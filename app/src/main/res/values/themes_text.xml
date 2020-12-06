@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="FFnet.TextStyle" parent="android:Widget.TextView" />
+
+    <style name="FFnet.TextStyle.BigTitle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingTop">@dimen/margin_big_big</item>
+        <item name="android:paddingBottom">@dimen/margin_big_big</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="FFnet.TextStyle.BigTitle.Blue">
+        <item name="android:textColor">@color/ff_blue</item>
+    </style>
+
+    <style name="FFnet.TextStyle.MidTitle">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="FFnet.TextStyle.MidTitle.Blue">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/ff_blue</item>
+    </style>
+
+    <style name="FFnet.TextStyle.Paragraph">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/ff_grey_darker</item>
+    </style>
+
+    <style name="FFnet.TextStyle.SubTitle">
+        <item name="android:textColor">@color/ff_grey_darker</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="FFnet.TextStyle.SubTitle.Light">
+        <item name="android:textColor">@color/ff_grey</item>
+    </style>
+
+    <style name="FFnet.TextStyle.SubTitle.White">
+        <item name="android:textColor">@color/ff_white</item>
+    </style>
+
+    <style name="FFnet.TextStyle.SubTitle.Blue">
+        <item name="android:textColor">@color/ff_blue</item>
+    </style>
+</resources>

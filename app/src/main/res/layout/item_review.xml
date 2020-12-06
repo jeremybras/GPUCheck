@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/posterTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Reapersis" />
+
+    <TextView
+        android:id="@+id/chapterTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/FFnet.TextStyle.SubTitle.Light"
+        app:layout_constraintStart_toStartOf="@+id/posterTextView"
+        app:layout_constraintTop_toBottomOf="@id/posterTextView"
+        tools:text="Chapter 8" />
+
+    <TextView
+        android:id="@+id/commentTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_mini"
+        android:paddingBottom="@dimen/margin_big_big"
+        android:textAppearance="@style/FFnet.TextStyle.SubTitle"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
+        app:layout_constraintStart_toStartOf="@+id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/chapterTextView"
+        tools:text="Merci pour cette suite ! j'ai rarement autant apprécié un Ron dans une fanfiction, j'aime beaucoup son côté analytique ! Bonne continuation !" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/startGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/margin_super_big" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/endGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/margin_super_big" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

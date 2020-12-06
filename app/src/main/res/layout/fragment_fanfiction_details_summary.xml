@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <HorizontalScrollView
+        android:id="@+id/detailsContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_super_big"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <fr.ffnet.downloader.ui.CategoryButtonView
+                android:id="@+id/languageButton"
+                style="@style/Category.UnChecked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_mini"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingTop="@dimen/margin_mini_mini"
+                android:paddingEnd="@dimen/margin_medium"
+                android:paddingBottom="@dimen/margin_mini"
+                app:isSelectable="false"
+                tools:text="Category" />
+
+            <fr.ffnet.downloader.ui.CategoryButtonView
+                android:id="@+id/genreButton"
+                style="@style/Category.UnChecked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_mini"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingTop="@dimen/margin_mini_mini"
+                android:paddingEnd="@dimen/margin_medium"
+                android:paddingBottom="@dimen/margin_mini"
+                app:isSelectable="false"
+                tools:text="Adventure" />
+
+            <fr.ffnet.downloader.ui.CategoryButtonView
+                android:id="@+id/chaptersButton"
+                style="@style/Category.UnChecked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_mini"
+                android:drawableStart="@drawable/ic_chapters"
+                android:drawablePadding="@dimen/margin_mini"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingTop="@dimen/margin_mini_mini"
+                android:paddingEnd="@dimen/margin_medium"
+                android:paddingBottom="@dimen/margin_mini"
+                app:isSelectable="false"
+                tools:text="7" />
+
+            <fr.ffnet.downloader.ui.CategoryButtonView
+                android:id="@+id/favoritesButton"
+                style="@style/Category.UnChecked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_mini"
+                android:drawableStart="@drawable/ic_favorite"
+                android:drawablePadding="@dimen/margin_mini"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingTop="@dimen/margin_mini_mini"
+                android:paddingEnd="@dimen/margin_medium"
+                android:paddingBottom="@dimen/margin_mini"
+                app:isSelectable="false"
+                tools:text="52" />
+
+            <fr.ffnet.downloader.ui.CategoryButtonView
+                android:id="@+id/reviewsButton"
+                style="@style/Category.UnChecked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_favorite"
+                android:drawablePadding="@dimen/margin_mini"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingTop="@dimen/margin_mini_mini"
+                android:paddingEnd="@dimen/margin_medium"
+                android:paddingBottom="@dimen/margin_mini"
+                android:visibility="gone"
+                app:isSelectable="false"
+                tools:text="52" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/commentTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_super_big"
+        android:textAppearance="@style/FFnet.TextStyle.SubTitle"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/detailsContainer"
+        tools:text="Summary" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/startGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/margin_super_big" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/endGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/margin_super_big" />
+</androidx.constraintlayout.widget.ConstraintLayout>

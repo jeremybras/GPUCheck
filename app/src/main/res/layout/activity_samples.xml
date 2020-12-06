@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/margin_super_big"
+    tools:context=".main.MainActivity">
+
+    <TextView
+        android:id="@+id/bigTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Formats"
+        android:textAppearance="@style/FFnet.TextStyle.BigTitle.Blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/midTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Formats"
+        android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bigTitleTextView" />
+
+    <TextView
+        android:id="@+id/paragraphTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Formats"
+        android:textAppearance="@style/FFnet.TextStyle.Paragraph"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/midTitleTextView" />
+
+    <TextView
+        android:id="@+id/subtitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Formats"
+        android:textAppearance="@style/FFnet.TextStyle.SubTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paragraphTextView" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/uncheckedSwitchCompat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:thumb="@drawable/switch_thumb"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/subtitleTextView"
+        app:track="@drawable/switch_track" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/checkedSwitchCompat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:thumb="@drawable/switch_thumb"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/uncheckedSwitchCompat"
+        app:track="@drawable/switch_track" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_big_big"
+        android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="@id/uncheckedSwitchCompat"
+        app:layout_constraintTop_toTopOf="@id/uncheckedSwitchCompat">
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            style="@style/RadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="authors" />
+
+        <androidx.appcompat.widget.AppCompatRadioButton
+            style="@style/RadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="stories"
+            tools:checked="true" />
+    </RadioGroup>
+
+    <fr.ffnet.downloader.ui.CategoryButtonView
+        android:id="@+id/categoryUncheckedButton"
+        style="@style/Category.UnChecked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin_medium"
+        android:paddingTop="@dimen/margin_mini_mini"
+        android:paddingEnd="@dimen/margin_medium"
+        android:paddingBottom="@dimen/margin_mini"
+        android:text="Category"
+        app:isSelectable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/checkedSwitchCompat" />
+
+    <fr.ffnet.downloader.ui.CategoryButtonView
+        android:id="@+id/categoryCheckedButton"
+        style="@style/Category.Checked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_mini"
+        android:paddingStart="@dimen/margin_medium"
+        android:paddingTop="@dimen/margin_mini_mini"
+        android:paddingEnd="@dimen/margin_medium"
+        android:paddingBottom="@dimen/margin_mini"
+        android:text="Adventure"
+        app:isChecked="true"
+        app:isSelectable="true"
+        app:layout_constraintStart_toEndOf="@+id/categoryUncheckedButton"
+        app:layout_constraintTop_toBottomOf="@id/checkedSwitchCompat" />
+
+    <fr.ffnet.downloader.ui.CategoryButtonView
+        android:id="@+id/chaptersButton"
+        style="@style/Category.UnChecked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_mini"
+        android:drawableStart="@drawable/ic_chapters"
+        android:drawablePadding="@dimen/margin_mini"
+        android:paddingStart="@dimen/margin_medium"
+        android:paddingTop="@dimen/margin_mini_mini"
+        android:paddingEnd="@dimen/margin_medium"
+        android:paddingBottom="@dimen/margin_mini"
+        android:text="7"
+        app:isSelectable="false"
+        app:layout_constraintStart_toEndOf="@+id/categoryCheckedButton"
+        app:layout_constraintTop_toBottomOf="@id/checkedSwitchCompat" />
+
+    <fr.ffnet.downloader.ui.CategoryButtonView
+        android:id="@+id/favoritesButton"
+        style="@style/Category.UnChecked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_mini"
+        android:drawableStart="@drawable/ic_favorite"
+        android:drawablePadding="@dimen/margin_mini"
+        android:paddingStart="@dimen/margin_medium"
+        android:paddingTop="@dimen/margin_mini_mini"
+        android:paddingEnd="@dimen/margin_medium"
+        android:paddingBottom="@dimen/margin_mini"
+        android:text="52"
+        app:isSelectable="false"
+        app:layout_constraintStart_toEndOf="@+id/chaptersButton"
+        app:layout_constraintTop_toBottomOf="@id/checkedSwitchCompat" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/deleteButton"
+        style="@style/Button.Big"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:drawableStart="@drawable/ic_trash"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoryUncheckedButton" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addToLibraryButton"
+        style="@style/Button.Text.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:drawableStart="@drawable/ic_add"
+        android:text="Add to library"
+        app:layout_constraintStart_toEndOf="@+id/deleteButton"
+        app:layout_constraintTop_toTopOf="@id/deleteButton" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addButton"
+        style="@style/Button.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:drawableStart="@drawable/ic_add"
+        app:layout_constraintStart_toStartOf="@+id/addToLibraryButton"
+        app:layout_constraintTop_toBottomOf="@id/addToLibraryButton" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/exportPDFButton"
+        style="@style/Button.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:text="PDF"
+        app:layout_constraintStart_toEndOf="@+id/addButton"
+        app:layout_constraintTop_toTopOf="@id/addButton" />
+
+    <ImageView
+        android:id="@+id/menuImageView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="@dimen/margin_big"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_menu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addButton" />
+
+    <ImageView
+        android:id="@+id/optionsImageView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/margin_big"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_options"
+        app:layout_constraintStart_toEndOf="@id/menuImageView"
+        app:layout_constraintTop_toTopOf="@id/menuImageView" />
+
+    <ImageView
+        android:id="@+id/searchImageView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/margin_big"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_search"
+        app:layout_constraintStart_toEndOf="@id/optionsImageView"
+        app:layout_constraintTop_toTopOf="@id/menuImageView" />
+
+    <ImageView
+        android:id="@+id/closeImageView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/margin_big"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_close"
+        app:layout_constraintStart_toEndOf="@id/searchImageView"
+        app:layout_constraintTop_toTopOf="@id/menuImageView" />
+
+    <ImageView
+        android:id="@+id/releaseImageView"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="@dimen/margin_big"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_release"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/optionsImageView" />
+
+    <ImageView
+        android:id="@+id/updateDisabledImageView"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="@dimen/margin_small"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_update_disabled"
+        app:layout_constraintStart_toEndOf="@id/releaseImageView"
+        app:layout_constraintTop_toTopOf="@id/releaseImageView" />
+
+    <ImageView
+        android:id="@+id/updateEnabledImageView"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="@dimen/margin_small"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_update_enabled"
+        app:layout_constraintStart_toEndOf="@id/updateDisabledImageView"
+        app:layout_constraintTop_toTopOf="@id/releaseImageView" />
+
+    <ImageView
+        android:id="@+id/warningImageView"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="@dimen/margin_small"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_warning"
+        app:layout_constraintStart_toEndOf="@id/updateEnabledImageView"
+        app:layout_constraintTop_toTopOf="@id/releaseImageView" />
+
+    <ImageView
+        android:id="@+id/searchMiniImageView"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="@dimen/margin_small"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_search_mini"
+        app:layout_constraintStart_toEndOf="@id/warningImageView"
+        app:layout_constraintTop_toTopOf="@id/releaseImageView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

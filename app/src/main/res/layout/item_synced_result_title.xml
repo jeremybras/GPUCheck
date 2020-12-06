@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/margin_super_big"
+    android:paddingTop="@dimen/margin_small"
+    android:paddingEnd="@dimen/margin_super_big">
+
+    <TextView
+        android:id="@+id/syncedStoriesTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/FFnet.TextStyle.BigTitle.Blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="My stories" />
+
+    <TextView
+        android:id="@+id/syncedStoriesSubTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/FFnet.TextStyle.SubTitle.Light"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/syncedStoriesTitleTextView"
+        tools:text="12 stories on your phone" />
+</androidx.constraintlayout.widget.ConstraintLayout>

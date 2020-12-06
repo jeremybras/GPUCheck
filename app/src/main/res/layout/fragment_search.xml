@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/searchContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/margin_super_big">
+
+    <LinearLayout
+        android:id="@+id/welcomeBlock"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
+        app:layout_constraintStart_toStartOf="@+id/startGuideline"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/welcomeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome"
+            android:textAppearance="@style/FFnet.TextStyle.BigTitle.Blue" />
+
+        <TextView
+            android:id="@+id/subtitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_subtitle"
+            android:textAppearance="@style/FFnet.TextStyle.SubTitle" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/searchBlock"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
+        app:layout_constraintStart_toStartOf="@+id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeBlock">
+
+        <TextView
+            android:id="@+id/searchTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/search"
+            android:textAppearance="@style/FFnet.TextStyle.BigTitle.Blue"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_big"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:background="@drawable/edittext_background"
+            android:drawableStart="@drawable/ic_search_edittext"
+            android:drawablePadding="@dimen/margin_small"
+            android:hint="@string/search_hint"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:paddingStart="@dimen/margin_medium"
+            android:paddingTop="@dimen/margin_medium"
+            android:paddingEnd="@dimen/margin_medium"
+            android:paddingBottom="@dimen/margin_medium"
+            android:text="dark"
+            android:textColor="@color/ff_grey_darker"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/searchValidateButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchTextView" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/searchValidateButton"
+            style="@style/Button.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="@string/ok"
+            app:layout_constraintBottom_toBottomOf="@+id/searchEditText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/searchEditText"
+            app:layout_constraintTop_toTopOf="@+id/searchEditText" />
+
+        <RadioGroup
+            android:id="@+id/searchTypeRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchEditText">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/searchAllRadioButton"
+                style="@style/RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search_radio_all" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/searchAuthorRadioButton"
+                style="@style/RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:text="@string/search_radio_authors" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/searchStoryRadioButton"
+                style="@style/RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:checked="true"
+                android:text="@string/search_radio_stories" />
+        </RadioGroup>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchResultRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/margin_big"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchBlock"
+        tools:listitem="@layout/item_search_result_story" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/startGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/margin_super_big" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/endGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/margin_super_big" />
+</androidx.constraintlayout.widget.ConstraintLayout>

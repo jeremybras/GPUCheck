@@ -1,0 +1,52 @@
+<resources>
+
+    <string name="app_name">FFnet</string>
+    <string name="ok">OK</string>
+
+    <string name="repository_error">Something went wrong, try again</string>
+
+    <string name="welcome">Welcome</string>
+    <string name="welcome_subtitle">Your library is empty\nUse the search bar to find something to read…</string>
+
+    <string name="search">Search</string>
+    <string name="search_hint">Type something…</string>
+    <string name="search_radio_all">all</string>
+    <string name="search_radio_authors">authors</string>
+    <string name="search_radio_stories">stories</string>
+
+    <string name="synced_stories_title">My stories</string>
+    <plurals name="synced_nb_stories">
+        <item quantity="one">1 story on your phone</item>
+        <item quantity="other">%d stories on your phone</item>
+    </plurals>
+
+    <plurals name="search_result_title">
+        <item quantity="one">1 result</item>
+        <item quantity="other">%d results</item>
+    </plurals>
+    <string name="search_no_result">No result</string>
+
+    <string name="export_permission_title">Write permission needed</string>
+    <string name="export_permission_content">The document cannot be generated without write permission</string>
+    <string name="export_permission_grant">Grant</string>
+    <string name="export_permission_deny">Deny</string>
+
+    <string name="load_story_info_fetching_error">There was an error while fetching fanfiction from fanfiction.net</string>
+    <string name="story_add_to_library">Add to library</string>
+    <string name="story_synchronizing">Synchronizing</string>
+    <string name="story_synchronize">Synchronize</string>
+    <string name="story_export_epub">ePUB</string>
+    <string name="story_export_pdf">PDF</string>
+    <string name="story_view_on_web">View on web</string>
+    <string name="story_delete">Delete from device</string>
+    <string name="story_about_this_book">About this book</string>
+    <string name="story_tab_title_summary">Summary</string>
+    <string name="story_tab_title_chapters">Chapters</string>
+    <string name="story_tab_title_reviews">Reviews</string>
+    <string name="story_review_chapter_title">Chapter %s</string>
+    <plurals name="story_chapters_missing">
+        <item quantity="one">1 chapter missing</item>
+        <item quantity="other">%d chapters missing</item>
+    </plurals>
+
+</resources>

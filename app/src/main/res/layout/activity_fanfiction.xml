@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/containerView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ff_eggshell"
+    android:paddingTop="@dimen/margin_super_big">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/menuImageView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:scaleType="centerInside"
+        app:layout_constraintStart_toStartOf="@+id/startGuideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_rawRes="@raw/ic_animations"
+        app:lottie_speed="2" />
+
+    <ImageView
+        android:id="@+id/optionsImageView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_options"
+        app:layout_constraintEnd_toEndOf="@+id/endGuideline"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_big_big"
+        android:textAppearance="@style/FFnet.TextStyle.BigTitle.Blue"
+        app:layout_constraintStart_toStartOf="@+id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/menuImageView"
+        tools:text="The Sea in Between" />
+
+    <TextView
+        android:id="@+id/detailsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/FFnet.TextStyle.SubTitle"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        tools:text="Twilight / Littlest Cactus" />
+
+    <ImageView
+        android:id="@+id/storyImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/placeholder"
+        app:layout_constraintBottom_toBottomOf="@+id/actionButtonViewFlipper"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toTopOf="@+id/aboutTextView" />
+
+    <TextView
+        android:id="@+id/aboutTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_big"
+        android:layout_marginTop="@dimen/margin_big"
+        android:text="@string/story_about_this_book"
+        android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
+        app:layout_constraintStart_toEndOf="@id/storyImageView"
+        app:layout_constraintTop_toBottomOf="@id/detailsTextView" />
+
+    <ImageView
+        android:id="@+id/publishedDateImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_release"
+        app:layout_constraintBottom_toBottomOf="@+id/publishedDateTextView"
+        app:layout_constraintStart_toStartOf="@+id/aboutTextView"
+        app:layout_constraintTop_toTopOf="@id/publishedDateTextView" />
+
+    <TextView
+        android:id="@+id/publishedDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_mini"
+        android:textAppearance="@style/FFnet.TextStyle.SubTitle"
+        app:layout_constraintStart_toEndOf="@+id/publishedDateImageView"
+        app:layout_constraintTop_toBottomOf="@+id/aboutTextView"
+        tools:text="8 sept. 2014" />
+
+    <ImageView
+        android:id="@+id/updateImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_update_disabled"
+        app:layout_constraintBottom_toBottomOf="@+id/updatedDateTextView"
+        app:layout_constraintEnd_toEndOf="@+id/publishedDateImageView"
+        app:layout_constraintStart_toStartOf="@+id/publishedDateImageView"
+        app:layout_constraintTop_toTopOf="@id/updatedDateTextView" />
+
+    <TextView
+        android:id="@+id/updatedDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/FFnet.TextStyle.SubTitle"
+        app:layout_constraintStart_toStartOf="@+id/publishedDateTextView"
+        app:layout_constraintTop_toBottomOf="@+id/publishedDateTextView"
+        tools:text="8 oct. 2020" />
+
+    <ImageView
+        android:id="@+id/chapterSyncImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_warning"
+        app:layout_constraintBottom_toBottomOf="@+id/chapterSyncTextView"
+        app:layout_constraintEnd_toEndOf="@+id/publishedDateImageView"
+        app:layout_constraintStart_toStartOf="@+id/publishedDateImageView"
+        app:layout_constraintTop_toTopOf="@id/chapterSyncTextView" />
+
+    <TextView
+        android:id="@+id/chapterSyncTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/FFnet.TextStyle.SubTitle.Blue"
+        app:layout_constraintStart_toStartOf="@+id/publishedDateTextView"
+        app:layout_constraintTop_toBottomOf="@+id/updatedDateTextView"
+        tools:text="2 chapters missing" />
+
+    <ViewFlipper
+        android:id="@+id/actionButtonViewFlipper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        app:layout_constraintStart_toStartOf="@+id/aboutTextView"
+        app:layout_constraintTop_toBottomOf="@id/chapterSyncTextView">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/addToLibraryButton"
+            style="@style/Button.Text.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_add"
+            android:text="@string/story_add_to_library" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/syncStoryButton"
+            style="@style/Button.Text.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_update_disabled"
+            android:drawableTint="@color/ff_white"
+            android:gravity="center"
+            android:text="@string/story_synchronize" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/syncingStoryButton"
+            style="@style/Button.Text.Icon.Disabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_update_disabled"
+            android:drawableTint="@color/ff_white"
+            android:enabled="false"
+            android:gravity="center"
+            android:text="@string/story_synchronizing" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/exportPDFButton"
+                style="@style/Button.Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/story_export_pdf" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/exportEPUBButton"
+                style="@style/Button.Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
+                android:text="@string/story_export_epub" />
+
+        </LinearLayout>
+    </ViewFlipper>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/detailsTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_super_big"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:background="@color/ff_eggshell"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/actionButtonViewFlipper"
+        app:tabBackground="@drawable/tab_background"
+        app:tabIndicatorHeight="0dp"
+        app:tabMinWidth="0dp" />
+
+    <View
+        android:id="@+id/shadowView"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/toolbar_dropshadow"
+        app:layout_constraintBottom_toTopOf="@+id/viewPager" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/ff_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detailsTabLayout" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/startGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/margin_super_big" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/endGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/margin_super_big" />
+</androidx.constraintlayout.widget.ConstraintLayout>

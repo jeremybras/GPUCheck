@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_super_big"
+    android:paddingStart="@dimen/margin_super_big"
+    android:paddingEnd="@dimen/margin_super_big">
+
+    <ImageView
+        android:id="@+id/storyImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitStart"
+        android:src="@drawable/placeholder"
+        app:layout_constraintBottom_toBottomOf="@+id/updatedDateTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/storyTitleTextView" />
+
+    <TextView
+        android:id="@+id/storyTitleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
+        app:layout_constraintEnd_toStartOf="@id/addButton"
+        app:layout_constraintStart_toEndOf="@+id/storyImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="The Sea in Between" />
+
+    <TextView
+        android:id="@+id/detailsTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_mini"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/FFnet.TextStyle.SubTitle.Light"
+        app:layout_constraintEnd_toStartOf="@id/addButton"
+        app:layout_constraintStart_toStartOf="@+id/storyTitleTextView"
+        app:layout_constraintTop_toBottomOf="@+id/storyTitleTextView"
+        tools:text="Twilight / Lolicat" />
+
+    <ImageView
+        android:id="@+id/updateDisabledImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_update_disabled"
+        app:layout_constraintBottom_toBottomOf="@+id/updatedDateTextView"
+        app:layout_constraintStart_toStartOf="@+id/storyTitleTextView"
+        app:layout_constraintTop_toTopOf="@id/updatedDateTextView" />
+
+    <TextView
+        android:id="@+id/updatedDateTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/FFnet.TextStyle.SubTitle.Light"
+        app:layout_constraintEnd_toStartOf="@id/addButton"
+        app:layout_constraintStart_toEndOf="@+id/updateDisabledImageView"
+        app:layout_constraintTop_toBottomOf="@+id/detailsTextView"
+        tools:text="Twilight / Lolicat" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addButton"
+        style="@style/Button.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/detailsTextView" />
+
+    <HorizontalScrollView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/storyImageView">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <fr.ffnet.downloader.ui.CategoryButtonView
+                android:id="@+id/languageButton"
+                style="@style/Category.UnChecked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_mini"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingTop="@dimen/margin_mini_mini"
+                android:paddingEnd="@dimen/margin_medium"
+                android:paddingBottom="@dimen/margin_mini"
+                app:isSelectable="false"
+                tools:text="Category" />
+
+            <fr.ffnet.downloader.ui.CategoryButtonView
+                android:id="@+id/genreButton"
+                style="@style/Category.UnChecked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_mini"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingTop="@dimen/margin_mini_mini"
+                android:paddingEnd="@dimen/margin_medium"
+                android:paddingBottom="@dimen/margin_mini"
+                app:isSelectable="false"
+                tools:text="Adventure" />
+
+            <fr.ffnet.downloader.ui.CategoryButtonView
+                android:id="@+id/chaptersButton"
+                style="@style/Category.UnChecked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_mini"
+                android:drawableStart="@drawable/ic_chapters"
+                android:drawablePadding="@dimen/margin_mini"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingTop="@dimen/margin_mini_mini"
+                android:paddingEnd="@dimen/margin_medium"
+                android:paddingBottom="@dimen/margin_mini"
+                app:isSelectable="false"
+                tools:text="7" />
+
+            <fr.ffnet.downloader.ui.CategoryButtonView
+                android:id="@+id/favoritesButton"
+                style="@style/Category.UnChecked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_mini"
+                android:drawableStart="@drawable/ic_favorite"
+                android:drawablePadding="@dimen/margin_mini"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingTop="@dimen/margin_mini_mini"
+                android:paddingEnd="@dimen/margin_medium"
+                android:paddingBottom="@dimen/margin_mini"
+                app:isSelectable="false"
+                tools:text="52" />
+
+            <fr.ffnet.downloader.ui.CategoryButtonView
+                android:id="@+id/reviewsButton"
+                style="@style/Category.UnChecked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_favorite"
+                android:drawablePadding="@dimen/margin_mini"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingTop="@dimen/margin_mini_mini"
+                android:paddingEnd="@dimen/margin_medium"
+                android:paddingBottom="@dimen/margin_mini"
+                android:visibility="gone"
+                app:isSelectable="false"
+                tools:text="52" />
+        </LinearLayout>
+    </HorizontalScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

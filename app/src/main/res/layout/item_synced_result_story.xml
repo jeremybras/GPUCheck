@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_medium"
+    android:layout_marginBottom="@dimen/margin_medium"
+    android:paddingTop="@dimen/margin_small">
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
+        app:layout_constraintEnd_toStartOf="@id/actionButtonViewFlipper"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="The Sea in Between" />
+
+    <TextView
+        android:id="@+id/detailsTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_mini"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/FFnet.TextStyle.SubTitle.Light"
+        app:layout_constraintEnd_toStartOf="@id/actionButtonViewFlipper"
+        app:layout_constraintStart_toStartOf="@+id/titleTextView"
+        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+        tools:text="Twilight / Lolicat" />
+
+    <ViewFlipper
+        android:id="@+id/actionButtonViewFlipper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        app:layout_constraintBottom_toBottomOf="@id/detailsTextView"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
+        app:layout_constraintTop_toTopOf="@id/titleTextView">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/syncStoryButton"
+            style="@style/Button.Text.Icon.White"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_update_disabled"
+            android:drawableTint="@color/ff_white"
+            android:gravity="center"
+            android:text="@string/story_synchronize" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/syncingStoryButton"
+            style="@style/Button.Text.Icon.Disabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_update_disabled"
+            android:drawableTint="@color/ff_white"
+            android:enabled="false"
+            android:gravity="center"
+            android:text="@string/story_synchronizing" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/exportPDFButton"
+                style="@style/Button.Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/story_export_pdf" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/exportEPUBButton"
+                style="@style/Button.Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
+                android:text="@string/story_export_epub" />
+
+        </LinearLayout>
+    </ViewFlipper>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/startGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/margin_super_big" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/endGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/margin_super_big" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
