@@ -7,8 +7,9 @@ import dagger.Provides
 import fr.ffnet.downloader.common.FanfictionDownloaderDatabase
 import fr.ffnet.downloader.common.NetworkModule.Companion.MOBILE_WEBSITE
 import fr.ffnet.downloader.common.NetworkModule.Companion.REGULAR_WEBSITE
-import fr.ffnet.downloader.repository.dao.FanfictionDao
 import fr.ffnet.downloader.repository.dao.AuthorDao
+import fr.ffnet.downloader.repository.dao.FanfictionDao
+import fr.ffnet.downloader.repository.dao.SettingsDao
 import fr.ffnet.downloader.utils.FanfictionBuilder
 import fr.ffnet.downloader.utils.FanfictionConverter
 import fr.ffnet.downloader.utils.ProfileBuilder
@@ -27,6 +28,10 @@ class RepositoryModule {
     @Provides
     fun provideProfileDao(database: FanfictionDownloaderDatabase): AuthorDao =
         database.authorDao()
+
+    @Provides
+    fun provideSettingsDao(database: FanfictionDownloaderDatabase): SettingsDao =
+        database.settingsDao()
 
     @Provides
     fun provideMobileCrawlService(
@@ -96,5 +101,21 @@ class RepositoryModule {
         regularCrawlService,
         mobileCrawlService,
         searchBuilder
+    )
+
+    @Provides
+    fun provideJustInRepository(
+        regularCrawlService: RegularCrawlService,
+        searchBuilder: SearchBuilder
+    ): JustInRepository = JustInRepository(
+        regularCrawlService,
+        searchBuilder
+    )
+
+    @Provides
+    fun provideSettingsRepository(
+        settingsDao: SettingsDao
+    ): SettingsRepository = SettingsRepository(
+        settingsDao
     )
 }

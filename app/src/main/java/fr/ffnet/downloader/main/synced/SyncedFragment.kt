@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -67,8 +68,8 @@ class SyncedFragment : Fragment(), ParentListener {
     }
 
     private fun initializeViewModelObservers() {
-        syncedViewModel.syncedList.observe(viewLifecycleOwner, { syncedItemList ->
+        syncedViewModel.syncedList.observe(viewLifecycleOwner) { syncedItemList ->
             (syncedResultRecyclerView.adapter as SyncedListAdapter).syncedResultList = syncedItemList
-        })
+        }
     }
 }

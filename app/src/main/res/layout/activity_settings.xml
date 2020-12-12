@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/margin_super_big"
+        android:paddingBottom="@dimen/margin_enormous">
+
+        <ImageView
+            android:id="@+id/closeImageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@string/content_description_close"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_close"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/formatsSectionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_super_big"
+            android:text="@string/settings_formats"
+            android:textAppearance="@style/FFnet.TextStyle.BigTitle.Blue"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@id/closeImageView" />
+
+        <!-- PDF -->
+        <TextView
+            android:id="@+id/pdfExportTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_big"
+            android:text="@string/settings_format_pdf_title"
+            android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/formatsSectionTextView" />
+
+        <TextView
+            android:id="@+id/pdfExportSubTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_formats_pdf_subtitle"
+            android:textAppearance="@style/FFnet.TextStyle.SubTitle"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/pdfExportTitleTextView" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/pdfExportSwitchCompat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:thumb="@drawable/switch_thumb"
+            app:layout_constraintBottom_toBottomOf="@id/pdfExportSubTitleTextView"
+            app:layout_constraintEnd_toEndOf="@id/endGuideline"
+            app:layout_constraintTop_toTopOf="@+id/pdfExportTitleTextView"
+            app:track="@drawable/switch_track" />
+
+        <!-- EPUB -->
+        <TextView
+            android:id="@+id/epubExportTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_big"
+            android:text="@string/settings_format_epub_title"
+            android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/pdfExportSubTitleTextView" />
+
+        <TextView
+            android:id="@+id/epubExportSubTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_format_epub_subtitle"
+            android:textAppearance="@style/FFnet.TextStyle.SubTitle"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/epubExportTitleTextView" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/epubExportSwitchCompat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:thumb="@drawable/switch_thumb"
+            app:layout_constraintBottom_toBottomOf="@id/epubExportSubTitleTextView"
+            app:layout_constraintEnd_toEndOf="@id/endGuideline"
+            app:layout_constraintTop_toTopOf="@+id/epubExportTitleTextView"
+            app:track="@drawable/switch_track" />
+
+        <!-- MOBI -->
+        <TextView
+            android:id="@+id/mobiExportTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_big"
+            android:text="@string/settings_format_mobi_title"
+            android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/epubExportSubTitleTextView" />
+
+        <TextView
+            android:id="@+id/mobiExportSubTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_format_mobi_subtitle"
+            android:textAppearance="@style/FFnet.TextStyle.SubTitle"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/mobiExportTitleTextView" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/mobiExportSwitchCompat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:thumb="@drawable/switch_thumb"
+            app:layout_constraintBottom_toBottomOf="@id/mobiExportSubTitleTextView"
+            app:layout_constraintEnd_toEndOf="@id/endGuideline"
+            app:layout_constraintTop_toTopOf="@+id/mobiExportTitleTextView"
+            app:track="@drawable/switch_track" />
+
+        <TextView
+            android:id="@+id/searchSectionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_super_big"
+            android:text="@string/search_title"
+            android:textAppearance="@style/FFnet.TextStyle.BigTitle.Blue"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@id/mobiExportSubTitleTextView" />
+
+        <TextView
+            android:id="@+id/searchTypeTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_big"
+            android:text="@string/settings_default_search_type"
+            android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/searchSectionTextView" />
+
+        <RadioGroup
+            android:id="@+id/searchTypeRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@id/searchTypeTitleTextView">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/searchTypeAllRadioButton"
+                style="@style/RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_big"
+                android:text="@string/search_radio_all" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/searchTypeAuthorRadioButton"
+                style="@style/RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_big"
+                android:text="@string/search_radio_authors" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/searchTypeStoryRadioButton"
+                style="@style/RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search_radio_stories" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/justInSectionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_super_big"
+            android:text="@string/settings_just_in_section_title"
+            android:textAppearance="@style/FFnet.TextStyle.BigTitle.Blue"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@id/searchTypeRadioGroup" />
+
+        <!-- MOBI -->
+        <TextView
+            android:id="@+id/justInShowTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_big"
+            android:text="@string/settings_just_in_show_section_title"
+            android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/justInSectionTextView" />
+
+        <TextView
+            android:id="@+id/justInShowSubTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_just_in_show_section_subtitle"
+            android:textAppearance="@style/FFnet.TextStyle.SubTitle"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/justInShowTitleTextView" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/justInShowSwitchCompat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:thumb="@drawable/switch_thumb"
+            app:layout_constraintBottom_toBottomOf="@id/justInShowSubTitleTextView"
+            app:layout_constraintEnd_toEndOf="@id/endGuideline"
+            app:layout_constraintTop_toTopOf="@+id/justInShowTitleTextView"
+            app:track="@drawable/switch_track" />
+
+        <TextView
+            android:id="@+id/justInTypeTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_big"
+            android:text="@string/settings_just_in_type"
+            android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/justInShowSubTitleTextView" />
+
+        <RadioGroup
+            android:id="@+id/justInTypeRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@id/justInTypeTitleTextView">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/justInTypePublishedRadioButton"
+                style="@style/RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_big"
+                android:text="@string/settings_just_in_type_recently_published" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/justInTypeUpdatedRadioButton"
+                style="@style/RadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_just_in_type_recently_updated" />
+        </RadioGroup>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/startGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/margin_super_big" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/endGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/margin_super_big" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -8,7 +8,10 @@
     <string name="welcome">Welcome</string>
     <string name="welcome_subtitle">Your library is empty\nUse the search bar to find something to read…</string>
 
-    <string name="search">Search</string>
+    <string name="search_just_in_title_published">New stories</string>
+    <string name="search_just_in_title_updated">New updates on stories</string>
+
+    <string name="search_title">Search</string>
     <string name="search_hint">Type something…</string>
     <string name="search_radio_all">all</string>
     <string name="search_radio_authors">authors</string>

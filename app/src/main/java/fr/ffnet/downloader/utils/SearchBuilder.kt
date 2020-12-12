@@ -96,10 +96,10 @@ class SearchBuilder @Inject constructor(
                 dates[dates.size - 1].attr("data-xutime").toLong() * 1000
             ).toDate()
 
-            val reviews = if (fanfictionStuff.contains("Reviews")) {
+            val reviews = if (fanfictionStuff.contains("Reviews: ")) {
                 fanfictionStuff.split("Reviews: ")[1].split(" ")[0].replace(",", "").toInt()
             } else 0
-            val favorites = if (fanfictionStuff.contains("Favs")) {
+            val favorites = if (fanfictionStuff.contains("Favs: ")) {
                 fanfictionStuff.split("Favs: ")[1].split(" ")[0].replace(",", "").toInt()
             } else 0
             val languageIndex = fanfictionStuff.indexOfAny(languageList)

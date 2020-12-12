@@ -32,10 +32,10 @@ class FanfictionBuilder @Inject constructor(
             title
         )
 
-        val reviews = if (profileTop.text().contains("Reviews")) {
+        val reviews = if (profileTop.text().contains("Reviews: ")) {
             profileTop.text().split("Reviews: ")[1].split(" ")[0].replace(",", "").toInt()
         } else 0
-        val favorites = if (profileTop.text().contains("Favs")) {
+        val favorites = if (profileTop.text().contains("Favs: ")) {
             profileTop.text().split("Favs: ")[1].split(" ")[0].replace(",", "").toInt()
         } else 0
         val languageIndex = profileTop.text().indexOfAny(SearchBuilder.languageList)
@@ -76,11 +76,20 @@ class FanfictionBuilder @Inject constructor(
     }
 
     fun buildReviews(html: String): List<Review> {
+        if (html.contains("No Reviews found")) {
+            return emptyList()
+        }
         val document = jsoupParser.parseHtml(html)
         val reviewListSelector = document.select("table.table-striped>tbody>tr>td")
 
         return reviewListSelector.map { reviewSelector ->
-            val date = reviewSelector.select("span[data-xutime]").first().attr("data-xutime")?.toLong() ?: 0
+
+            val date = reviewSelector
+                .select("span[data-xutime]")
+                .firstOrNull()
+                ?.attr("data-xutime")
+                ?.toLong() ?: 0
+
             val chapterId = reviewSelector.text().split(" chapter ")[1].split(" ")[0].trim()
             val comment = reviewSelector.select("div").first().text()
             val poster = reviewSelector.text().split(" chapter ")[0].trim()

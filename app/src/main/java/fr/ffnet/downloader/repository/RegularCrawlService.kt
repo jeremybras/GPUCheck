@@ -24,4 +24,10 @@ interface RegularCrawlService {
 
     @GET("r/{fanfictionId}/")
     fun getReviews(@Path("fanfictionId") fanfictionId: String): Call<ResponseBody>
+
+    @GET("j/0/1/0/")
+    fun justInPublished(): Call<ResponseBody>
+
+    @GET("j/0/2/0/")
+    fun justInUpdated(): Call<ResponseBody>
 }

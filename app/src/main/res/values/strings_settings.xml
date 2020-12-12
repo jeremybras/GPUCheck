@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_formats">Formats</string>
+    <string name="settings_format_pdf_title">PDF</string>
+    <string name="settings_formats_pdf_subtitle">Universal format</string>
+    <string name="settings_format_epub_title">ePUB</string>
+    <string name="settings_format_epub_subtitle">For readers</string>
+    <string name="settings_format_mobi_title">MOBI</string>
+    <string name="settings_format_mobi_subtitle">For Kindle</string>
+    <string name="settings_default_search_type">Default search type</string>
+    <string name="settings_just_in_section_title">Recent stories section</string>
+    <string name="settings_just_in_show_section_title">Show section</string>
+    <string name="settings_just_in_show_section_subtitle">Show recent stories above search bar</string>
+    <string name="settings_just_in_type">Type</string>
+    <string name="settings_just_in_type_recently_published">Recently published</string>
+    <string name="settings_just_in_type_recently_updated">Recently updated</string>
+</resources>

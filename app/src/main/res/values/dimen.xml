@@ -7,4 +7,5 @@
     <dimen name="margin_big">16dp</dimen>
     <dimen name="margin_big_big">24dp</dimen>
     <dimen name="margin_super_big">32dp</dimen>
+    <dimen name="margin_enormous">48dp</dimen>
 </resources>

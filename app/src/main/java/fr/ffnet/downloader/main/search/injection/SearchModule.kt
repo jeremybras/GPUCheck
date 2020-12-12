@@ -5,14 +5,17 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Module
 import dagger.Provides
 import fr.ffnet.downloader.main.ViewPagerViewModel
+import fr.ffnet.downloader.main.search.JustInViewModel
 import fr.ffnet.downloader.main.search.SearchFragment
 import fr.ffnet.downloader.main.search.SearchViewModel
 import fr.ffnet.downloader.options.OptionsController
 import fr.ffnet.downloader.options.OptionsViewModel
 import fr.ffnet.downloader.repository.DatabaseRepository
 import fr.ffnet.downloader.repository.DownloaderRepository
+import fr.ffnet.downloader.repository.JustInRepository
 import fr.ffnet.downloader.repository.SearchRepository
-import fr.ffnet.downloader.utils.DateFormatter
+import fr.ffnet.downloader.repository.SettingsRepository
+import fr.ffnet.downloader.settings.SettingsViewModel
 import fr.ffnet.downloader.utils.EpubBuilder
 import fr.ffnet.downloader.utils.FanfictionOpener
 import fr.ffnet.downloader.utils.PdfBuilder
@@ -22,6 +25,26 @@ import fr.ffnet.downloader.utils.ViewModelFactory
 
 @Module
 class SearchModule(private val fragment: SearchFragment) {
+
+    @Provides
+    fun provideSettingsViewModel(
+        repository: SettingsRepository
+    ): SettingsViewModel {
+        val factory = ViewModelFactory {
+            SettingsViewModel(repository)
+        }
+        return ViewModelProvider(fragment, factory)[SettingsViewModel::class.java]
+    }
+
+    @Provides
+    fun provideJustInViewModel(
+        repository: JustInRepository
+    ): JustInViewModel {
+        val factory = ViewModelFactory {
+            JustInViewModel(repository)
+        }
+        return ViewModelProvider(fragment, factory)[JustInViewModel::class.java]
+    }
 
     @Provides
     fun provideViewPagerViewModel(
@@ -36,9 +59,6 @@ class SearchModule(private val fragment: SearchFragment) {
         urlTransformer: UrlTransformer,
         resources: Resources,
         searchRepository: SearchRepository,
-        downloaderRepository: DownloaderRepository,
-        dbRepository: DatabaseRepository,
-        dateFormatter: DateFormatter,
         UIBuilder: UIBuilder,
     ): SearchViewModel {
         val factory = ViewModelFactory {
@@ -46,9 +66,6 @@ class SearchModule(private val fragment: SearchFragment) {
                 urlTransformer,
                 resources,
                 searchRepository,
-                downloaderRepository,
-                dbRepository,
-                dateFormatter,
                 UIBuilder
             )
         }

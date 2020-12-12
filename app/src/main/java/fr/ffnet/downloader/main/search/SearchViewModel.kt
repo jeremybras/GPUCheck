@@ -26,9 +26,6 @@ class SearchViewModel(
     private val urlTransformer: UrlTransformer,
     private val resources: Resources,
     private val searchRepository: SearchRepository,
-    private val downloaderRepository: DownloaderRepository,
-    private val databaseRepository: DatabaseRepository,
-    private val dateFormatter: DateFormatter,
     private val uiBuilder: UIBuilder
 ) : ViewModel() {
 

@@ -11,13 +11,12 @@
     <ImageView
         android:id="@+id/storyImageView"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="160dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitStart"
+        android:scaleType="fitCenter"
         android:src="@drawable/placeholder"
-        app:layout_constraintBottom_toBottomOf="@id/actionButtonViewFlipper"
         app:layout_constraintStart_toStartOf="@id/startGuideline"
-        app:layout_constraintTop_toTopOf="@id/titleTextView" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/titleTextView"
@@ -25,10 +24,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
         android:ellipsize="end"
+        android:maxLines="1"
         android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
+        app:layout_constraintBottom_toTopOf="@id/detailsTextView"
         app:layout_constraintEnd_toEndOf="@id/endGuideline"
         app:layout_constraintStart_toEndOf="@+id/storyImageView"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/storyImageView"
+        app:layout_constraintVertical_chainStyle="packed"
         tools:text="The Sea in Between" />
 
     <TextView
@@ -39,6 +41,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="@style/FFnet.TextStyle.SubTitle.Light"
+        app:layout_constraintBottom_toTopOf="@id/actionButtonViewFlipper"
         app:layout_constraintEnd_toEndOf="@id/endGuideline"
         app:layout_constraintStart_toStartOf="@+id/titleTextView"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView"
@@ -49,6 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_medium"
+        app:layout_constraintBottom_toBottomOf="@id/storyImageView"
         app:layout_constraintStart_toStartOf="@+id/titleTextView"
         app:layout_constraintTop_toBottomOf="@id/detailsTextView">
 

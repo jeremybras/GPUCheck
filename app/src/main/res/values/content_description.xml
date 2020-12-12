@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="content_description_story_options">Story options</string>
+    <string name="content_description_story_image">Story image</string>
+    <string name="content_description_story_published_date">Story published date</string>
+    <string name="content_description_story_updated_date">Story updated date</string>
+    <string name="content_description_story_chapters_not_synced">Chapters not synchronized</string>
+    <string name="content_description_close">Close screen</string>
+</resources>

@@ -10,13 +10,13 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.lifecycle.observe
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import fr.ffnet.downloader.BuildConfig
 import fr.ffnet.downloader.R
 import fr.ffnet.downloader.common.MainApplication
 import fr.ffnet.downloader.fanfiction.FanfictionViewModel.StoryState.DEFAULT
-import fr.ffnet.downloader.fanfiction.FanfictionViewModel.StoryState.IN_LIBRARY
 import fr.ffnet.downloader.fanfiction.FanfictionViewModel.StoryState.SYNCING
 import fr.ffnet.downloader.fanfiction.chapters.FanfictionDetailsChaptersFragment
 import fr.ffnet.downloader.fanfiction.injection.FanfictionModule
@@ -25,7 +25,6 @@ import fr.ffnet.downloader.fanfiction.summary.FanfictionDetailsSummaryFragment
 import fr.ffnet.downloader.options.OptionsController
 import fr.ffnet.downloader.options.ParentListener
 import kotlinx.android.synthetic.main.activity_fanfiction.*
-import kotlinx.android.synthetic.main.item_search_result_story.view.*
 import javax.inject.Inject
 
 
@@ -106,30 +105,30 @@ class FanfictionActivity : AppCompatActivity(), ParentListener, PopupMenu.OnMenu
     }
 
     private fun setObservers() {
-        viewModel.loadFanfictionInfo(fanfictionId).observe(this, { fanfiction ->
+        viewModel.loadFanfictionInfo(fanfictionId).observe(this) { story ->
 
             picasso
-                .load("https:${fanfiction.imageUrl}")
+                .load("https:${story.imageUrl}")
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
                 .into(storyImageView)
 
-            titleTextView.text = fanfiction.title
-            detailsTextView.text = fanfiction.details
-            publishedDateTextView.text = fanfiction.publishedDate
-            updatedDateTextView.text = fanfiction.updatedDate
+            titleTextView.text = story.title
+            detailsTextView.text = story.details
+            publishedDateTextView.text = story.publishedDate
+            updatedDateTextView.text = story.updatedDate
 
-            chapterSyncImageView.isVisible = fanfiction.isDownloadComplete.not()
-            chapterSyncTextView.isVisible = fanfiction.isDownloadComplete.not()
-            chapterSyncTextView.text = fanfiction.chaptersMissingText
-        })
-        viewModel.globalSyncState.observe(this, { storyState ->
+            chapterSyncImageView.isVisible = story.isDownloadComplete.not()
+            chapterSyncTextView.isVisible = story.isDownloadComplete.not()
+            chapterSyncTextView.text = story.chaptersMissingText
+        }
+        viewModel.globalSyncState.observe(this) { storyState ->
             actionButtonViewFlipper.displayedChild = when (storyState) {
                 DEFAULT -> DISPLAY_ADD_LIBRARY
                 SYNCING -> DISPLAY_SYNCING
                 else -> DISPLAY_SYNCED
             }
-        })
+        }
     }
 
     private fun setListeners() {

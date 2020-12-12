@@ -3,6 +3,7 @@ package fr.ffnet.downloader.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.lifecycle.observe
 import com.google.android.material.snackbar.Snackbar
 import fr.ffnet.downloader.R
 import fr.ffnet.downloader.common.MainApplication
@@ -10,6 +11,7 @@ import fr.ffnet.downloader.main.injection.ViewPagerModule
 import fr.ffnet.downloader.main.search.SearchFragment
 import fr.ffnet.downloader.main.synced.SyncedFragment
 import fr.ffnet.downloader.options.ParentListener
+import fr.ffnet.downloader.settings.SettingsActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -47,6 +49,8 @@ class MainActivity : AppCompatActivity(), ParentListener {
         menuImageView.setOnClickListener {
             if (menuImageView.frame > 50) {
                 onBackPressed()
+            } else {
+                startActivity(SettingsActivity.newIntent(this))
             }
         }
     }
@@ -65,7 +69,8 @@ class MainActivity : AppCompatActivity(), ParentListener {
     }
 
     override fun onBackPressed() {
-        if (pageTypeViewPager.currentItem == FRAGMENT_ID_SEARCH && hasStories) {
+        val shouldShowWelcomeBlock = getSearchFragment()?.shouldShowWelcomeBlock() ?: false
+        if ((pageTypeViewPager.currentItem == FRAGMENT_ID_SEARCH && hasStories) || shouldShowWelcomeBlock) {
             getSearchFragment()?.onBackPressed()
         } else {
             super.onBackPressed()
@@ -75,7 +80,7 @@ class MainActivity : AppCompatActivity(), ParentListener {
     private fun initViewPager() {
         val mainAdapter = MainAdapter(supportFragmentManager)
         pageTypeViewPager.adapter = mainAdapter
-        viewModel.hasSyncedStories().observe(this, { newHasStories ->
+        viewModel.hasSyncedStories().observe(this) { newHasStories ->
             hasStories = newHasStories
             if (mainAdapter.fragmentList.isEmpty()) {
                 pageTypeViewPager.adapter = mainAdapter.apply {
@@ -89,7 +94,7 @@ class MainActivity : AppCompatActivity(), ParentListener {
                 showSearch()
             }
             searchIcon.isVisible = isOnSyncedFragment()
-        })
+        }
     }
 
     fun showSynced() {

@@ -8,45 +8,83 @@
     android:layout_height="match_parent"
     android:paddingTop="@dimen/margin_super_big">
 
-    <LinearLayout
-        android:id="@+id/welcomeBlock"
+    <TextView
+        android:id="@+id/welcomeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome"
+        android:textAppearance="@style/FFnet.TextStyle.BigTitle.Blue"
+        app:layout_constraintStart_toStartOf="@+id/startGuideline"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/subtitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/margin_big_big"
+        android:text="@string/welcome_subtitle"
+        android:textAppearance="@style/FFnet.TextStyle.SubTitle"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/welcomeTextView" />
+
+    <TextView
+        android:id="@+id/justInTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search_just_in_title_updated"
+        android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/subtitleTextView" />
+
+    <ViewFlipper
+        android:id="@+id/justInViewFlipper"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="@id/endGuideline"
-        app:layout_constraintStart_toStartOf="@+id/startGuideline"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginTop="@dimen/margin_big"
+        android:paddingBottom="@dimen/margin_big_big"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/justInTextView">
 
-        <TextView
-            android:id="@+id/welcomeTextView"
+        <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/welcome"
-            android:textAppearance="@style/FFnet.TextStyle.BigTitle.Blue" />
+            android:layout_gravity="center"
+            android:indeterminate="true" />
 
-        <TextView
-            android:id="@+id/subtitleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/welcome_subtitle"
-            android:textAppearance="@style/FFnet.TextStyle.SubTitle" />
-    </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/justInRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ViewFlipper>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/welcomeBlock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="welcomeTextView,subtitleTextView" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/justInBlock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="justInTextView,justInViewFlipper" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/searchBlock"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_medium"
         app:layout_constraintEnd_toEndOf="@id/endGuideline"
         app:layout_constraintStart_toStartOf="@+id/startGuideline"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeBlock">
+        app:layout_constraintTop_toBottomOf="@+id/justInViewFlipper">
 
         <TextView
             android:id="@+id/searchTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/search"
+            android:text="@string/search_title"
             android:textAppearance="@style/FFnet.TextStyle.BigTitle.Blue"
             app:layout_constraintTop_toTopOf="parent" />
 
