@@ -2,11 +2,13 @@ package fr.ffnet.downloader.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.observe
 import com.google.android.material.snackbar.Snackbar
 import fr.ffnet.downloader.R
 import fr.ffnet.downloader.common.MainApplication
+import fr.ffnet.downloader.main.SideNavFragment.DrawerMenuItem
 import fr.ffnet.downloader.main.injection.ViewPagerModule
 import fr.ffnet.downloader.main.search.SearchFragment
 import fr.ffnet.downloader.main.synced.SyncedFragment
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity(), ParentListener {
             if (menuImageView.frame > 50) {
                 onBackPressed()
             } else {
-                startActivity(SettingsActivity.newIntent(this))
+                drawerLayout.openDrawer(GravityCompat.START)
             }
         }
     }
@@ -77,6 +79,23 @@ class MainActivity : AppCompatActivity(), ParentListener {
         }
     }
 
+    fun showSynced() {
+        if (hasStories.not()) {
+            super.onBackPressed()
+        } else {
+            setMenuOriginal()
+            searchIcon.isVisible = true
+            pageTypeViewPager.currentItem = FRAGMENT_ID_SYNCED
+        }
+    }
+
+    fun onMenuItemClicked(menuItem: DrawerMenuItem) {
+        when (menuItem) {
+            DrawerMenuItem.SETTINGS -> startActivity(SettingsActivity.newIntent(this))
+        }
+        drawerLayout.closeDrawer(GravityCompat.START)
+    }
+
     private fun initViewPager() {
         val mainAdapter = MainAdapter(supportFragmentManager)
         pageTypeViewPager.adapter = mainAdapter
@@ -94,16 +113,6 @@ class MainActivity : AppCompatActivity(), ParentListener {
                 showSearch()
             }
             searchIcon.isVisible = isOnSyncedFragment()
-        }
-    }
-
-    fun showSynced() {
-        if (hasStories.not()) {
-            super.onBackPressed()
-        } else {
-            setMenuOriginal()
-            searchIcon.isVisible = true
-            pageTypeViewPager.currentItem = FRAGMENT_ID_SYNCED
         }
     }
 

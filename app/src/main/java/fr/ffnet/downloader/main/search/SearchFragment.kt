@@ -45,8 +45,8 @@ class SearchFragment : Fragment(), ParentListener {
     companion object {
         fun newInstance(): SearchFragment = SearchFragment()
 
-        private const val DISPLAY_JUST_IN_CONTENT = 1
         private const val DISPLAY_JUST_IN_LOADER = 0
+        private const val DISPLAY_JUST_IN_CONTENT = 1
     }
 
     enum class KeyboardStatus {
@@ -233,7 +233,12 @@ class SearchFragment : Fragment(), ParentListener {
     private fun transitionToStart() {
         searchEditText.clearFocus()
         welcomeBlock.isVisible = hasSyncedStories.not()
-        justInBlock.isVisible = true
+        justInBlock.isVisible = settingsViewModel
+            .settingList
+            .value
+            ?.firstOrNull { it.type == JUST_IN_SHOW_SECTION }
+            ?.isEnabled
+            ?: true
     }
 
     fun shouldShowWelcomeBlock(): Boolean {

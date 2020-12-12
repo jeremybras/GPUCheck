@@ -10,9 +10,6 @@ import androidx.work.WorkInfo.State.ENQUEUED
 import androidx.work.WorkInfo.State.RUNNING
 import fr.ffnet.downloader.common.FFLogger
 import fr.ffnet.downloader.common.FFLogger.Companion.EVENT_KEY
-import fr.ffnet.downloader.fanfiction.FanfictionViewModel.StoryState.DEFAULT
-import fr.ffnet.downloader.fanfiction.FanfictionViewModel.StoryState.SYNCED
-import fr.ffnet.downloader.fanfiction.FanfictionViewModel.StoryState.SYNCING
 import fr.ffnet.downloader.models.SearchUIItem.SearchStoryUI
 import fr.ffnet.downloader.repository.DatabaseRepository
 import fr.ffnet.downloader.repository.DownloaderRepository
@@ -29,7 +26,7 @@ class FanfictionViewModel(
     private lateinit var isSyncing: LiveData<Boolean>
     private val chapterSyncState: MutableLiveData<ChapterSyncState> = MutableLiveData()
 
-    val globalSyncState: MediatorLiveData<StoryState> by lazy { MediatorLiveData() }
+    val globalSyncState: MediatorLiveData<StoryState> by lazy { MediatorLiveData<StoryState>() }
 
     data class ChapterSyncState(
         val isSynced: Boolean,
@@ -91,13 +88,15 @@ class FanfictionViewModel(
         chapterSyncState: ChapterSyncState?,
     ): StoryState {
         return when {
-            isSyncing -> SYNCING
-            chapterSyncState?.isSynced ?: false -> SYNCED
-            else -> DEFAULT
+            isSyncing -> StoryState.Syncing
+            chapterSyncState?.isSynced ?: false -> StoryState.Synced
+            else -> StoryState.Default
         }
     }
 
-    enum class StoryState {
-        DEFAULT, IN_LIBRARY, SYNCING, SYNCED
+    sealed class StoryState {
+        object Default : StoryState()
+        object Syncing : StoryState()
+        object Synced : StoryState()
     }
 }

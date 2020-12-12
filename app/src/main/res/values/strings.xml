@@ -52,4 +52,5 @@
         <item quantity="other">%d chapters missing</item>
     </plurals>
 
+    <string name="drawer_menu_settings">Settings</string>
 </resources>

@@ -67,26 +67,34 @@ class UIBuilder @Inject constructor(
     fun buildSyncedStoryUI(
         fanfiction: Fanfiction,
         storyState: StoryState,
+        shouldShowExportPdf: Boolean,
+        shouldShowExportEpub: Boolean
     ): SyncedStoryUI {
         return SyncedStoryUI(
             id = fanfiction.id,
             title = fanfiction.title,
             details = "${fanfiction.category} / ${fanfiction.author}",
             imageUrl = fanfiction.image,
-            storyState = storyState
+            storyState = storyState,
+            shouldShowExportPdf = shouldShowExportPdf,
+            shouldShowExportEpub = shouldShowExportEpub
         )
     }
 
     fun buildSyncedStorySpotlightUI(
         fanfiction: Fanfiction,
         storyState: StoryState,
+        shouldShowExportPdf: Boolean,
+        shouldShowExportEpub: Boolean
     ): SyncedStorySpotlightUI {
         return SyncedStorySpotlightUI(
             id = fanfiction.id,
             title = fanfiction.title,
             details = "${fanfiction.category} / ${fanfiction.author}",
             imageUrl = fanfiction.image,
-            storyState = storyState
+            storyState = storyState,
+            shouldShowExportPdf = shouldShowExportPdf,
+            shouldShowExportEpub = shouldShowExportEpub
         )
     }
 }

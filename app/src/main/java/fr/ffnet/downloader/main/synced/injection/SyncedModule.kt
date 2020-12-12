@@ -10,6 +10,7 @@ import fr.ffnet.downloader.options.OptionsController
 import fr.ffnet.downloader.options.OptionsViewModel
 import fr.ffnet.downloader.repository.DatabaseRepository
 import fr.ffnet.downloader.repository.DownloaderRepository
+import fr.ffnet.downloader.repository.SettingsRepository
 import fr.ffnet.downloader.utils.EpubBuilder
 import fr.ffnet.downloader.utils.FanfictionOpener
 import fr.ffnet.downloader.utils.PdfBuilder
@@ -24,6 +25,7 @@ class SyncedModule(private val fragment: SyncedFragment) {
         resources: Resources,
         databaseRepository: DatabaseRepository,
         downloaderRepository: DownloaderRepository,
+        settingsRepository: SettingsRepository,
         uiBuilder: UIBuilder
     ): SyncedViewModel {
         val factory = ViewModelFactory {
@@ -31,6 +33,7 @@ class SyncedModule(private val fragment: SyncedFragment) {
                 resources,
                 databaseRepository,
                 downloaderRepository,
+                settingsRepository,
                 uiBuilder
             )
         }

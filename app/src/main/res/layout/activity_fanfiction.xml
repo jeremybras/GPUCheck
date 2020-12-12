@@ -213,7 +213,7 @@
         android:id="@+id/shadowView"
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:background="@drawable/toolbar_dropshadow"
+        android:background="@drawable/toolbar_dropshadow_top"
         app:layout_constraintBottom_toTopOf="@+id/viewPager" />
 
     <androidx.viewpager.widget.ViewPager

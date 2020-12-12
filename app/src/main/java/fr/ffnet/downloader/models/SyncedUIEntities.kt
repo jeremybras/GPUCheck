@@ -15,6 +15,8 @@ sealed class SyncedUIItem {
         val details: String,
         val imageUrl: String,
         val storyState: StoryState,
+        val shouldShowExportPdf: Boolean,
+        val shouldShowExportEpub: Boolean
     ) : SyncedUIItem()
 
     data class SyncedStorySpotlightUI(
@@ -23,5 +25,7 @@ sealed class SyncedUIItem {
         val details: String,
         val imageUrl: String,
         val storyState: StoryState,
+        val shouldShowExportPdf: Boolean,
+        val shouldShowExportEpub: Boolean
     ) : SyncedUIItem()
 }

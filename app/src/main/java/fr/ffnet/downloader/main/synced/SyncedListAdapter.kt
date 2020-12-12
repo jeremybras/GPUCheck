@@ -3,6 +3,7 @@ package fr.ffnet.downloader.main.synced
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.ffnet.downloader.R
@@ -94,11 +95,13 @@ class SyncedListAdapter(
         fun bind(story: SyncedStoryUI) {
 
             view.actionButtonViewFlipper.displayedChild = when (story.storyState) {
-                StoryState.DEFAULT -> DISPLAY_SYNC
-                StoryState.SYNCING -> DISPLAY_SYNCING
-                StoryState.SYNCED -> DISPLAY_SYNCED
-                else -> DISPLAY_SYNC
+                StoryState.Default -> DISPLAY_SYNC
+                StoryState.Syncing -> DISPLAY_SYNCING
+                is StoryState.Synced -> DISPLAY_SYNCED
             }
+
+            view.exportPDFButton.isVisible = story.shouldShowExportPdf
+            view.exportEPUBButton.isVisible = story.shouldShowExportEpub
 
             view.titleTextView.text = story.title
             view.detailsTextView.text = story.details
@@ -129,11 +132,13 @@ class SyncedListAdapter(
                 .into(view.storyImageView)
 
             view.actionButtonViewFlipper.displayedChild = when (story.storyState) {
-                StoryState.DEFAULT -> DISPLAY_SYNC
-                StoryState.SYNCING -> DISPLAY_SYNCING
-                StoryState.SYNCED -> DISPLAY_SYNCED
-                else -> DISPLAY_SYNC
+                StoryState.Default -> DISPLAY_SYNC
+                StoryState.Syncing -> DISPLAY_SYNCING
+                StoryState.Synced -> DISPLAY_SYNCED
             }
+
+            view.exportPDFButton.isVisible = story.shouldShowExportPdf
+            view.exportEPUBButton.isVisible = story.shouldShowExportEpub
 
             view.titleTextView.text = story.title
             view.detailsTextView.text = story.details

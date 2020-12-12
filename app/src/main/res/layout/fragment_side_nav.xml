@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/appTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_super_big"
+        android:layout_marginEnd="@dimen/margin_super_big"
+        android:text="FFNet Downloader"
+        android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/shadowView"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginTop="@dimen/margin_big"
+        android:background="@drawable/toolbar_dropshadow_down"
+        app:layout_constraintTop_toBottomOf="@id/appTitleTextView" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/margin_super_big"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shadowView">
+
+        <TextView
+            android:id="@+id/settingsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/margin_small"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/margin_big"
+            android:paddingTop="@dimen/margin_medium"
+            android:paddingEnd="@dimen/margin_big"
+            android:paddingBottom="@dimen/margin_medium"
+            android:text="@string/drawer_menu_settings"
+            android:textAppearance="@style/FFnet.TextStyle.Paragraph"
+            app:drawableStartCompat="@drawable/ic_settings" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

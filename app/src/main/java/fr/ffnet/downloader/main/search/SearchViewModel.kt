@@ -11,10 +11,7 @@ import fr.ffnet.downloader.common.FFLogger.Companion.EVENT_KEY
 import fr.ffnet.downloader.models.SearchUIItem
 import fr.ffnet.downloader.models.SearchUIItem.SearchAuthorUI
 import fr.ffnet.downloader.models.SearchUIItem.SearchStoryUI
-import fr.ffnet.downloader.repository.DatabaseRepository
-import fr.ffnet.downloader.repository.DownloaderRepository
 import fr.ffnet.downloader.repository.SearchRepository
-import fr.ffnet.downloader.utils.DateFormatter
 import fr.ffnet.downloader.utils.SingleLiveEvent
 import fr.ffnet.downloader.utils.UIBuilder
 import fr.ffnet.downloader.utils.UrlTransformer
@@ -32,7 +29,7 @@ class SearchViewModel(
     val navigateToFanfiction: SingleLiveEvent<String> = SingleLiveEvent()
     val navigateToAuthor: SingleLiveEvent<String> = SingleLiveEvent()
     val error: SingleLiveEvent<String> = SingleLiveEvent()
-    val searchResult: MediatorLiveData<List<SearchUIItem>> by lazy { MediatorLiveData() }
+    val searchResult: MediatorLiveData<List<SearchUIItem>> by lazy { MediatorLiveData<List<SearchUIItem>>() }
 
     private val storyResult: MutableLiveData<List<SearchStoryUI>> = MutableLiveData()
     private val authorResult: MutableLiveData<List<SearchAuthorUI>> = MutableLiveData()

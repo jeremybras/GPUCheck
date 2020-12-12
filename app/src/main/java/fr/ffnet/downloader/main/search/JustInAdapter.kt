@@ -40,7 +40,7 @@ class JustInAdapter(
     inner class JustInViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(justInUI: JustInUIItem) {
 
-            view.justInImageView.setOnClickListener {
+            view.setOnClickListener {
                 actionsListener.onFetchInformation(justInUI.storyId)
             }
 

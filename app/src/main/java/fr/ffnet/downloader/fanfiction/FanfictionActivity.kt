@@ -16,20 +16,22 @@ import com.squareup.picasso.Picasso
 import fr.ffnet.downloader.BuildConfig
 import fr.ffnet.downloader.R
 import fr.ffnet.downloader.common.MainApplication
-import fr.ffnet.downloader.fanfiction.FanfictionViewModel.StoryState.DEFAULT
-import fr.ffnet.downloader.fanfiction.FanfictionViewModel.StoryState.SYNCING
+import fr.ffnet.downloader.fanfiction.FanfictionViewModel.StoryState
 import fr.ffnet.downloader.fanfiction.chapters.FanfictionDetailsChaptersFragment
 import fr.ffnet.downloader.fanfiction.injection.FanfictionModule
 import fr.ffnet.downloader.fanfiction.reviews.FanfictionDetailsReviewsFragment
 import fr.ffnet.downloader.fanfiction.summary.FanfictionDetailsSummaryFragment
+import fr.ffnet.downloader.models.SettingType.EPUB_EXPORT
+import fr.ffnet.downloader.models.SettingType.PDF_EXPORT
 import fr.ffnet.downloader.options.OptionsController
 import fr.ffnet.downloader.options.ParentListener
+import fr.ffnet.downloader.settings.SettingsViewModel
 import kotlinx.android.synthetic.main.activity_fanfiction.*
 import javax.inject.Inject
 
-
 class FanfictionActivity : AppCompatActivity(), ParentListener, PopupMenu.OnMenuItemClickListener {
 
+    @Inject lateinit var settingsViewModel: SettingsViewModel
     @Inject lateinit var viewModel: FanfictionViewModel
     @Inject lateinit var optionsController: OptionsController
     @Inject lateinit var picasso: Picasso
@@ -124,10 +126,20 @@ class FanfictionActivity : AppCompatActivity(), ParentListener, PopupMenu.OnMenu
         }
         viewModel.globalSyncState.observe(this) { storyState ->
             actionButtonViewFlipper.displayedChild = when (storyState) {
-                DEFAULT -> DISPLAY_ADD_LIBRARY
-                SYNCING -> DISPLAY_SYNCING
-                else -> DISPLAY_SYNCED
+                StoryState.Default -> DISPLAY_ADD_LIBRARY
+                StoryState.Syncing -> DISPLAY_SYNCING
+                StoryState.Synced -> DISPLAY_SYNCED
             }
+        }
+        settingsViewModel.settingList.observe(this) { settingList ->
+            exportPDFButton.isVisible = settingList
+                .firstOrNull { it.type == PDF_EXPORT }
+                ?.isEnabled
+                ?: true
+            exportEPUBButton.isVisible = settingList
+                .firstOrNull { it.type == EPUB_EXPORT }
+                ?.isEnabled
+                ?: true
         }
     }
 
