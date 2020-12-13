@@ -69,16 +69,16 @@ class AuthorRepository(
                             authorId = profileInfo.profileId,
                             name = profileInfo.name,
                             fetchedDate = LocalDateTime.now(),
-                            nbstories = storyIds.size.toString(),
-                            nbFavorites = favoriteIds.size.toString()
+                            nbstories = storyIds.size,
+                            nbFavorites = favoriteIds.size
                         )
                     )
                 } else {
                     dao.updateAuthor(
                         author.copy(
                             fetchedDate = LocalDateTime.now(),
-                            nbstories = storyIds.size.toString(),
-                            nbFavorites = favoriteIds.size.toString()
+                            nbstories = storyIds.size,
+                            nbFavorites = favoriteIds.size
                         )
                     )
                 }

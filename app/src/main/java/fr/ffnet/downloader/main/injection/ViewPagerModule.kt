@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.Provides
 import fr.ffnet.downloader.main.MainActivity
 import fr.ffnet.downloader.main.ViewPagerViewModel
+import fr.ffnet.downloader.repository.AuthorRepository
 import fr.ffnet.downloader.repository.DatabaseRepository
 import fr.ffnet.downloader.utils.ViewModelFactory
 
@@ -13,9 +14,10 @@ class ViewPagerModule(private val activity: MainActivity) {
 
     @Provides
     fun provideViewPagerViewModel(
-        dbRepository: DatabaseRepository,
+        databaseRepository: DatabaseRepository,
+        authorRepository: AuthorRepository
     ): ViewPagerViewModel {
-        val factory = ViewModelFactory { ViewPagerViewModel(dbRepository) }
+        val factory = ViewModelFactory { ViewPagerViewModel(databaseRepository, authorRepository) }
         return ViewModelProvider(activity, factory)[ViewPagerViewModel::class.java]
     }
 }

@@ -28,4 +28,10 @@ sealed class SyncedUIItem {
         val shouldShowExportPdf: Boolean,
         val shouldShowExportEpub: Boolean
     ) : SyncedUIItem()
+
+    data class SyncedAuthorUI(
+        val title: String,
+        val nbStories: String,
+        val nbFavorites: String
+    ) : SyncedUIItem()
 }

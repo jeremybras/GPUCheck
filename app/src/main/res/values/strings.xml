@@ -17,7 +17,8 @@
     <string name="search_radio_authors">authors</string>
     <string name="search_radio_stories">stories</string>
 
-    <string name="synced_stories_title">My stories</string>
+    <string name="synced_stories_title">Stories</string>
+    <string name="synced_authors_title">Authors</string>
     <plurals name="synced_nb_stories">
         <item quantity="one">1 story on your phone</item>
         <item quantity="other">%d stories on your phone</item>

@@ -27,7 +27,8 @@ sealed class SearchUIItem {
         val id: String,
         val name: String,
         val nbStories: String,
-        val imageUrl: String
+        val imageUrl: String,
+        val actionImage: Int
     ) : SearchUIItem()
 }
 

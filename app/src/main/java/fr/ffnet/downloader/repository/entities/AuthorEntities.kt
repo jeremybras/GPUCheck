@@ -14,16 +14,16 @@ data class AuthorSearchResult(
 data class Author(
     val id: String,
     val name: String,
-    val nbStories: String,
-    val nbFavorites: String,
+    val nbStories: Int,
+    val nbFavorites: Int,
     val fetchedDate: LocalDateTime
 )
 
 @Entity
 data class AuthorEntity(
     @PrimaryKey val authorId: String,
-    var name: String,
-    var fetchedDate: LocalDateTime,
-    var nbstories: String,
-    var nbFavorites: String
+    val name: String,
+    val fetchedDate: LocalDateTime,
+    val nbstories: Int,
+    val nbFavorites: Int
 )

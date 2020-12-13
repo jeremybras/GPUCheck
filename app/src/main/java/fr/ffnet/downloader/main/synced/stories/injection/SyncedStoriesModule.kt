@@ -1,11 +1,11 @@
-package fr.ffnet.downloader.main.synced.injection
+package fr.ffnet.downloader.main.synced.stories.injection
 
 import android.content.res.Resources
 import androidx.lifecycle.ViewModelProvider
 import dagger.Module
 import dagger.Provides
-import fr.ffnet.downloader.main.synced.SyncedFragment
-import fr.ffnet.downloader.main.synced.SyncedViewModel
+import fr.ffnet.downloader.main.synced.stories.SyncedStoriesFragment
+import fr.ffnet.downloader.main.synced.stories.SyncedStoriesViewModel
 import fr.ffnet.downloader.options.OptionsController
 import fr.ffnet.downloader.options.OptionsViewModel
 import fr.ffnet.downloader.repository.AuthorRepository
@@ -19,26 +19,24 @@ import fr.ffnet.downloader.utils.UIBuilder
 import fr.ffnet.downloader.utils.ViewModelFactory
 
 @Module
-class SyncedModule(private val fragment: SyncedFragment) {
+class SyncedStoriesModule(private val fragment: SyncedStoriesFragment) {
 
     @Provides
     fun provideSyncedViewModel(
-        resources: Resources,
         databaseRepository: DatabaseRepository,
         downloaderRepository: DownloaderRepository,
         settingsRepository: SettingsRepository,
         uiBuilder: UIBuilder
-    ): SyncedViewModel {
+    ): SyncedStoriesViewModel {
         val factory = ViewModelFactory {
-            SyncedViewModel(
-                resources,
+            SyncedStoriesViewModel(
                 databaseRepository,
                 downloaderRepository,
                 settingsRepository,
                 uiBuilder
             )
         }
-        return ViewModelProvider(fragment, factory)[SyncedViewModel::class.java]
+        return ViewModelProvider(fragment, factory)[SyncedStoriesViewModel::class.java]
     }
 
     @Provides

@@ -7,8 +7,8 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import fr.ffnet.downloader.R
-import fr.ffnet.downloader.models.AuthorUI
 import fr.ffnet.downloader.models.SearchUIItem.SearchStoryUI
+import fr.ffnet.downloader.models.SyncedUIItem
 import fr.ffnet.downloader.repository.AuthorRepository
 import fr.ffnet.downloader.repository.AuthorRepository.AuthorRepositoryResult.AuthorRepositoryResultFailure
 import fr.ffnet.downloader.repository.AuthorRepository.AuthorRepositoryResult.AuthorRepositoryResultSuccess
@@ -26,14 +26,18 @@ class AuthorViewModel(
 ) : ViewModel() {
 
     val error: SingleLiveEvent<String> = SingleLiveEvent()
-    val author = MutableLiveData<AuthorUI>()
+    val author = MutableLiveData<SyncedUIItem.SyncedAuthorUI>()
     lateinit var storyList: LiveData<List<SearchStoryUI>>
 
     fun loadAuthorInfo(authorId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             when (val authorResult = authorRepository.getAuthor(authorId)) {
                 is AuthorRepositoryResultSuccess -> author.postValue(
-                    uiBuilder.buildAuthorUI(authorResult)
+                    uiBuilder.buildAuthorUI(
+                        name = authorResult.authorName,
+                        nbStories = authorResult.storiesNb,
+                        nbFavorites = authorResult.favoritesNb
+                    )
                 )
                 AuthorRepositoryResultFailure -> error.postValue(
                     resources.getString(R.string.author_load_error)

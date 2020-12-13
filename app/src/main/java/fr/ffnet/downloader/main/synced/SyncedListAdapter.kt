@@ -9,12 +9,12 @@ import com.squareup.picasso.Picasso
 import fr.ffnet.downloader.R
 import fr.ffnet.downloader.fanfiction.FanfictionViewModel.StoryState
 import fr.ffnet.downloader.models.SyncedUIItem
+import fr.ffnet.downloader.models.SyncedUIItem.SyncedAuthorUI
 import fr.ffnet.downloader.models.SyncedUIItem.SyncedStorySpotlightUI
 import fr.ffnet.downloader.models.SyncedUIItem.SyncedStoryUI
-import fr.ffnet.downloader.models.SyncedUIItem.SyncedUITitle
 import fr.ffnet.downloader.options.OnFanfictionActionsListener
+import kotlinx.android.synthetic.main.item_synced_result_author.view.*
 import kotlinx.android.synthetic.main.item_synced_result_story_spotlight.view.*
-import kotlinx.android.synthetic.main.item_synced_result_title.view.*
 
 class SyncedListAdapter(
     private val picasso: Picasso,
@@ -22,7 +22,7 @@ class SyncedListAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
-        private const val TYPE_HEADER = 0
+        private const val TYPE_AUTHOR = 0
         private const val TYPE_SPOTLIGHT_STORY = 1
         private const val TYPE_STORY = 2
 
@@ -39,9 +39,9 @@ class SyncedListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            TYPE_HEADER -> SyncedStorytUITitleViewHolder(
+            TYPE_AUTHOR -> SyncedAuthorUIViewHolder(
                 LayoutInflater.from(parent.context).inflate(
-                    R.layout.item_synced_result_title, parent, false
+                    R.layout.item_synced_result_author, parent, false
                 )
             )
             TYPE_STORY -> SyncedStoryUIViewHolder(
@@ -58,7 +58,7 @@ class SyncedListAdapter(
     }
 
     override fun getItemViewType(position: Int): Int = when {
-        syncedResultList[position] is SyncedUITitle -> TYPE_HEADER
+        syncedResultList[position] is SyncedAuthorUI -> TYPE_AUTHOR
         syncedResultList[position] is SyncedStoryUI -> TYPE_STORY
         else -> TYPE_SPOTLIGHT_STORY
     }
@@ -67,7 +67,7 @@ class SyncedListAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = syncedResultList[position]) {
-            is SyncedUITitle -> (holder as SyncedStorytUITitleViewHolder).bind(item)
+            is SyncedAuthorUI -> (holder as SyncedAuthorUIViewHolder).bind(item)
             is SyncedStoryUI -> (holder as SyncedStoryUIViewHolder).bind(item)
             is SyncedStorySpotlightUI -> (holder as SyncedSpotlighStorytUIViewHolder).bind(item)
         }
@@ -83,10 +83,11 @@ class SyncedListAdapter(
         }
     }
 
-    inner class SyncedStorytUITitleViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(item: SyncedUITitle) {
-            view.syncedStoriesTitleTextView.text = item.title
-            view.syncedStoriesSubTitleTextView.text = item.subtitle
+    inner class SyncedAuthorUIViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+
+        fun bind(author: SyncedAuthorUI) {
+            view.authorNameTextView.text = author.title
+            view.nbStoriesTextView.text = author.nbStories
         }
     }
 

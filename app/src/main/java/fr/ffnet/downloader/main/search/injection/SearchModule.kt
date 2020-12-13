@@ -49,9 +49,10 @@ class SearchModule(private val fragment: SearchFragment) {
 
     @Provides
     fun provideViewPagerViewModel(
-        dbRepository: DatabaseRepository,
+        databaseRepository: DatabaseRepository,
+        authorRepository: AuthorRepository
     ): ViewPagerViewModel {
-        val factory = ViewModelFactory { ViewPagerViewModel(dbRepository) }
+        val factory = ViewModelFactory { ViewPagerViewModel(databaseRepository, authorRepository) }
         return ViewModelProvider(fragment, factory)[ViewPagerViewModel::class.java]
     }
 

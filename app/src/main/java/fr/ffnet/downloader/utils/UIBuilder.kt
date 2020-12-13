@@ -3,15 +3,14 @@ package fr.ffnet.downloader.utils
 import android.content.res.Resources
 import fr.ffnet.downloader.R
 import fr.ffnet.downloader.fanfiction.FanfictionViewModel.StoryState
-import fr.ffnet.downloader.models.AuthorUI
-import fr.ffnet.downloader.models.Story
 import fr.ffnet.downloader.models.Review
 import fr.ffnet.downloader.models.ReviewUI
 import fr.ffnet.downloader.models.SearchUIItem.SearchAuthorUI
 import fr.ffnet.downloader.models.SearchUIItem.SearchStoryUI
+import fr.ffnet.downloader.models.Story
+import fr.ffnet.downloader.models.SyncedUIItem.SyncedAuthorUI
 import fr.ffnet.downloader.models.SyncedUIItem.SyncedStorySpotlightUI
 import fr.ffnet.downloader.models.SyncedUIItem.SyncedStoryUI
-import fr.ffnet.downloader.repository.AuthorRepository.AuthorRepositoryResult.AuthorRepositoryResultSuccess
 import fr.ffnet.downloader.repository.entities.AuthorSearchResult
 import javax.inject.Inject
 
@@ -22,6 +21,7 @@ class UIBuilder @Inject constructor(
 
     fun buildSearchAuthorUI(
         author: AuthorSearchResult,
+        actionImage: Int
     ): SearchAuthorUI {
         val nbStories = author.nbStories.toInt()
         return SearchAuthorUI(
@@ -32,7 +32,24 @@ class UIBuilder @Inject constructor(
                 nbStories,
                 nbStories
             ),
-            imageUrl = author.imageUrl
+            imageUrl = author.imageUrl,
+            actionImage = actionImage
+        )
+    }
+
+    fun buildAuthorUI(name: String, nbStories: Int, nbFavorites: Int): SyncedAuthorUI {
+        return SyncedAuthorUI(
+            title = resources.getString(R.string.author_title, name),
+            nbStories = resources.getQuantityString(
+                R.plurals.search_author_nb_stories,
+                nbStories,
+                nbStories
+            ),
+            nbFavorites = resources.getQuantityString(
+                R.plurals.search_author_nb_favorites,
+                nbFavorites,
+                nbFavorites
+            )
         )
     }
 
@@ -105,22 +122,6 @@ class UIBuilder @Inject constructor(
             storyState = storyState,
             shouldShowExportPdf = shouldShowExportPdf,
             shouldShowExportEpub = shouldShowExportEpub
-        )
-    }
-
-    fun buildAuthorUI(author: AuthorRepositoryResultSuccess): AuthorUI {
-        return AuthorUI(
-            title = resources.getString(R.string.author_title, author.authorName),
-            nbStories = resources.getQuantityString(
-                R.plurals.search_author_nb_stories,
-                author.storiesNb,
-                author.storiesNb
-            ),
-            nbFavorites = resources.getQuantityString(
-                R.plurals.search_author_nb_favorites,
-                author.favoritesNb,
-                author.favoritesNb
-            )
         )
     }
 }

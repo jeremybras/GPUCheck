@@ -21,7 +21,6 @@ import fr.ffnet.downloader.main.ViewPagerViewModel
 import fr.ffnet.downloader.main.search.SearchViewModel.*
 import fr.ffnet.downloader.main.search.injection.SearchModule
 import fr.ffnet.downloader.models.JustInUI
-import fr.ffnet.downloader.models.SettingType.DEFAULT_SEARCH_ALL
 import fr.ffnet.downloader.models.SettingType.DEFAULT_SEARCH_AUTHORS
 import fr.ffnet.downloader.models.SettingType.DEFAULT_SEARCH_STORIES
 import fr.ffnet.downloader.options.OptionsController
@@ -147,7 +146,7 @@ class SearchFragment : Fragment(), ParentListener {
 
     private fun initializeViewModelObservers() {
 
-        viewPagerViewModel.hasSyncedStories().observe(viewLifecycleOwner) { hasSyncedStories ->
+        viewPagerViewModel.hasSyncedItems().observe(viewLifecycleOwner) { hasSyncedStories ->
             this.hasSyncedStories = hasSyncedStories
             welcomeBlock.isVisible = hasSyncedStories.not()
         }

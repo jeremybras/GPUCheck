@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(), ParentListener {
 
     @Inject lateinit var viewModel: ViewPagerViewModel
 
-    private var hasStories: Boolean = false
+    private var hasSyncedItems: Boolean = false
 
     companion object {
         private const val MENU_IMAGE_SPEED = 1.5f
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity(), ParentListener {
 
     override fun onBackPressed() {
         val shouldShowWelcomeBlock = getSearchFragment()?.shouldShowWelcomeBlock() ?: false
-        if ((isOnSearchFragment() && hasStories) || shouldShowWelcomeBlock) {
+        if ((isOnSearchFragment() && hasSyncedItems) || shouldShowWelcomeBlock) {
             getSearchFragment()?.onBackPressed()
         } else if (isOnSettingsFragment()) {
             onMenuImageView()
@@ -77,8 +77,8 @@ class MainActivity : AppCompatActivity(), ParentListener {
     private fun initViewPager() {
         val mainAdapter = MainAdapter(supportFragmentManager)
         pageTypeViewPager.adapter = mainAdapter
-        viewModel.hasSyncedStories().observe(this) { newHasStories ->
-            hasStories = newHasStories
+        viewModel.hasSyncedItems().observe(this) { newHasSyncedItems ->
+            hasSyncedItems = newHasSyncedItems
             if (mainAdapter.fragmentList.isEmpty()) {
                 pageTypeViewPager.adapter = mainAdapter.apply {
                     fragmentList = mutableListOf(
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(), ParentListener {
                     )
                 }
             }
-            if (hasStories) {
+            if (hasSyncedItems) {
                 showSynced()
             } else {
                 showSearch()
@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity(), ParentListener {
     }
 
     fun showSynced() {
-        if (hasStories.not()) {
+        if (hasSyncedItems.not()) {
             super.onBackPressed()
         } else {
             pageTypeViewPager.currentItem = FRAGMENT_ID_SYNCED
@@ -156,7 +156,7 @@ class MainActivity : AppCompatActivity(), ParentListener {
         searchIcon.isVisible = isOnSyncedFragment()
         when {
             isOnSyncedFragment() -> setMenuOriginal()
-            hasStories && isOnSearchFragment() -> setMenuBack()
+            hasSyncedItems && isOnSearchFragment() -> setMenuBack()
             isOnSearchFragment() -> setMenuOriginal()
             isOnSettingsFragment() -> setMenuClose()
         }

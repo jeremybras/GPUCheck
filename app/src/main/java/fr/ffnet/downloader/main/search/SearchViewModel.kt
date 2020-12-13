@@ -93,7 +93,7 @@ class SearchViewModel(
             storyResult.postValue(emptyList())
             authorResult.postValue(
                 searchList.map {
-                    uiBuilder.buildSearchAuthorUI(it)
+                    uiBuilder.buildSearchAuthorUI(it, R.drawable.ic_add)
                 }
             )
         }
