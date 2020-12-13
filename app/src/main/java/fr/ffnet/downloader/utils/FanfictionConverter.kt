@@ -1,7 +1,7 @@
 package fr.ffnet.downloader.utils
 
 import fr.ffnet.downloader.models.Chapter
-import fr.ffnet.downloader.models.Fanfiction
+import fr.ffnet.downloader.models.Story
 import fr.ffnet.downloader.models.Review
 import fr.ffnet.downloader.repository.entities.ChapterEntity
 import fr.ffnet.downloader.repository.entities.FanfictionEntity
@@ -13,7 +13,7 @@ class FanfictionConverter @Inject constructor() {
     fun toFanfiction(
         fanfiction: FanfictionEntity,
         chapterList: List<ChapterEntity> = emptyList()
-    ) = Fanfiction(
+    ) = Story(
         id = fanfiction.id,
         title = fanfiction.title,
         isInLibrary = fanfiction.isInLibrary,
@@ -41,24 +41,24 @@ class FanfictionConverter @Inject constructor() {
         content = chapter.content
     )
 
-    fun toFanfictionEntity(fanfiction: Fanfiction): FanfictionEntity = FanfictionEntity(
-        id = fanfiction.id,
-        title = fanfiction.title,
+    fun toFanfictionEntity(story: Story): FanfictionEntity = FanfictionEntity(
+        id = story.id,
+        title = story.title,
         isInLibrary = false,
-        image = fanfiction.image,
-        words = fanfiction.words,
-        author = fanfiction.author,
-        summary = fanfiction.summary,
-        language = fanfiction.language,
-        category = fanfiction.category,
-        genre = fanfiction.genre,
-        nbReviews = fanfiction.nbReviews,
-        nbFavorites = fanfiction.nbFavorites,
-        publishedDate = fanfiction.publishedDate,
-        updatedDate = fanfiction.updatedDate,
-        fetchedDate = fanfiction.fetchedDate,
-        nbChapters = fanfiction.nbChapters,
-        nbSyncedChapters = fanfiction.nbSyncedChapters
+        image = story.image,
+        words = story.words,
+        author = story.author,
+        summary = story.summary,
+        language = story.language,
+        category = story.category,
+        genre = story.genre,
+        nbReviews = story.nbReviews,
+        nbFavorites = story.nbFavorites,
+        publishedDate = story.publishedDate,
+        updatedDate = story.updatedDate,
+        fetchedDate = story.fetchedDate,
+        nbChapters = story.nbChapters,
+        nbSyncedChapters = story.nbSyncedChapters
     )
 
     fun toChapterEntityList(

@@ -6,4 +6,8 @@
     <string name="content_description_story_updated_date">Story updated date</string>
     <string name="content_description_story_chapters_not_synced">Chapters not synchronized</string>
     <string name="content_description_close">Close screen</string>
+
+    <string name="content_description_author_image">Author image</string>
+    <string name="content_description_author_nb_stories">Number of stories</string>
+    <string name="content_description_author_nb_favorite_stories">Number of favorite stories</string>
 </resources>

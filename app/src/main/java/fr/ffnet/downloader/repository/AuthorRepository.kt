@@ -2,7 +2,7 @@ package fr.ffnet.downloader.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import fr.ffnet.downloader.models.Fanfiction
+import fr.ffnet.downloader.models.Story
 import fr.ffnet.downloader.repository.AuthorRepository.AuthorRepositoryResult.AuthorRepositoryResultFailure
 import fr.ffnet.downloader.repository.AuthorRepository.AuthorRepositoryResult.AuthorRepositoryResultSuccess
 import fr.ffnet.downloader.repository.dao.AuthorDao
@@ -39,8 +39,8 @@ class AuthorRepository(
 
                 val profileInfo = profileBuilder.buildProfile(authorId, responseBody.string())
 
-                val favoriteIds = insertListAndReturnIds(profileInfo.favoriteFanfictionList)
-                val storyIds = insertListAndReturnIds(profileInfo.myFanfictionList)
+                val favoriteIds = insertListAndReturnIds(profileInfo.favoriteStoryList)
+                val storyIds = insertListAndReturnIds(profileInfo.myStoryList)
 
                 dao.deleteProfileMapping(authorId)
                 favoriteIds.map {
@@ -108,8 +108,8 @@ class AuthorRepository(
         }
     }
 
-    private fun insertListAndReturnIds(fanfictionList: List<Fanfiction>): List<String> {
-        return fanfictionList.map { fanfiction ->
+    private fun insertListAndReturnIds(storyList: List<Story>): List<String> {
+        return storyList.map { fanfiction ->
             val fanfictionInfo = fanfictionDao.getFanfiction(fanfiction.id)
             if (fanfictionInfo == null) {
                 val fanfictionEntity = fanfictionConverter.toFanfictionEntity(fanfiction)

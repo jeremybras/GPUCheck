@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.work.WorkInfo
 import fr.ffnet.downloader.common.FFLogger
 import fr.ffnet.downloader.common.FFLogger.Companion.EVENT_KEY
-import fr.ffnet.downloader.models.Fanfiction
+import fr.ffnet.downloader.models.Story
 import fr.ffnet.downloader.repository.DownloaderRepository.FanfictionRepositoryResult.FanfictionRepositoryResultFailure
 import fr.ffnet.downloader.repository.DownloaderRepository.FanfictionRepositoryResult.FanfictionRepositoryResultInternetFailure
 import fr.ffnet.downloader.repository.DownloaderRepository.FanfictionRepositoryResult.FanfictionRepositoryResultServerFailure
@@ -86,7 +86,7 @@ class DownloaderRepository(
     }
 
     sealed class FanfictionRepositoryResult {
-        data class FanfictionRepositoryResultSuccess(val fanfictionInfo: Fanfiction) : FanfictionRepositoryResult()
+        data class FanfictionRepositoryResultSuccess(val storyInfo: Story) : FanfictionRepositoryResult()
         object FanfictionRepositoryResultFailure : FanfictionRepositoryResult()
         object FanfictionRepositoryResultServerFailure : FanfictionRepositoryResult()
         object FanfictionRepositoryResultInternetFailure : FanfictionRepositoryResult()

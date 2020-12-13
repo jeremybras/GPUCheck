@@ -5,7 +5,7 @@ import com.itextpdf.text.PageSize
 import com.itextpdf.text.pdf.PdfWriter
 import com.itextpdf.tool.xml.XMLWorkerHelper
 import fr.ffnet.downloader.models.Chapter
-import fr.ffnet.downloader.models.Fanfiction
+import fr.ffnet.downloader.models.Story
 import org.apache.commons.text.StringEscapeUtils
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -23,8 +23,8 @@ class PdfBuilder @Inject constructor() {
         private val HTML_FOOTER = "</body>\n</html>"
     }
 
-    fun buildPdf(absolutePath: String, fanfiction: Fanfiction): String {
-        val fileTitle = "${fanfiction.title}.pdf"
+    fun buildPdf(absolutePath: String, story: Story): String {
+        val fileTitle = "${story.title}.pdf"
         val file = File(absolutePath, fileTitle)
 
         val outputStream = ByteArrayOutputStream()
@@ -32,10 +32,10 @@ class PdfBuilder @Inject constructor() {
         val pdfWritter = PdfWriter.getInstance(document, outputStream)
 
         document.open()
-        document.addTitle(fanfiction.title)
+        document.addTitle(story.title)
         val worker = XMLWorkerHelper.getInstance()
 
-        fanfiction.chapterList.forEach { chapter ->
+        story.chapterList.forEach { chapter ->
             val chapterHtml = generateHtmlPageFromChapter(chapter)
             worker.parseXHtml(pdfWritter, document, StringReader(chapterHtml))
         }

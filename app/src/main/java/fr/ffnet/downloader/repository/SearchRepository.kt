@@ -1,6 +1,6 @@
 package fr.ffnet.downloader.repository
 
-import fr.ffnet.downloader.models.Fanfiction
+import fr.ffnet.downloader.models.Story
 import fr.ffnet.downloader.repository.entities.AuthorSearchResult
 import fr.ffnet.downloader.utils.SearchBuilder
 import java.io.IOException
@@ -16,7 +16,7 @@ class SearchRepository(
         private const val SEARCH_TYPE_WRITER = "writer"
     }
 
-    fun searchStory(keywordList: List<String>): List<Fanfiction>? {
+    fun searchStory(keywordList: List<String>): List<Story>? {
         val keywords = keywordList.joinToString("+")
 
         try {

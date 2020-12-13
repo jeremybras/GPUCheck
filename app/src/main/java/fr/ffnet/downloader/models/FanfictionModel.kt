@@ -3,7 +3,7 @@ package fr.ffnet.downloader.models
 import org.joda.time.LocalDateTime
 import java.util.*
 
-data class Fanfiction(
+data class Story(
     val id: String,
     var title: String,
     val isInLibrary: Boolean,

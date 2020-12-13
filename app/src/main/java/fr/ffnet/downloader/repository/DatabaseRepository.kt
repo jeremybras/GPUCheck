@@ -2,7 +2,7 @@ package fr.ffnet.downloader.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import fr.ffnet.downloader.models.Fanfiction
+import fr.ffnet.downloader.models.Story
 import fr.ffnet.downloader.models.Review
 import fr.ffnet.downloader.repository.AuthorRepository.Companion.PROFILE_TYPE_FAVORITE
 import fr.ffnet.downloader.repository.AuthorRepository.Companion.PROFILE_TYPE_MY_STORY
@@ -16,17 +16,17 @@ class DatabaseRepository(
     private val converter: FanfictionConverter
 ) {
 
-    fun getFanfictionInfo(fanfictionId: String): LiveData<Fanfiction> {
+    fun getFanfictionInfo(fanfictionId: String): LiveData<Story> {
         return Transformations.map(dao.getFanfictionLiveData(fanfictionId)) {
             converter.toFanfiction(it)
         }
     }
 
-    fun getSyncedFanfictions(): LiveData<List<Fanfiction>> = transformEntityToModel(
+    fun getSyncedFanfictions(): LiveData<List<Story>> = transformEntityToModel(
         dao.getSyncedFanfictions()
     )
 
-    fun loadHistory(): LiveData<List<Fanfiction>> = transformEntityToModel(
+    fun loadHistory(): LiveData<List<Story>> = transformEntityToModel(
         dao.getFanfictionHistory()
     )
 
@@ -34,19 +34,19 @@ class DatabaseRepository(
         fanfictionId
     )
 
-    fun getFavoriteFanfictions(authorId: String): LiveData<List<Fanfiction>> {
+    fun getFavoriteFanfictions(authorId: String): LiveData<List<Story>> {
         return transformEntityToModel(
             dao.getFanfictionsFromAssociatedProfileLiveData(authorId, PROFILE_TYPE_FAVORITE)
         )
     }
 
-    fun getStories(authorId: String): LiveData<List<Fanfiction>> {
+    fun getStories(authorId: String): LiveData<List<Story>> {
         return transformEntityToModel(
             dao.getFanfictionsFromAssociatedProfileLiveData(authorId, PROFILE_TYPE_MY_STORY)
         )
     }
 
-    fun getCompleteFanfiction(fanfictionId: String): Fanfiction? {
+    fun getCompleteFanfiction(fanfictionId: String): Story? {
         val fanfiction = dao.getFanfiction(fanfictionId)
         val chapterList = dao.getSyncedChapters(fanfictionId)
         return if (chapterList.isNotEmpty() && fanfiction != null) {
@@ -60,7 +60,7 @@ class DatabaseRepository(
 
     private fun transformEntityToModel(
         liveData: LiveData<List<FanfictionEntity>>
-    ): LiveData<List<Fanfiction>> = Transformations.map(liveData) { fanfictionList ->
+    ): LiveData<List<Story>> = Transformations.map(liveData) { fanfictionList ->
         fanfictionList.map { converter.toFanfiction(it) }
     }
 

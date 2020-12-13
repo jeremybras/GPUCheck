@@ -1,6 +1,6 @@
 package fr.ffnet.downloader.utils
 
-import fr.ffnet.downloader.models.Fanfiction
+import fr.ffnet.downloader.models.Story
 import fr.ffnet.downloader.models.Profile
 import fr.ffnet.downloader.repository.AuthorRepository.Companion.PROFILE_TYPE_FAVORITE
 import fr.ffnet.downloader.repository.AuthorRepository.Companion.PROFILE_TYPE_MY_STORY
@@ -21,11 +21,11 @@ class ProfileBuilder @Inject constructor(
         return Profile(
             profileId = profileId,
             name = name,
-            favoriteFanfictionList = extractFanfictionsFromList(
+            favoriteStoryList = extractFanfictionsFromList(
                 favoriteStoriesSelector,
                 PROFILE_TYPE_FAVORITE
             ),
-            myFanfictionList = extractFanfictionsFromList(
+            myStoryList = extractFanfictionsFromList(
                 myStoriesSelector,
                 PROFILE_TYPE_MY_STORY,
                 name
@@ -37,7 +37,7 @@ class ProfileBuilder @Inject constructor(
         selector: Elements,
         profileType: Int,
         defaultAuthor: String? = null
-    ): List<Fanfiction> {
+    ): List<Story> {
         return selector.map { fanfiction ->
             val fanfictionId = fanfiction.attr("data-storyId")
             val image = fanfiction.select("a img").attr("data-original")
@@ -54,7 +54,7 @@ class ProfileBuilder @Inject constructor(
             val category = fanfictionStuff.split(" -")[0]
 
 
-            Fanfiction(
+            Story(
                 id = fanfictionId,
                 title = fanfiction.attr("data-title"),
                 isInLibrary = false,

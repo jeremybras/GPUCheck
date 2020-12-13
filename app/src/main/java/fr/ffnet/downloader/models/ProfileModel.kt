@@ -3,6 +3,6 @@ package fr.ffnet.downloader.models
 data class Profile(
     val profileId: String,
     val name: String,
-    val favoriteFanfictionList: List<Fanfiction>,
-    val myFanfictionList: List<Fanfiction>
+    val favoriteStoryList: List<Story>,
+    val myStoryList: List<Story>
 )

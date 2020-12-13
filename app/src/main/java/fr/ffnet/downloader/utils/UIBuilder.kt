@@ -4,7 +4,7 @@ import android.content.res.Resources
 import fr.ffnet.downloader.R
 import fr.ffnet.downloader.fanfiction.FanfictionViewModel.StoryState
 import fr.ffnet.downloader.models.AuthorUI
-import fr.ffnet.downloader.models.Fanfiction
+import fr.ffnet.downloader.models.Story
 import fr.ffnet.downloader.models.Review
 import fr.ffnet.downloader.models.ReviewUI
 import fr.ffnet.downloader.models.SearchUIItem.SearchAuthorUI
@@ -37,28 +37,28 @@ class UIBuilder @Inject constructor(
     }
 
     fun buildSearchStoryUI(
-        fanfiction: Fanfiction,
+        story: Story,
     ): SearchStoryUI {
         return SearchStoryUI(
-            id = fanfiction.id,
-            title = fanfiction.title,
-            summary = fanfiction.summary,
-            details = "${fanfiction.category} / ${fanfiction.author}",
-            publishedDate = dateFormatter.format(fanfiction.publishedDate),
-            updatedDate = dateFormatter.format(fanfiction.updatedDate),
-            language = fanfiction.language,
-            genre = fanfiction.genre,
-            chaptersNb = fanfiction.nbChapters,
-            syncedChaptersNb = fanfiction.nbSyncedChapters,
+            id = story.id,
+            title = story.title,
+            summary = story.summary,
+            details = "${story.category} / ${story.author}",
+            publishedDate = dateFormatter.format(story.publishedDate),
+            updatedDate = dateFormatter.format(story.updatedDate),
+            language = story.language,
+            genre = story.genre,
+            chaptersNb = story.nbChapters,
+            syncedChaptersNb = story.nbSyncedChapters,
             chaptersMissingText = resources.getQuantityString(
                 R.plurals.story_chapters_missing,
-                fanfiction.nbChapters - fanfiction.nbSyncedChapters,
-                fanfiction.nbChapters - fanfiction.nbSyncedChapters
+                story.nbChapters - story.nbSyncedChapters,
+                story.nbChapters - story.nbSyncedChapters
             ),
-            isDownloadComplete = fanfiction.nbSyncedChapters == fanfiction.nbChapters,
-            reviewsNb = fanfiction.nbReviews.toString(),
-            favoritesNb = fanfiction.nbFavorites.toString(),
-            imageUrl = fanfiction.image
+            isDownloadComplete = story.nbSyncedChapters == story.nbChapters,
+            reviewsNb = story.nbReviews.toString(),
+            favoritesNb = story.nbFavorites.toString(),
+            imageUrl = story.image
         )
     }
 
@@ -75,16 +75,16 @@ class UIBuilder @Inject constructor(
     }
 
     fun buildSyncedStoryUI(
-        fanfiction: Fanfiction,
+        story: Story,
         storyState: StoryState,
         shouldShowExportPdf: Boolean,
         shouldShowExportEpub: Boolean
     ): SyncedStoryUI {
         return SyncedStoryUI(
-            id = fanfiction.id,
-            title = fanfiction.title,
-            details = "${fanfiction.category} / ${fanfiction.author}",
-            imageUrl = fanfiction.image,
+            id = story.id,
+            title = story.title,
+            details = "${story.category} / ${story.author}",
+            imageUrl = story.image,
             storyState = storyState,
             shouldShowExportPdf = shouldShowExportPdf,
             shouldShowExportEpub = shouldShowExportEpub
@@ -92,16 +92,16 @@ class UIBuilder @Inject constructor(
     }
 
     fun buildSyncedStorySpotlightUI(
-        fanfiction: Fanfiction,
+        story: Story,
         storyState: StoryState,
         shouldShowExportPdf: Boolean,
         shouldShowExportEpub: Boolean
     ): SyncedStorySpotlightUI {
         return SyncedStorySpotlightUI(
-            id = fanfiction.id,
-            title = fanfiction.title,
-            details = "${fanfiction.category} / ${fanfiction.author}",
-            imageUrl = fanfiction.image,
+            id = story.id,
+            title = story.title,
+            details = "${story.category} / ${story.author}",
+            imageUrl = story.image,
             storyState = storyState,
             shouldShowExportPdf = shouldShowExportPdf,
             shouldShowExportEpub = shouldShowExportEpub

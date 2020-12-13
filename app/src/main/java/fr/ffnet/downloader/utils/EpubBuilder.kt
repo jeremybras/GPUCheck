@@ -1,7 +1,7 @@
 package fr.ffnet.downloader.utils
 
 import fr.ffnet.downloader.models.Chapter
-import fr.ffnet.downloader.models.Fanfiction
+import fr.ffnet.downloader.models.Story
 import nl.siegmann.epublib.domain.Book
 import nl.siegmann.epublib.domain.Resource
 import nl.siegmann.epublib.epub.EpubWriter
@@ -21,9 +21,9 @@ class EpubBuilder @Inject constructor() {
         private const val HTML_FOOTER = "</body>\n</html>"
     }
 
-    fun buildEpub(absolutePath: String, fanfiction: Fanfiction): String {
+    fun buildEpub(absolutePath: String, story: Story): String {
 
-        val fileTitle = "${fanfiction.title}.epub"
+        val fileTitle = "${story.title}.epub"
         val file = File(absolutePath, fileTitle)
 
         val outputStream = ByteArrayOutputStream()
@@ -31,10 +31,10 @@ class EpubBuilder @Inject constructor() {
         val book = Book()
 
         book.metadata.apply {
-            addTitle(fanfiction.title)
+            addTitle(story.title)
         }
 
-        fanfiction.chapterList.forEach { chapter ->
+        story.chapterList.forEach { chapter ->
             val chapterHtml = generateHtmlPageFromChapter(chapter)
             book.addSection(
                 chapter.title,

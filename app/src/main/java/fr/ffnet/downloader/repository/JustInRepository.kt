@@ -1,7 +1,7 @@
 package fr.ffnet.downloader.repository
 
 import fr.ffnet.downloader.main.search.JustInViewModel.JustInType
-import fr.ffnet.downloader.models.Fanfiction
+import fr.ffnet.downloader.models.Story
 import fr.ffnet.downloader.utils.SearchBuilder
 import java.io.IOException
 
@@ -10,7 +10,7 @@ class JustInRepository(
     private val searchBuilder: SearchBuilder
 ) {
 
-    fun loadJustInList(type: JustInType): List<Fanfiction>? {
+    fun loadJustInList(type: JustInType): List<Story>? {
         try {
             val response = when (type) {
                 JustInType.PUBLISHED -> regularCrawlService.justInPublished().execute()

@@ -1,7 +1,7 @@
 package fr.ffnet.downloader.utils
 
 import fr.ffnet.downloader.models.Chapter
-import fr.ffnet.downloader.models.Fanfiction
+import fr.ffnet.downloader.models.Story
 import fr.ffnet.downloader.models.Review
 import org.joda.time.DateTime
 import org.joda.time.LocalDateTime
@@ -15,7 +15,7 @@ class FanfictionBuilder @Inject constructor(
     fun buildFanfiction(
         id: String,
         html: String
-    ): Pair<String, Fanfiction> {
+    ): Pair<String, Story> {
 
         val document = jsoupParser.parseHtml(html)
         val profileTop = document.select("div#profile_top")
@@ -43,7 +43,7 @@ class FanfictionBuilder @Inject constructor(
         val category = document.select("#pre_story_links>span>a").last().text()
         val image = profileTop.select("span>img.cimage").attr("src")
 
-        return document.select("#storytext").first().html() to Fanfiction(
+        return document.select("#storytext").first().html() to Story(
             id = id,
             title = title,
             isInLibrary = false,

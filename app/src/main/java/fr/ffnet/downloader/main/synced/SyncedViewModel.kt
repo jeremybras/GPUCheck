@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.work.WorkInfo
 import fr.ffnet.downloader.R
 import fr.ffnet.downloader.fanfiction.FanfictionViewModel.StoryState
-import fr.ffnet.downloader.models.Fanfiction
+import fr.ffnet.downloader.models.Story
 import fr.ffnet.downloader.models.Setting
 import fr.ffnet.downloader.models.SettingType
 import fr.ffnet.downloader.models.SyncedUIItem
@@ -27,7 +27,7 @@ class SyncedViewModel(
 ) : ViewModel() {
 
     private var isSyncing: LiveData<List<String>>
-    private var fanfictionList: LiveData<List<Fanfiction>>
+    private var storyList: LiveData<List<Story>>
     private var settingList: LiveData<List<Setting>>
 
     val syncedList: MediatorLiveData<List<SyncedUIItem>> by lazy { MediatorLiveData<List<SyncedUIItem>>() }
@@ -44,17 +44,19 @@ class SyncedViewModel(
                 .toList()
         }
 
-        fanfictionList = Transformations.map(databaseRepository.getSyncedFanfictions()) { it }
+        storyList = Transformations.map(databaseRepository.getSyncedFanfictions()) { it }
         settingList = Transformations.map(settingsRepository.getAllSettings()) { it }
 
         syncedList.apply {
+
             removeSource(isSyncing)
-            removeSource(fanfictionList)
+            removeSource(storyList)
             removeSource(settingList)
+
             addSource(isSyncing) {
                 combineLatestData()
             }
-            addSource(fanfictionList) {
+            addSource(storyList) {
                 combineLatestData()
             }
             addSource(settingList) {
@@ -66,7 +68,7 @@ class SyncedViewModel(
     private fun combineLatestData() {
 
         val isSyncing = isSyncing.value ?: emptyList()
-        val fanfictionList = fanfictionList.value ?: emptyList()
+        val fanfictionList = storyList.value ?: emptyList()
         val settingList = settingList.value ?: emptyList()
 
         val shouldShowExportPdf = settingList
@@ -112,9 +114,9 @@ class SyncedViewModel(
         }
     }
 
-    private fun buildStoryState(fanfiction: Fanfiction, isSyncing: List<String>): StoryState {
-        val isSynced = fanfiction.nbChapters == fanfiction.nbSyncedChapters
-        val isCurrentlySyncing = isSyncing.contains(fanfiction.id)
+    private fun buildStoryState(story: Story, isSyncing: List<String>): StoryState {
+        val isSynced = story.nbChapters == story.nbSyncedChapters
+        val isCurrentlySyncing = isSyncing.contains(story.id)
         return when {
             isCurrentlySyncing -> StoryState.Syncing
             isSynced -> StoryState.Synced
