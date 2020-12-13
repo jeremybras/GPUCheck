@@ -2,18 +2,16 @@ package fr.ffnet.downloader.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.observe
 import com.google.android.material.snackbar.Snackbar
 import fr.ffnet.downloader.R
 import fr.ffnet.downloader.common.MainApplication
-import fr.ffnet.downloader.main.SideNavFragment.DrawerMenuItem
 import fr.ffnet.downloader.main.injection.ViewPagerModule
 import fr.ffnet.downloader.main.search.SearchFragment
 import fr.ffnet.downloader.main.synced.SyncedFragment
 import fr.ffnet.downloader.options.ParentListener
-import fr.ffnet.downloader.settings.SettingsActivity
+import fr.ffnet.downloader.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -26,9 +24,12 @@ class MainActivity : AppCompatActivity(), ParentListener {
     companion object {
         private const val MENU_IMAGE_SPEED = 1.5f
 
-        private const val FRAGMENT_ID_SYNCED = 0
-        private const val FRAGMENT_ID_SEARCH = 1
+        private const val FRAGMENT_ID_SETTINGS = 0
+        private const val FRAGMENT_ID_SYNCED = 1
+        private const val FRAGMENT_ID_SEARCH = 2
     }
+
+    private var getBackFromSettings: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,20 +50,26 @@ class MainActivity : AppCompatActivity(), ParentListener {
         initViewPager()
 
         menuImageView.setOnClickListener {
-            if (menuImageView.frame > 50) {
-                onBackPressed()
-            } else {
-                drawerLayout.openDrawer(GravityCompat.START)
+            when (menuImageView.frame) {
+                in 50..59 -> onBackPressed()
+                in 25..35 -> {
+                    getBackFromSettings = pageTypeViewPager.currentItem
+                    showSettings()
+                }
+                in 0..10 -> {
+                    if (getBackFromSettings == FRAGMENT_ID_SYNCED) {
+                        showSynced()
+                    } else if (getBackFromSettings == FRAGMENT_ID_SEARCH) {
+                        showSearch()
+                    }
+                    getBackFromSettings = null
+                }
             }
         }
     }
 
     override fun onResume() {
-        if (isOnSyncedFragment()) {
-            setMenuOriginal()
-        } else if (hasStories) {
-            setMenuBack()
-        }
+        figureOutMenuIcon()
         super.onResume()
     }
 
@@ -79,23 +86,6 @@ class MainActivity : AppCompatActivity(), ParentListener {
         }
     }
 
-    fun showSynced() {
-        if (hasStories.not()) {
-            super.onBackPressed()
-        } else {
-            setMenuOriginal()
-            searchIcon.isVisible = true
-            pageTypeViewPager.currentItem = FRAGMENT_ID_SYNCED
-        }
-    }
-
-    fun onMenuItemClicked(menuItem: DrawerMenuItem) {
-        when (menuItem) {
-            DrawerMenuItem.SETTINGS -> startActivity(SettingsActivity.newIntent(this))
-        }
-        drawerLayout.closeDrawer(GravityCompat.START)
-    }
-
     private fun initViewPager() {
         val mainAdapter = MainAdapter(supportFragmentManager)
         pageTypeViewPager.adapter = mainAdapter
@@ -104,34 +94,84 @@ class MainActivity : AppCompatActivity(), ParentListener {
             if (mainAdapter.fragmentList.isEmpty()) {
                 pageTypeViewPager.adapter = mainAdapter.apply {
                     fragmentList = mutableListOf(
-                        SyncedFragment.newInstance(),
-                        SearchFragment.newInstance()
+                        SettingsFragment(),
+                        SyncedFragment(),
+                        SearchFragment()
                     )
                 }
             }
-            if (hasStories.not()) {
+            if (hasStories) {
+                showSynced()
+            } else {
                 showSearch()
             }
-            searchIcon.isVisible = isOnSyncedFragment()
+            figureOutMenuIcon()
+        }
+    }
+
+    private fun showSettings() {
+        pageTypeViewPager.currentItem = FRAGMENT_ID_SETTINGS
+        figureOutMenuIcon()
+    }
+
+    fun showSynced() {
+        if (hasStories.not()) {
+            super.onBackPressed()
+        } else {
+            pageTypeViewPager.currentItem = FRAGMENT_ID_SYNCED
+            figureOutMenuIcon()
         }
     }
 
     private fun showSearch() {
-        if (hasStories) {
-            setMenuBack()
-        }
-        searchIcon.isVisible = false
         pageTypeViewPager.currentItem = FRAGMENT_ID_SEARCH
+        figureOutMenuIcon()
+    }
+
+    private fun setMenuClose() {
+        if (menuImageView.frame in 25..35) {
+            menuImageView.setMinAndMaxFrame(0, 30)
+            menuImageView.speed = -MENU_IMAGE_SPEED
+            menuImageView.playAnimation()
+        } else if (menuImageView.frame in 50..59) {
+            menuImageView.setMinAndMaxFrame(0, 59)
+            menuImageView.speed = -MENU_IMAGE_SPEED
+            menuImageView.playAnimation()
+        }
     }
 
     private fun setMenuBack() {
-        menuImageView.speed = MENU_IMAGE_SPEED
-        menuImageView.playAnimation()
+        if (menuImageView.frame in 25..35) {
+            menuImageView.setMinAndMaxFrame(30, 59)
+            menuImageView.speed = MENU_IMAGE_SPEED
+            menuImageView.playAnimation()
+        } else if (menuImageView.frame in 0..10) {
+            menuImageView.setMinAndMaxFrame(0, 59)
+            menuImageView.speed = MENU_IMAGE_SPEED
+            menuImageView.playAnimation()
+        }
     }
 
     private fun setMenuOriginal() {
-        menuImageView.speed = -MENU_IMAGE_SPEED
-        menuImageView.playAnimation()
+        if (menuImageView.frame in 0..10) {
+            menuImageView.setMinAndMaxFrame(0, 30)
+            menuImageView.speed = MENU_IMAGE_SPEED
+            menuImageView.playAnimation()
+        } else if (menuImageView.frame in 50..59) {
+            menuImageView.setMinAndMaxFrame(30, 59)
+            menuImageView.speed = -MENU_IMAGE_SPEED
+            menuImageView.playAnimation()
+        }
+    }
+
+    private fun figureOutMenuIcon() {
+        searchIcon.isVisible = isOnSyncedFragment()
+        when {
+            isOnSyncedFragment() -> setMenuOriginal()
+            hasStories && isOnSearchFragment() -> setMenuBack()
+            isOnSearchFragment() -> setMenuOriginal()
+            isOnSettingsFragment() -> setMenuClose()
+        }
     }
 
     private fun getSearchFragment(): SearchFragment? {
@@ -141,14 +181,15 @@ class MainActivity : AppCompatActivity(), ParentListener {
             .firstOrNull()
     }
 
-    private fun getSyncedFragment(): SyncedFragment? {
-        return supportFragmentManager
-            .fragments
-            .filterIsInstance(SyncedFragment::class.java)
-            .firstOrNull()
+    private fun isOnSyncedFragment(): Boolean {
+        return pageTypeViewPager.currentItem == FRAGMENT_ID_SYNCED
     }
 
-    private fun isOnSyncedFragment(): Boolean {
-        return pageTypeViewPager.currentItem == FRAGMENT_ID_SYNCED && getSyncedFragment() != null
+    private fun isOnSearchFragment(): Boolean {
+        return pageTypeViewPager.currentItem == FRAGMENT_ID_SEARCH
+    }
+
+    private fun isOnSettingsFragment(): Boolean {
+        return pageTypeViewPager.currentItem == FRAGMENT_ID_SETTINGS
     }
 }

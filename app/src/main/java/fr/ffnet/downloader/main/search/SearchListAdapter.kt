@@ -12,7 +12,10 @@ import fr.ffnet.downloader.models.SearchUIItem.SearchAuthorUI
 import fr.ffnet.downloader.models.SearchUIItem.SearchStoryUI
 import fr.ffnet.downloader.models.SearchUIItem.SearchUITitle
 import fr.ffnet.downloader.options.OnFanfictionActionsListener
+import kotlinx.android.synthetic.main.item_search_result_author.view.*
 import kotlinx.android.synthetic.main.item_search_result_story.view.*
+import kotlinx.android.synthetic.main.item_search_result_story.view.addButton
+import kotlinx.android.synthetic.main.item_search_result_story.view.storyImageView
 import kotlinx.android.synthetic.main.item_search_result_title.view.*
 
 class SearchListAdapter(
@@ -78,6 +81,19 @@ class SearchListAdapter(
     inner class SearchAuthorUIViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(author: SearchAuthorUI) {
+
+            picasso
+                .load(author.imageUrl)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
+                .into(view.authorImageView)
+
+            view.authorNameTextView.text = author.name
+            view.nbStoriesTextView.text = author.nbStories
+
+            view.setOnClickListener {
+                listener.onFetchAuthorInformation(author.id)
+            }
 
         }
     }

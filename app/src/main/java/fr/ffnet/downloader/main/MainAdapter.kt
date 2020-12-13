@@ -21,7 +21,4 @@ class MainAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(
 
     override fun getCount(): Int = fragmentList.size
 
-    fun removeFirstFragment() {
-        fragmentList.removeFirst()
-    }
 }

@@ -21,8 +21,16 @@ class UIBuilder @Inject constructor(
     fun buildSearchAuthorUI(
         author: AuthorSearchResult,
     ): SearchAuthorUI {
+        val nbStories = author.nbStories.toInt()
         return SearchAuthorUI(
-            id = author.id
+            id = author.id,
+            name = author.name,
+            nbStories = resources.getQuantityString(
+                R.plurals.search_author_nb_stories,
+                nbStories,
+                nbStories
+            ),
+            imageUrl = author.imageUrl
         )
     }
 

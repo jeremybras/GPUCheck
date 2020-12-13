@@ -83,6 +83,10 @@ class OptionsViewModel(
         }
     }
 
+    fun loadAuthorInfo(authorId: String) {
+
+    }
+
     private fun displayErrorMessage(messageResource: Int) {
         val errorMessage = resources.getString(messageResource)
         FFLogger.d(EVENT_KEY, errorMessage)

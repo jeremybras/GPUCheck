@@ -11,25 +11,14 @@
         android:paddingTop="@dimen/margin_super_big"
         android:paddingBottom="@dimen/margin_enormous">
 
-        <ImageView
-            android:id="@+id/closeImageView"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:contentDescription="@string/content_description_close"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_close"
-            app:layout_constraintStart_toStartOf="@id/startGuideline"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/formatsSectionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_super_big"
             android:text="@string/settings_formats"
             android:textAppearance="@style/FFnet.TextStyle.BigTitle.Blue"
             app:layout_constraintStart_toStartOf="@id/startGuideline"
-            app:layout_constraintTop_toBottomOf="@id/closeImageView" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <!-- PDF -->
         <TextView
@@ -183,7 +172,6 @@
             app:layout_constraintStart_toStartOf="@id/startGuideline"
             app:layout_constraintTop_toBottomOf="@id/searchTypeRadioGroup" />
 
-        <!-- MOBI -->
         <TextView
             android:id="@+id/justInShowTitleTextView"
             android:layout_width="wrap_content"
@@ -246,6 +234,35 @@
                 android:layout_height="wrap_content"
                 android:text="@string/settings_just_in_type_recently_updated" />
         </RadioGroup>
+
+        <TextView
+            android:id="@+id/dreamTeamTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_big"
+            android:text="@string/settings_dream_team"
+            android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/justInTypeRadioGroup" />
+
+        <TextView
+            android:id="@+id/dreamTeamJeremyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_mini"
+            android:text="@string/settings_dream_team_jeremy"
+            android:textAppearance="@style/FFnet.TextStyle.SubTitle"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/dreamTeamTextView" />
+
+        <TextView
+            android:id="@+id/dreamTeamJulieTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_dream_team_julie"
+            android:textAppearance="@style/FFnet.TextStyle.SubTitle"
+            app:layout_constraintStart_toStartOf="@id/startGuideline"
+            app:layout_constraintTop_toBottomOf="@+id/dreamTeamJeremyTextView" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/startGuideline"

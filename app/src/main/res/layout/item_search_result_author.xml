@@ -1,7 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_super_big"
+    android:paddingStart="@dimen/margin_super_big"
+    android:paddingEnd="@dimen/margin_super_big">
 
+    <ImageView
+        android:id="@+id/authorImageView"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitStart"
+        android:src="@drawable/placeholder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/authorNameTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
+        app:layout_constraintEnd_toStartOf="@id/addButton"
+        app:layout_constraintStart_toEndOf="@+id/authorImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="The Sea in Between" />
+
+    <TextView
+        android:id="@+id/nbStoriesTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_mini_mini"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/FFnet.TextStyle.SubTitle.Light"
+        app:layout_constraintEnd_toStartOf="@id/addButton"
+        app:layout_constraintStart_toStartOf="@+id/authorNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/authorNameTextView"
+        tools:text="5 stories" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addButton"
+        style="@style/Button.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="@+id/authorImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/authorImageView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

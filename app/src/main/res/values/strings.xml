@@ -27,6 +27,10 @@
         <item quantity="one">1 result</item>
         <item quantity="other">%d results</item>
     </plurals>
+    <plurals name="search_author_nb_stories">
+        <item quantity="one">1 story</item>
+        <item quantity="other">%d stories</item>
+    </plurals>
     <string name="search_no_result">No result</string>
 
     <string name="export_permission_title">Write permission needed</string>

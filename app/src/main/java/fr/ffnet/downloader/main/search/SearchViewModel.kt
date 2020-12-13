@@ -41,20 +41,9 @@ class SearchViewModel(
     init {
         searchResult.removeSource(authorResult)
         searchResult.removeSource(storyResult)
-
         searchResult.apply {
-            addSource(authorResult) {
-                searchResult.value = combineLatestData(
-                    authorList = authorResult.value ?: emptyList(),
-                    storyList = storyResult.value ?: emptyList()
-                )
-            }
-            addSource(storyResult) {
-                searchResult.value = combineLatestData(
-                    authorList = authorResult.value ?: emptyList(),
-                    storyList = storyResult.value ?: emptyList()
-                )
-            }
+            addSource(authorResult) { combineLatestData() }
+            addSource(storyResult) { combineLatestData() }
         }
     }
 
@@ -124,12 +113,14 @@ class SearchViewModel(
         }
     }
 
-    private fun combineLatestData(
-        authorList: List<SearchAuthorUI>,
-        storyList: List<SearchStoryUI>
-    ): List<SearchUIItem> {
+    private fun combineLatestData() {
+
+        val authorList = authorResult.value ?: emptyList()
+        val storyList = storyResult.value ?: emptyList()
+
         if (authorList.isEmpty() && storyList.isEmpty()) {
-            return listOf(SearchUIItem.SearchUITitle(resources.getString(R.string.search_no_result)))
+            searchResult.value = listOf(SearchUIItem.SearchUITitle(resources.getString(R.string.search_no_result)))
+            return
         }
         val title = SearchUIItem.SearchUITitle(
             resources.getQuantityString(
@@ -138,6 +129,6 @@ class SearchViewModel(
                 authorList.size + storyList.size
             )
         )
-        return listOf(title).plus(authorList).plus(storyList)
+        searchResult.value = listOf(title).plus(authorList).plus(storyList)
     }
 }

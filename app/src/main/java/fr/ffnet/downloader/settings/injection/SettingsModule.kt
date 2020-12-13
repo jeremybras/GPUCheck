@@ -4,12 +4,12 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.Module
 import dagger.Provides
 import fr.ffnet.downloader.repository.SettingsRepository
-import fr.ffnet.downloader.settings.SettingsActivity
+import fr.ffnet.downloader.settings.SettingsFragment
 import fr.ffnet.downloader.settings.SettingsViewModel
 import fr.ffnet.downloader.utils.ViewModelFactory
 
 @Module
-class SettingsModule(private val activity: SettingsActivity) {
+class SettingsModule(private val fragment: SettingsFragment) {
 
     @Provides
     fun provideSettingsViewModel(
@@ -18,6 +18,6 @@ class SettingsModule(private val activity: SettingsActivity) {
         val factory = ViewModelFactory {
             SettingsViewModel(repository)
         }
-        return ViewModelProvider(activity, factory)[SettingsViewModel::class.java]
+        return ViewModelProvider(fragment, factory)[SettingsViewModel::class.java]
     }
 }

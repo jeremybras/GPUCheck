@@ -1,7 +1,7 @@
 package fr.ffnet.downloader.settings.injection
 
 import dagger.Subcomponent
-import fr.ffnet.downloader.settings.SettingsActivity
+import fr.ffnet.downloader.settings.SettingsFragment
 
 @Subcomponent(
     modules = [
@@ -9,5 +9,5 @@ import fr.ffnet.downloader.settings.SettingsActivity
     ]
 )
 interface SettingsComponent {
-    fun inject(activity: SettingsActivity)
+    fun inject(fragment: SettingsFragment)
 }

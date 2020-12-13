@@ -25,10 +25,6 @@ class SyncedFragment : Fragment(), ParentListener {
     @Inject lateinit var optionsController: OptionsController
     @Inject lateinit var picasso: Picasso
 
-    companion object {
-        fun newInstance(): SyncedFragment = SyncedFragment()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

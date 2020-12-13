@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".fanfiction.FanfictionActivity" />
-        <activity android:name=".settings.SettingsActivity" />
+        <activity android:name=".settings.SettingsFragment" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

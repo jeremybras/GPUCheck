@@ -3,6 +3,7 @@ package fr.ffnet.downloader.options
 import android.content.Context
 import android.os.Environment
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.observe
 import fr.ffnet.downloader.common.FFLogger
 import fr.ffnet.downloader.fanfiction.FanfictionActivity
 import fr.ffnet.downloader.options.OptionsViewModel.SearchError
@@ -14,6 +15,7 @@ interface OnFanfictionActionsListener {
     fun onExportEpub(fanfictionId: String)
     fun onUnsync(fanfictionId: String)
     fun onSync(fanfictionId: String)
+    fun onFetchAuthorInformation(authorId: String)
 }
 
 interface ParentListener {
@@ -35,24 +37,24 @@ class OptionsController(
     }
 
     init {
-        optionsViewModel.getFile.observe(lifecycleOwner, { (fileName, absolutePath) ->
+        optionsViewModel.getFile.observe(lifecycleOwner) { (fileName, absolutePath) ->
             fanfictionOpener.openFile(fileName, absolutePath)
-        })
-        optionsViewModel.navigateToFanfiction.observe(lifecycleOwner, { fanfictionId ->
+        }
+        optionsViewModel.navigateToFanfiction.observe(lifecycleOwner) { fanfictionId ->
             context.startActivity(
                 FanfictionActivity.intent(
                     context,
                     fanfictionId
                 )
             )
-        })
-        optionsViewModel.error.observe(lifecycleOwner, { searchError ->
+        }
+        optionsViewModel.error.observe(lifecycleOwner) { searchError ->
             when (searchError) {
                 is SearchError.InfoFetchingFailed -> {
                     parentListener.showErrorMessage(searchError.message)
                 }
             }
-        })
+        }
     }
 
     override fun onFetchInformation(fanfictionId: String) {
@@ -78,5 +80,9 @@ class OptionsController(
     override fun onSync(fanfictionId: String) {
         FFLogger.d(FFLogger.EVENT_KEY, "Sync $fanfictionId")
         optionsViewModel.onSyncFanfiction(fanfictionId)
+    }
+
+    override fun onFetchAuthorInformation(authorId: String) {
+        optionsViewModel.loadAuthorInfo(authorId)
     }
 }

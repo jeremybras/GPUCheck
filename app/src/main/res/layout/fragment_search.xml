@@ -63,14 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:constraint_referenced_ids="welcomeTextView,subtitleTextView" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/justInBlock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:constraint_referenced_ids="justInTextView,justInViewFlipper" />
+        app:constraint_referenced_ids="welcomeTextView,subtitleTextView,justInTextView,justInViewFlipper" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/searchBlock"
@@ -100,10 +93,7 @@
             android:hint="@string/search_hint"
             android:imeOptions="actionSearch"
             android:inputType="text"
-            android:paddingStart="@dimen/margin_medium"
-            android:paddingTop="@dimen/margin_medium"
-            android:paddingEnd="@dimen/margin_medium"
-            android:paddingBottom="@dimen/margin_medium"
+            android:padding="@dimen/margin_medium"
             android:text="dark"
             android:textColor="@color/ff_grey_darker"
             android:textSize="14sp"

@@ -7,7 +7,8 @@ import org.joda.time.LocalDateTime
 data class AuthorSearchResult(
     val id: String,
     val name: String,
-    val nbStories: String
+    val nbStories: String,
+    val imageUrl: String
 )
 
 data class Author(

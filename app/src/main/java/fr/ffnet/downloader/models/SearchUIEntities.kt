@@ -24,7 +24,10 @@ sealed class SearchUIItem {
     ) : SearchUIItem()
 
     data class SearchAuthorUI(
-        val id: String
+        val id: String,
+        val name: String,
+        val nbStories: String,
+        val imageUrl: String
     ) : SearchUIItem()
 }
 

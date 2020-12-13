@@ -36,10 +36,10 @@ class SearchRepository(
         val keywords = keywordList.joinToString("+")
 
         try {
-            val response = mobileCrawlService.search(keywords, SEARCH_TYPE_WRITER).execute()
+            val response = regularCrawlService.search(keywords, SEARCH_TYPE_WRITER).execute()
             if (response.isSuccessful) {
                 response.body()?.let { responseBody ->
-                    return searchBuilder.builAuthorSearchResult(responseBody.string())
+                    return searchBuilder.buildAuthorSearchResult(responseBody.string())
                 }
             }
         } catch (ex: IOException) {

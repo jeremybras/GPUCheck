@@ -18,15 +18,11 @@ import fr.ffnet.downloader.R
 import fr.ffnet.downloader.common.MainApplication
 import fr.ffnet.downloader.main.MainActivity
 import fr.ffnet.downloader.main.ViewPagerViewModel
-import fr.ffnet.downloader.main.search.JustInViewModel.JustInType
 import fr.ffnet.downloader.main.search.injection.SearchModule
 import fr.ffnet.downloader.models.JustInUI
 import fr.ffnet.downloader.models.SettingType.DEFAULT_SEARCH_ALL
 import fr.ffnet.downloader.models.SettingType.DEFAULT_SEARCH_AUTHORS
 import fr.ffnet.downloader.models.SettingType.DEFAULT_SEARCH_STORIES
-import fr.ffnet.downloader.models.SettingType.JUST_IN_RECENTLY_PUBLISHED
-import fr.ffnet.downloader.models.SettingType.JUST_IN_RECENTLY_UPDATED
-import fr.ffnet.downloader.models.SettingType.JUST_IN_SHOW_SECTION
 import fr.ffnet.downloader.options.OptionsController
 import fr.ffnet.downloader.options.ParentListener
 import fr.ffnet.downloader.settings.SettingsViewModel
@@ -43,8 +39,6 @@ class SearchFragment : Fragment(), ParentListener {
     @Inject lateinit var picasso: Picasso
 
     companion object {
-        fun newInstance(): SearchFragment = SearchFragment()
-
         private const val DISPLAY_JUST_IN_LOADER = 0
         private const val DISPLAY_JUST_IN_CONTENT = 1
     }
@@ -123,6 +117,9 @@ class SearchFragment : Fragment(), ParentListener {
         )
         justInRecyclerView.adapter = JustInAdapter(picasso, optionsController)
 
+        justInViewModel.loadJustInList(JustInViewModel.JustInType.UPDATED)
+        justInTextView.text = requireContext().getText(R.string.search_just_in_title_updated)
+
         searchResultRecyclerView.adapter = SearchListAdapter(
             picasso,
             optionsController
@@ -189,18 +186,6 @@ class SearchFragment : Fragment(), ParentListener {
                     DEFAULT_SEARCH_AUTHORS -> searchAuthorRadioButton.isChecked = setting.isEnabled
                     DEFAULT_SEARCH_STORIES -> searchStoryRadioButton.isChecked = setting.isEnabled
 
-                    JUST_IN_SHOW_SECTION -> justInBlock.isVisible = setting.isEnabled
-                    JUST_IN_RECENTLY_PUBLISHED -> if (setting.isEnabled) {
-                        justInViewFlipper.displayedChild = DISPLAY_JUST_IN_LOADER
-                        justInViewModel.loadJustInList(JustInType.PUBLISHED)
-                        justInTextView.text = requireContext().getText(R.string.search_just_in_title_published)
-                    }
-                    JUST_IN_RECENTLY_UPDATED -> if (setting.isEnabled) {
-                        justInViewFlipper.displayedChild = DISPLAY_JUST_IN_LOADER
-                        justInViewModel.loadJustInList(JustInType.UPDATED)
-                        justInTextView.text = requireContext().getText(R.string.search_just_in_title_updated)
-                    }
-
                     else -> {
                         // Do nothing
                     }
@@ -227,18 +212,11 @@ class SearchFragment : Fragment(), ParentListener {
 
     private fun transitionToEnd() {
         welcomeBlock.isVisible = false
-        justInBlock.isVisible = false
     }
 
     private fun transitionToStart() {
         searchEditText.clearFocus()
         welcomeBlock.isVisible = hasSyncedStories.not()
-        justInBlock.isVisible = settingsViewModel
-            .settingList
-            .value
-            ?.firstOrNull { it.type == JUST_IN_SHOW_SECTION }
-            ?.isEnabled
-            ?: true
     }
 
     fun shouldShowWelcomeBlock(): Boolean {

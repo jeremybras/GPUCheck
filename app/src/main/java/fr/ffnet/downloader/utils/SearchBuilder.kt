@@ -136,30 +136,41 @@ class SearchBuilder @Inject constructor(
         }
     }
 
-    fun builAuthorSearchResult(html: String): List<AuthorSearchResult> {
+    fun buildAuthorSearchResult(html: String): List<AuthorSearchResult> {
         val document = jsoupParser.parseHtml(html)
-        val selector = document.select("form>div>div.bs")
 
-        if (selector.isEmpty()) {
-            return document.select("form a")
-                .filter { it.attr("href").contains("/u/") }
-                .map { link ->
+        val selector = document.select("div>table>tbody td>a")
+
+        return if (selector.size == 1) {
+            if (html.contains("1 found")) {
+                val container = document.select("div#content_wrapper_inner").first()
+                val link = container.select("a").first { it.attr("href").contains("/u/") }
+                val image = container.select("img").attr("data-original")
+
+                val nbStoriesContainer = container.select("span.badge-blue")
+                val nbStories = if (nbStoriesContainer.size == 1) nbStoriesContainer.text() else "0"
+                listOf(
                     AuthorSearchResult(
                         id = link.attr("href").split("/")[2],
                         name = link.text(),
-                        nbStories = "0"
+                        nbStories = nbStories,
+                        imageUrl = "https:$image"
                     )
-                }
-        }
-
-        return selector.map {
-            val link = it.select("a")
-            val span = it.select("span")
-            AuthorSearchResult(
-                id = link.attr("href").split("/")[2],
-                name = link.text(),
-                nbStories = span.select("span").text()
-            )
+                )
+            } else emptyList()
+        } else {
+            selector.mapNotNull {
+                if (it.attr("href").contains("/u/")) {
+                    val span = it.select("span")
+                    val image = it.select("img").attr("data-original")
+                    AuthorSearchResult(
+                        id = it.attr("href").split("/")[2],
+                        name = it.select("b").first().text(),
+                        nbStories = span.select("span").text().split(" ")[0],
+                        imageUrl = "https:$image"
+                    )
+                } else null
+            }
         }
     }
 }
