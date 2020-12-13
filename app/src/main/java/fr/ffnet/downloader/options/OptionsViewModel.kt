@@ -8,14 +8,8 @@ import fr.ffnet.downloader.R
 import fr.ffnet.downloader.common.FFLogger
 import fr.ffnet.downloader.common.FFLogger.Companion.EVENT_KEY
 import fr.ffnet.downloader.repository.AuthorRepository
-import fr.ffnet.downloader.repository.AuthorRepository.AuthorRepositoryResult.AuthorRepositoryResultFailure
-import fr.ffnet.downloader.repository.AuthorRepository.AuthorRepositoryResult.AuthorRepositoryResultSuccess
 import fr.ffnet.downloader.repository.DatabaseRepository
 import fr.ffnet.downloader.repository.DownloaderRepository
-import fr.ffnet.downloader.repository.DownloaderRepository.FanfictionRepositoryResult.FanfictionRepositoryResultFailure
-import fr.ffnet.downloader.repository.DownloaderRepository.FanfictionRepositoryResult.FanfictionRepositoryResultInternetFailure
-import fr.ffnet.downloader.repository.DownloaderRepository.FanfictionRepositoryResult.FanfictionRepositoryResultServerFailure
-import fr.ffnet.downloader.repository.DownloaderRepository.FanfictionRepositoryResult.FanfictionRepositoryResultSuccess
 import fr.ffnet.downloader.utils.EpubBuilder
 import fr.ffnet.downloader.utils.PdfBuilder
 import fr.ffnet.downloader.utils.SingleLiveEvent
@@ -38,21 +32,29 @@ class OptionsViewModel(
 
     fun loadFanfictionInfo(fanfictionId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val isFanfictionInDatabase = dbRepository.isFanfictionInDatabase(fanfictionId)
-            if (isFanfictionInDatabase) {
+            if (dbRepository.isFanfictionInDatabase(fanfictionId)) {
                 FFLogger.d(EVENT_KEY, "Fanfiction $fanfictionId is already in database")
                 navigateToStory.postValue(fanfictionId)
                 apiRepository.loadFanfictionInfo(fanfictionId)
             } else {
-                when (apiRepository.loadFanfictionInfo(fanfictionId)) {
-                    is FanfictionRepositoryResultSuccess -> {
-                        FFLogger.d(EVENT_KEY, "Fanfiction $fanfictionId loaded successfully")
-                        navigateToStory.postValue(fanfictionId)
-                    }
-                    FanfictionRepositoryResultFailure,
-                    FanfictionRepositoryResultServerFailure,
-                    FanfictionRepositoryResultInternetFailure -> displayErrorMessage(R.string.load_story_info_fetching_error)
-                }
+                apiRepository.loadFanfictionInfo(fanfictionId)?.let { story ->
+                    FFLogger.d(EVENT_KEY, "Fanfiction $fanfictionId loaded successfully")
+                    navigateToStory.postValue(fanfictionId)
+                } ?: displayErrorMessage(R.string.load_story_info_fetching_error)
+            }
+        }
+    }
+
+    fun loadAuthorInfo(authorId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val author = authorRepository.getAuthor(authorId)
+            if (author != null) {
+                navigateToAuthor.postValue(authorId)
+                authorRepository.loadProfileInfo(authorId)
+            } else {
+                authorRepository.loadProfileInfo(authorId)?.let {
+                    navigateToAuthor.postValue(authorId)
+                } ?: displayErrorMessage(R.string.load_author_info_fetching_error)
             }
         }
     }
@@ -70,6 +72,12 @@ class OptionsViewModel(
         }
     }
 
+    fun unsyncAuthor(authorId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            authorRepository.unsyncAuthor(authorId)
+        }
+    }
+
     fun buildPdf(absolutePath: String, fanfictionId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             dbRepository.getCompleteFanfiction(fanfictionId)?.let { fanfiction ->
@@ -84,15 +92,6 @@ class OptionsViewModel(
             dbRepository.getCompleteFanfiction(fanfictionId)?.let { fanfiction ->
                 val fileName = epubBuilder.buildEpub(absolutePath, fanfiction)
                 getFile.postValue(fileName to absolutePath)
-            }
-        }
-    }
-
-    fun loadAuthorInfo(authorId: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            when (authorRepository.loadProfileInfo(authorId)) {
-                is AuthorRepositoryResultSuccess -> navigateToAuthor.postValue(authorId)
-                AuthorRepositoryResultFailure -> displayErrorMessage(R.string.load_author_info_fetching_error)
             }
         }
     }

@@ -5,14 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/margin_super_big"
     android:paddingStart="@dimen/margin_super_big"
-    android:paddingEnd="@dimen/margin_super_big">
+    android:paddingTop="@dimen/margin_big"
+    android:paddingEnd="@dimen/margin_super_big"
+    android:paddingBottom="@dimen/margin_big">
 
     <ImageView
         android:id="@+id/storyImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:scaleType="fitStart"
         android:src="@drawable/placeholder"

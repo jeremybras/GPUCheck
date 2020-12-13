@@ -1,14 +1,12 @@
 package fr.ffnet.downloader.main.search
 
 import android.content.res.Resources
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import fr.ffnet.downloader.R
 import fr.ffnet.downloader.common.FFLogger
 import fr.ffnet.downloader.common.FFLogger.Companion.EVENT_KEY
-import fr.ffnet.downloader.models.SearchUIItem
 import fr.ffnet.downloader.models.SearchUIItem.SearchAuthorUI
 import fr.ffnet.downloader.models.SearchUIItem.SearchStoryUI
 import fr.ffnet.downloader.repository.SearchRepository
@@ -29,22 +27,12 @@ class SearchViewModel(
     val navigateToFanfiction: SingleLiveEvent<String> = SingleLiveEvent()
     val navigateToAuthor: SingleLiveEvent<String> = SingleLiveEvent()
     val error: SingleLiveEvent<String> = SingleLiveEvent()
-    val searchResult: MediatorLiveData<List<SearchUIItem>> by lazy { MediatorLiveData<List<SearchUIItem>>() }
 
-    private val storyResult: MutableLiveData<List<SearchStoryUI>> = MutableLiveData()
-    private val authorResult: MutableLiveData<List<SearchAuthorUI>> = MutableLiveData()
+    val storyResult: MutableLiveData<List<SearchStoryUI>> = MutableLiveData()
+    val authorResult: MutableLiveData<List<SearchAuthorUI>> = MutableLiveData()
 
     enum class SearchType {
-        SEARCH_ALL, SEARCH_AUTHOR, SEARCH_STORY
-    }
-
-    init {
-        searchResult.removeSource(authorResult)
-        searchResult.removeSource(storyResult)
-        searchResult.apply {
-            addSource(authorResult) { combineLatestData() }
-            addSource(storyResult) { combineLatestData() }
-        }
+        SEARCH_AUTHOR, SEARCH_STORY
     }
 
     fun search(searchText: String?, searchType: SearchType) {
@@ -70,25 +58,20 @@ class SearchViewModel(
             viewModelScope.launch(Dispatchers.IO) {
 
                 when (searchType) {
-                    SearchType.SEARCH_ALL -> {
-                        searchAuthor(searchText)
-                        searchStory(searchText)
-                    }
                     SearchType.SEARCH_AUTHOR -> searchAuthor(searchText)
                     SearchType.SEARCH_STORY -> searchStory(searchText)
                 }
             }
         } else {
-            searchResult.postValue(emptyList())
+            storyResult.postValue(emptyList())
+            authorResult.postValue(emptyList())
         }
     }
 
     private fun searchAuthor(searchText: String) {
         val searchList = searchRepository.searchAuthor(searchText.split(" ").map { it.trim() })
         if (searchList == null) {
-            val errorMessage = resources.getString(R.string.repository_error)
-            FFLogger.d(EVENT_KEY, errorMessage)
-            error.postValue(errorMessage)
+            displayErrorMessage(R.string.repository_error)
         } else {
             storyResult.postValue(emptyList())
             authorResult.postValue(
@@ -102,9 +85,7 @@ class SearchViewModel(
     private fun searchStory(searchText: String) {
         val searchList = searchRepository.searchStory(searchText.split(" ").map { it.trim() })
         if (searchList == null) {
-            val errorMessage = resources.getString(R.string.repository_error)
-            FFLogger.d(EVENT_KEY, errorMessage)
-            error.postValue(errorMessage)
+            displayErrorMessage(R.string.repository_error)
         } else {
             authorResult.postValue(emptyList())
             storyResult.postValue(
@@ -115,22 +96,9 @@ class SearchViewModel(
         }
     }
 
-    private fun combineLatestData() {
-
-        val authorList = authorResult.value ?: emptyList()
-        val storyList = storyResult.value ?: emptyList()
-
-        if (authorList.isEmpty() && storyList.isEmpty()) {
-            searchResult.value = listOf(SearchUIItem.SearchUITitle(resources.getString(R.string.search_no_result)))
-            return
-        }
-        val title = SearchUIItem.SearchUITitle(
-            resources.getQuantityString(
-                R.plurals.search_result_title,
-                authorList.size + storyList.size,
-                authorList.size + storyList.size
-            )
-        )
-        searchResult.value = listOf(title).plus(authorList).plus(storyList)
+    private fun displayErrorMessage(messageResource: Int) {
+        val errorMessage = resources.getString(messageResource)
+        FFLogger.d(EVENT_KEY, errorMessage)
+        error.postValue(errorMessage)
     }
 }

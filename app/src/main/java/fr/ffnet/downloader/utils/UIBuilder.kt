@@ -11,6 +11,7 @@ import fr.ffnet.downloader.models.Story
 import fr.ffnet.downloader.models.SyncedUIItem.SyncedAuthorUI
 import fr.ffnet.downloader.models.SyncedUIItem.SyncedStorySpotlightUI
 import fr.ffnet.downloader.models.SyncedUIItem.SyncedStoryUI
+import fr.ffnet.downloader.repository.entities.Author
 import fr.ffnet.downloader.repository.entities.AuthorSearchResult
 import javax.inject.Inject
 
@@ -37,19 +38,22 @@ class UIBuilder @Inject constructor(
         )
     }
 
-    fun buildAuthorUI(name: String, nbStories: Int, nbFavorites: Int): SyncedAuthorUI {
+    fun buildAuthorUI(author: Author): SyncedAuthorUI {
         return SyncedAuthorUI(
-            title = resources.getString(R.string.author_title, name),
+            id = author.id,
+            name = author.name,
+            title = resources.getString(R.string.author_title, author.name),
             nbStories = resources.getQuantityString(
                 R.plurals.search_author_nb_stories,
-                nbStories,
-                nbStories
+                author.nbStories,
+                author.nbStories
             ),
             nbFavorites = resources.getQuantityString(
                 R.plurals.search_author_nb_favorites,
-                nbFavorites,
-                nbFavorites
-            )
+                author.nbFavorites,
+                author.nbFavorites
+            ),
+            imageUrl = author.imageUrl
         )
     }
 

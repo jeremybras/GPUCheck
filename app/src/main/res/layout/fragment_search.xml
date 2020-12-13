@@ -94,7 +94,7 @@
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:padding="@dimen/margin_medium"
-            android:text="dark"
+            android:text="grow"
             android:textColor="@color/ff_grey_darker"
             android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/searchValidateButton"

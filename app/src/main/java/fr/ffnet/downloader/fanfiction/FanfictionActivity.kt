@@ -95,7 +95,7 @@ class FanfictionActivity : AppCompatActivity(), ParentListener, PopupMenu.OnMenu
                 true
             }
             R.id.deleteOption -> {
-                optionsController.onUnsync(fanfictionId)
+                optionsController.onUnsyncStory(fanfictionId)
                 true
             }
             else -> false

@@ -30,8 +30,11 @@ sealed class SyncedUIItem {
     ) : SyncedUIItem()
 
     data class SyncedAuthorUI(
+        val id: String,
+        val name: String,
         val title: String,
         val nbStories: String,
-        val nbFavorites: String
+        val nbFavorites: String,
+        val imageUrl: String
     ) : SyncedUIItem()
 }

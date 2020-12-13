@@ -17,6 +17,7 @@ class ProfileBuilder @Inject constructor(
         val name = document.select("#content_wrapper_inner span").first()?.text() ?: "N/A"
         val favoriteStoriesSelector = document.select(".z-list.favstories")
         val myStoriesSelector = document.select(".z-list.mystories")
+        val image = document.select("#bio>img").attr("data-original")
 
         return Profile(
             profileId = profileId,
@@ -29,7 +30,8 @@ class ProfileBuilder @Inject constructor(
                 myStoriesSelector,
                 PROFILE_TYPE_MY_STORY,
                 name
-            )
+            ),
+            imageUrl = "https:$image"
         )
     }
 

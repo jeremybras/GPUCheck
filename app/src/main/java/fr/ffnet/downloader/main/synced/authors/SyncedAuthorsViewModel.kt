@@ -17,7 +17,7 @@ class SyncedAuthorsViewModel(
     fun loadAuthorsStories() {
         authors = Transformations.map(authorRepository.loadSyncedAuthors()) { authorList ->
             authorList.map { author ->
-                uiBuilder.buildAuthorUI(author.name, author.nbStories, author.nbFavorites)
+                uiBuilder.buildAuthorUI(author)
             }
         }
     }

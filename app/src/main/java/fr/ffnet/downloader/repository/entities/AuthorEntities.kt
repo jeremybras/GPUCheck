@@ -16,7 +16,8 @@ data class Author(
     val name: String,
     val nbStories: Int,
     val nbFavorites: Int,
-    val fetchedDate: LocalDateTime
+    val fetchedDate: LocalDateTime,
+    val imageUrl: String
 )
 
 @Entity
@@ -25,5 +26,6 @@ data class AuthorEntity(
     val name: String,
     val fetchedDate: LocalDateTime,
     val nbstories: Int,
-    val nbFavorites: Int
+    val nbFavorites: Int,
+    val imageUrl: String
 )

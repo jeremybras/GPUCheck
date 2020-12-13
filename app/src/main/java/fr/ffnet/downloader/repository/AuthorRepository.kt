@@ -3,8 +3,6 @@ package fr.ffnet.downloader.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import fr.ffnet.downloader.models.Story
-import fr.ffnet.downloader.repository.AuthorRepository.AuthorRepositoryResult.AuthorRepositoryResultFailure
-import fr.ffnet.downloader.repository.AuthorRepository.AuthorRepositoryResult.AuthorRepositoryResultSuccess
 import fr.ffnet.downloader.repository.dao.AuthorDao
 import fr.ffnet.downloader.repository.dao.FanfictionDao
 import fr.ffnet.downloader.repository.entities.Author
@@ -32,7 +30,7 @@ class AuthorRepository(
         dao.deleteAuthor(authorId)
     }
 
-    fun loadProfileInfo(authorId: String): AuthorRepositoryResult {
+    fun loadProfileInfo(authorId: String): Author? {
         val response = regularCrawlService.getProfile(authorId).execute()
         if (response.isSuccessful) {
             response.body()?.let { responseBody ->
@@ -62,50 +60,56 @@ class AuthorRepository(
                     )
                 }
 
-                val author = dao.getAuthor(authorId)
-                if (author == null) {
-                    dao.insertAuthor(
-                        AuthorEntity(
-                            authorId = profileInfo.profileId,
-                            name = profileInfo.name,
-                            fetchedDate = LocalDateTime.now(),
-                            nbstories = storyIds.size,
-                            nbFavorites = favoriteIds.size
-                        )
+                val authorEntity = dao.getAuthor(authorId)
+                if (authorEntity == null) {
+                    val newAuthorEntity = AuthorEntity(
+                        authorId = profileInfo.profileId,
+                        name = profileInfo.name,
+                        fetchedDate = LocalDateTime.now(),
+                        nbstories = storyIds.size,
+                        nbFavorites = favoriteIds.size,
+                        imageUrl = profileInfo.imageUrl
                     )
+                    dao.insertAuthor(newAuthorEntity)
+                    return buildAuthor(newAuthorEntity)
                 } else {
-                    dao.updateAuthor(
-                        author.copy(
-                            fetchedDate = LocalDateTime.now(),
-                            nbstories = storyIds.size,
-                            nbFavorites = favoriteIds.size
-                        )
+                    val updatedAuthorEntity = authorEntity.copy(
+                        fetchedDate = LocalDateTime.now(),
+                        nbstories = storyIds.size,
+                        nbFavorites = favoriteIds.size,
+                        imageUrl = profileInfo.imageUrl
                     )
+                    dao.updateAuthor(updatedAuthorEntity)
+                    return buildAuthor(updatedAuthorEntity)
                 }
-
-                return AuthorRepositoryResultSuccess(
-                    authorId = authorId,
-                    authorName = profileInfo.name,
-                    favoritesNb = favoriteIds.size,
-                    storiesNb = storyIds.size,
-                )
             }
         }
-        return AuthorRepositoryResultFailure
+        return null
     }
 
     fun loadSyncedAuthors(): LiveData<List<Author>> {
         return Transformations.map(dao.getSyncedAuthors()) { authorEntityList ->
             authorEntityList.map {
-                Author(
-                    id = it.authorId,
-                    name = it.name,
-                    nbStories = it.nbstories,
-                    nbFavorites = it.nbFavorites,
-                    fetchedDate = it.fetchedDate
-                )
+                buildAuthor(it)
             }
         }
+    }
+
+    fun getAuthor(authorId: String): Author? {
+        return dao.getAuthor(authorId)?.let {
+            buildAuthor(it)
+        }
+    }
+
+    private fun buildAuthor(authorEntity: AuthorEntity): Author {
+        return Author(
+            id = authorEntity.authorId,
+            name = authorEntity.name,
+            nbStories = authorEntity.nbstories,
+            nbFavorites = authorEntity.nbFavorites,
+            fetchedDate = authorEntity.fetchedDate,
+            imageUrl = authorEntity.imageUrl
+        )
     }
 
     private fun insertListAndReturnIds(storyList: List<Story>): List<String> {
@@ -117,27 +121,5 @@ class AuthorRepository(
             }
             fanfiction.id
         }
-    }
-
-    fun getAuthor(authorId: String): AuthorRepositoryResult {
-        return dao.getAuthor(authorId)?.let {
-            AuthorRepositoryResultSuccess(
-                authorId = it.authorId,
-                authorName = it.name,
-                storiesNb = it.nbstories.toInt(),
-                favoritesNb = it.nbFavorites.toInt()
-            )
-        } ?: AuthorRepositoryResultFailure
-    }
-
-    sealed class AuthorRepositoryResult {
-        data class AuthorRepositoryResultSuccess(
-            val authorId: String,
-            val authorName: String,
-            val favoritesNb: Int,
-            val storiesNb: Int
-        ) : AuthorRepositoryResult()
-
-        object AuthorRepositoryResultFailure : AuthorRepositoryResult()
     }
 }

@@ -81,19 +81,19 @@ class SyncedStoriesViewModel(
             emptyList()
         } else {
             val firstItem = uiBuilder.buildSyncedStorySpotlightUI(
-                fanfictionList.first(),
-                buildStoryState(fanfictionList.first(), isSyncing),
-                shouldShowExportPdf,
-                shouldShowExportEpub
+                story = fanfictionList.first(),
+                storyState = buildStoryState(fanfictionList.first(), isSyncing),
+                shouldShowExportPdf = shouldShowExportPdf,
+                shouldShowExportEpub = shouldShowExportEpub
             )
             val otherItems = if (fanfictionList.size > 1) {
 
                 fanfictionList.drop(1).map { story ->
                     uiBuilder.buildSyncedStoryUI(
-                        story,
-                        buildStoryState(story, isSyncing),
-                        shouldShowExportPdf,
-                        shouldShowExportEpub
+                        story = story,
+                        storyState = buildStoryState(story, isSyncing),
+                        shouldShowExportPdf = shouldShowExportPdf,
+                        shouldShowExportEpub = shouldShowExportEpub
                     )
                 }
             } else emptyList()

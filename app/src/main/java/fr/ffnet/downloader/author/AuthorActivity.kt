@@ -64,6 +64,13 @@ class AuthorActivity : AppCompatActivity(), ParentListener {
 
     private fun setObservers() {
         authorViewModel.author.observe(this) { author ->
+
+            picasso
+                .load(author.imageUrl)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
+                .into(authorImageView)
+
             titleTextView.text = author.title
             nbStoriesDateTextView.text = author.nbStories
             nbFavoritesDateTextView.text = author.nbFavorites

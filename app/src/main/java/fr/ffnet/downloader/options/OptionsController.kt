@@ -13,9 +13,10 @@ interface OnFanfictionActionsListener {
     fun onFetchInformation(fanfictionId: String)
     fun onExportPdf(fanfictionId: String)
     fun onExportEpub(fanfictionId: String)
-    fun onUnsync(fanfictionId: String)
+    fun onUnsyncStory(fanfictionId: String)
     fun onSync(fanfictionId: String)
     fun onFetchAuthorInformation(authorId: String)
+    fun onUnsyncAuthor(authorId: String)
 }
 
 interface ParentListener {
@@ -70,7 +71,7 @@ class OptionsController(
         optionsViewModel.buildEpub(absolutePath, fanfictionId)
     }
 
-    override fun onUnsync(fanfictionId: String) {
+    override fun onUnsyncStory(fanfictionId: String) {
         FFLogger.d(FFLogger.EVENT_KEY, "Unsync $fanfictionId")
         optionsViewModel.unsyncFanfiction(fanfictionId)
     }
@@ -82,5 +83,9 @@ class OptionsController(
 
     override fun onFetchAuthorInformation(authorId: String) {
         optionsViewModel.loadAuthorInfo(authorId)
+    }
+
+    override fun onUnsyncAuthor(authorId: String) {
+        optionsViewModel.unsyncAuthor(authorId)
     }
 }

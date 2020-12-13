@@ -26,10 +26,6 @@ class DatabaseRepository(
         dao.getSyncedFanfictions()
     )
 
-    fun loadHistory(): LiveData<List<Story>> = transformEntityToModel(
-        dao.getFanfictionHistory()
-    )
-
     fun getChapters(fanfictionId: String): LiveData<List<ChapterEntity>> = dao.getChaptersLivedata(
         fanfictionId
     )

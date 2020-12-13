@@ -18,7 +18,7 @@ import fr.ffnet.downloader.R
 import fr.ffnet.downloader.common.MainApplication
 import fr.ffnet.downloader.main.MainActivity
 import fr.ffnet.downloader.main.ViewPagerViewModel
-import fr.ffnet.downloader.main.search.SearchViewModel.*
+import fr.ffnet.downloader.main.search.SearchViewModel.SearchType
 import fr.ffnet.downloader.main.search.injection.SearchModule
 import fr.ffnet.downloader.models.JustInUI
 import fr.ffnet.downloader.models.SettingType.DEFAULT_SEARCH_AUTHORS
@@ -151,10 +151,15 @@ class SearchFragment : Fragment(), ParentListener {
             welcomeBlock.isVisible = hasSyncedStories.not()
         }
 
-        searchViewModel.searchResult.observe(viewLifecycleOwner) {
+        searchViewModel.storyResult.observe(viewLifecycleOwner) {
             searchValidateButton.isEnabled = true
             (searchResultRecyclerView.adapter as SearchListAdapter).searchResultList = it
         }
+        searchViewModel.authorResult.observe(viewLifecycleOwner) {
+            searchValidateButton.isEnabled = true
+            (searchResultRecyclerView.adapter as SearchListAdapter).searchResultList = it
+        }
+
         searchViewModel.error.observe(viewLifecycleOwner) {
             showErrorMessage(it)
         }

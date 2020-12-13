@@ -12,6 +12,7 @@ import fr.ffnet.downloader.models.SyncedUIItem
 import fr.ffnet.downloader.models.SyncedUIItem.SyncedAuthorUI
 import fr.ffnet.downloader.models.SyncedUIItem.SyncedStorySpotlightUI
 import fr.ffnet.downloader.models.SyncedUIItem.SyncedStoryUI
+import fr.ffnet.downloader.models.SyncedUIItem.SyncedUITitle
 import fr.ffnet.downloader.options.OnFanfictionActionsListener
 import kotlinx.android.synthetic.main.item_synced_result_author.view.*
 import kotlinx.android.synthetic.main.item_synced_result_story_spotlight.view.*
@@ -74,20 +75,31 @@ class SyncedListAdapter(
     }
 
     fun unsync(position: Int) {
-        val item = syncedResultList[position]
-        if (item is SyncedStorySpotlightUI) {
-            listener.onUnsync(item.id)
-        }
-        if (item is SyncedStoryUI) {
-            listener.onUnsync(item.id)
+        when (val item = syncedResultList[position]) {
+            is SyncedStorySpotlightUI -> listener.onUnsyncStory(item.id)
+            is SyncedStoryUI -> listener.onUnsyncStory(item.id)
+            is SyncedAuthorUI -> listener.onUnsyncAuthor(item.id)
+            is SyncedUITitle -> {
+                // Not supposed to happen
+            }
         }
     }
 
     inner class SyncedAuthorUIViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(author: SyncedAuthorUI) {
-            view.authorNameTextView.text = author.title
+
+            picasso
+                .load(author.imageUrl)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
+                .into(view.authorImageView)
+
+            view.authorNameTextView.text = author.name
             view.nbStoriesTextView.text = author.nbStories
+            view.setOnClickListener {
+                listener.onFetchAuthorInformation(author.id)
+            }
         }
     }
 

@@ -5,10 +5,6 @@ import androidx.work.WorkInfo
 import fr.ffnet.downloader.common.FFLogger
 import fr.ffnet.downloader.common.FFLogger.Companion.EVENT_KEY
 import fr.ffnet.downloader.models.Story
-import fr.ffnet.downloader.repository.DownloaderRepository.FanfictionRepositoryResult.FanfictionRepositoryResultFailure
-import fr.ffnet.downloader.repository.DownloaderRepository.FanfictionRepositoryResult.FanfictionRepositoryResultInternetFailure
-import fr.ffnet.downloader.repository.DownloaderRepository.FanfictionRepositoryResult.FanfictionRepositoryResultServerFailure
-import fr.ffnet.downloader.repository.DownloaderRepository.FanfictionRepositoryResult.FanfictionRepositoryResultSuccess
 import fr.ffnet.downloader.repository.dao.FanfictionDao
 import fr.ffnet.downloader.utils.FanfictionBuilder
 import fr.ffnet.downloader.utils.FanfictionConverter
@@ -45,7 +41,7 @@ class DownloaderRepository(
         }
     }
 
-    fun loadFanfictionInfo(fanfictionId: String): FanfictionRepositoryResult {
+    fun loadFanfictionInfo(fanfictionId: String): Story? {
         return try {
             FFLogger.d(EVENT_KEY, "Refreshing info for $fanfictionId")
             val response = serviceRegular.getFanfiction(fanfictionId).execute()
@@ -75,13 +71,11 @@ class DownloaderRepository(
                         fanfictionId = fanfictionId,
                         chapterId = "1"
                     )
-                    FanfictionRepositoryResultSuccess(remoteFanfiction)
-                } ?: FanfictionRepositoryResultFailure
-            } else {
-                FanfictionRepositoryResultServerFailure
-            }
+                    remoteFanfiction
+                }
+            } else null
         } catch (exception: IOException) {
-            FanfictionRepositoryResultInternetFailure
+            null
         }
     }
 
