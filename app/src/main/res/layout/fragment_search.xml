@@ -121,13 +121,6 @@
             app:layout_constraintTop_toBottomOf="@id/searchEditText">
 
             <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/searchAllRadioButton"
-                style="@style/RadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/search_radio_all" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/searchAuthorRadioButton"
                 style="@style/RadioButton"
                 android:layout_width="wrap_content"

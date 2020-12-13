@@ -182,7 +182,6 @@ class SearchFragment : Fragment(), ParentListener {
         settingsViewModel.settingList.observe(viewLifecycleOwner) { settingList ->
             settingList.map { setting ->
                 when (setting.type) {
-                    DEFAULT_SEARCH_ALL -> searchAllRadioButton.isChecked = setting.isEnabled
                     DEFAULT_SEARCH_AUTHORS -> searchAuthorRadioButton.isChecked = setting.isEnabled
                     DEFAULT_SEARCH_STORIES -> searchStoryRadioButton.isChecked = setting.isEnabled
 

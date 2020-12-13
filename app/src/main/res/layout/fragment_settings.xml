@@ -139,14 +139,6 @@
             app:layout_constraintTop_toBottomOf="@id/searchTypeTitleTextView">
 
             <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/searchTypeAllRadioButton"
-                style="@style/RadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_big"
-                android:text="@string/search_radio_all" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/searchTypeAuthorRadioButton"
                 style="@style/RadioButton"
                 android:layout_width="wrap_content"
@@ -163,79 +155,6 @@
         </RadioGroup>
 
         <TextView
-            android:id="@+id/justInSectionTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_super_big"
-            android:text="@string/settings_just_in_section_title"
-            android:textAppearance="@style/FFnet.TextStyle.BigTitle.Blue"
-            app:layout_constraintStart_toStartOf="@id/startGuideline"
-            app:layout_constraintTop_toBottomOf="@id/searchTypeRadioGroup" />
-
-        <TextView
-            android:id="@+id/justInShowTitleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_big"
-            android:text="@string/settings_just_in_show_section_title"
-            android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
-            app:layout_constraintStart_toStartOf="@id/startGuideline"
-            app:layout_constraintTop_toBottomOf="@+id/justInSectionTextView" />
-
-        <TextView
-            android:id="@+id/justInShowSubTitleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_just_in_show_section_subtitle"
-            android:textAppearance="@style/FFnet.TextStyle.SubTitle"
-            app:layout_constraintStart_toStartOf="@id/startGuideline"
-            app:layout_constraintTop_toBottomOf="@+id/justInShowTitleTextView" />
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/justInShowSwitchCompat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:thumb="@drawable/switch_thumb"
-            app:layout_constraintBottom_toBottomOf="@id/justInShowSubTitleTextView"
-            app:layout_constraintEnd_toEndOf="@id/endGuideline"
-            app:layout_constraintTop_toTopOf="@+id/justInShowTitleTextView"
-            app:track="@drawable/switch_track" />
-
-        <TextView
-            android:id="@+id/justInTypeTitleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_big"
-            android:text="@string/settings_just_in_type"
-            android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
-            app:layout_constraintStart_toStartOf="@id/startGuideline"
-            app:layout_constraintTop_toBottomOf="@+id/justInShowSubTitleTextView" />
-
-        <RadioGroup
-            android:id="@+id/justInTypeRadioGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@id/startGuideline"
-            app:layout_constraintTop_toBottomOf="@id/justInTypeTitleTextView">
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/justInTypePublishedRadioButton"
-                style="@style/RadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_big"
-                android:text="@string/settings_just_in_type_recently_published" />
-
-            <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/justInTypeUpdatedRadioButton"
-                style="@style/RadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_just_in_type_recently_updated" />
-        </RadioGroup>
-
-        <TextView
             android:id="@+id/dreamTeamTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -243,7 +162,7 @@
             android:text="@string/settings_dream_team"
             android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
             app:layout_constraintStart_toStartOf="@id/startGuideline"
-            app:layout_constraintTop_toBottomOf="@+id/justInTypeRadioGroup" />
+            app:layout_constraintTop_toBottomOf="@+id/searchTypeRadioGroup" />
 
         <TextView
             android:id="@+id/dreamTeamJeremyTextView"

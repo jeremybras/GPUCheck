@@ -50,21 +50,7 @@ class MainActivity : AppCompatActivity(), ParentListener {
         initViewPager()
 
         menuImageView.setOnClickListener {
-            when (menuImageView.frame) {
-                in 50..59 -> onBackPressed()
-                in 25..35 -> {
-                    getBackFromSettings = pageTypeViewPager.currentItem
-                    showSettings()
-                }
-                in 0..10 -> {
-                    if (getBackFromSettings == FRAGMENT_ID_SYNCED) {
-                        showSynced()
-                    } else if (getBackFromSettings == FRAGMENT_ID_SEARCH) {
-                        showSearch()
-                    }
-                    getBackFromSettings = null
-                }
-            }
+            onMenuImageView()
         }
     }
 
@@ -79,8 +65,10 @@ class MainActivity : AppCompatActivity(), ParentListener {
 
     override fun onBackPressed() {
         val shouldShowWelcomeBlock = getSearchFragment()?.shouldShowWelcomeBlock() ?: false
-        if ((pageTypeViewPager.currentItem == FRAGMENT_ID_SEARCH && hasStories) || shouldShowWelcomeBlock) {
+        if ((isOnSearchFragment() && hasStories) || shouldShowWelcomeBlock) {
             getSearchFragment()?.onBackPressed()
+        } else if (isOnSettingsFragment()) {
+            onMenuImageView()
         } else {
             super.onBackPressed()
         }
@@ -171,6 +159,24 @@ class MainActivity : AppCompatActivity(), ParentListener {
             hasStories && isOnSearchFragment() -> setMenuBack()
             isOnSearchFragment() -> setMenuOriginal()
             isOnSettingsFragment() -> setMenuClose()
+        }
+    }
+
+    private fun onMenuImageView() {
+        when (menuImageView.frame) {
+            in 50..59 -> onBackPressed()
+            in 25..35 -> {
+                getBackFromSettings = pageTypeViewPager.currentItem
+                showSettings()
+            }
+            in 0..10 -> {
+                if (getBackFromSettings == FRAGMENT_ID_SYNCED) {
+                    showSynced()
+                } else if (getBackFromSettings == FRAGMENT_ID_SEARCH) {
+                    showSearch()
+                }
+                getBackFromSettings = null
+            }
         }
     }
 
