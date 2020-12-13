@@ -90,6 +90,7 @@ class SearchViewModel(
             FFLogger.d(EVENT_KEY, errorMessage)
             error.postValue(errorMessage)
         } else {
+            storyResult.postValue(emptyList())
             authorResult.postValue(
                 searchList.map {
                     uiBuilder.buildSearchAuthorUI(it)
@@ -105,6 +106,7 @@ class SearchViewModel(
             FFLogger.d(EVENT_KEY, errorMessage)
             error.postValue(errorMessage)
         } else {
+            authorResult.postValue(emptyList())
             storyResult.postValue(
                 searchList.sortedByDescending { it.nbChapters }.map {
                     uiBuilder.buildSearchStoryUI(it)

@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 class FanfictionViewModel(
     private val downloaderRepository: DownloaderRepository,
     private val databaseRepository: DatabaseRepository,
-    private val uiBuilder: UIBuilder,
+    private val uiBuilder: UIBuilder
 ) : ViewModel() {
 
     private lateinit var isSyncing: LiveData<Boolean>

@@ -42,7 +42,9 @@ class SettingsViewModel(
             if (allSettings.size == defaultSettings.size) {
                 allSettings
             } else {
-                settingsRepository.saveSettings(defaultSettings)
+                viewModelScope.launch(Dispatchers.IO) {
+                    settingsRepository.saveSettings(defaultSettings)
+                }
                 defaultSettings
             }
         }

@@ -7,6 +7,9 @@ import androidx.lifecycle.viewModelScope
 import fr.ffnet.downloader.R
 import fr.ffnet.downloader.common.FFLogger
 import fr.ffnet.downloader.common.FFLogger.Companion.EVENT_KEY
+import fr.ffnet.downloader.repository.AuthorRepository
+import fr.ffnet.downloader.repository.AuthorRepository.AuthorRepositoryResult.AuthorRepositoryResultFailure
+import fr.ffnet.downloader.repository.AuthorRepository.AuthorRepositoryResult.AuthorRepositoryResultSuccess
 import fr.ffnet.downloader.repository.DatabaseRepository
 import fr.ffnet.downloader.repository.DownloaderRepository
 import fr.ffnet.downloader.repository.DownloaderRepository.FanfictionRepositoryResult.FanfictionRepositoryResultFailure
@@ -23,26 +26,28 @@ class OptionsViewModel(
     private val resources: Resources,
     private val dbRepository: DatabaseRepository,
     private val apiRepository: DownloaderRepository,
+    private val authorRepository: AuthorRepository,
     private val pdfBuilder: PdfBuilder,
     private val epubBuilder: EpubBuilder
 ) : ViewModel() {
 
     val getFile: MutableLiveData<Pair<String, String>> = SingleLiveEvent()
-    val navigateToFanfiction: SingleLiveEvent<String> = SingleLiveEvent()
-    val error: SingleLiveEvent<SearchError> = SingleLiveEvent()
+    val navigateToStory: SingleLiveEvent<String> = SingleLiveEvent()
+    val navigateToAuthor: SingleLiveEvent<String> = SingleLiveEvent()
+    val error: SingleLiveEvent<String> = SingleLiveEvent()
 
     fun loadFanfictionInfo(fanfictionId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val isFanfictionInDatabase = dbRepository.isFanfictionInDatabase(fanfictionId)
             if (isFanfictionInDatabase) {
                 FFLogger.d(EVENT_KEY, "Fanfiction $fanfictionId is already in database")
-                navigateToFanfiction.postValue(fanfictionId)
+                navigateToStory.postValue(fanfictionId)
                 apiRepository.loadFanfictionInfo(fanfictionId)
             } else {
                 when (apiRepository.loadFanfictionInfo(fanfictionId)) {
                     is FanfictionRepositoryResultSuccess -> {
                         FFLogger.d(EVENT_KEY, "Fanfiction $fanfictionId loaded successfully")
-                        navigateToFanfiction.postValue(fanfictionId)
+                        navigateToStory.postValue(fanfictionId)
                     }
                     FanfictionRepositoryResultFailure,
                     FanfictionRepositoryResultServerFailure,
@@ -84,18 +89,17 @@ class OptionsViewModel(
     }
 
     fun loadAuthorInfo(authorId: String) {
-
+        viewModelScope.launch(Dispatchers.IO) {
+            when (authorRepository.loadProfileInfo(authorId)) {
+                is AuthorRepositoryResultSuccess -> navigateToAuthor.postValue(authorId)
+                AuthorRepositoryResultFailure -> displayErrorMessage(R.string.load_author_info_fetching_error)
+            }
+        }
     }
 
     private fun displayErrorMessage(messageResource: Int) {
         val errorMessage = resources.getString(messageResource)
         FFLogger.d(EVENT_KEY, errorMessage)
-        error.postValue(
-            SearchError.InfoFetchingFailed(errorMessage)
-        )
-    }
-
-    sealed class SearchError(val message: String) {
-        data class InfoFetchingFailed(val msg: String) : SearchError(msg)
+        error.postValue(errorMessage)
     }
 }

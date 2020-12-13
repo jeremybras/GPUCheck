@@ -10,6 +10,7 @@ import fr.ffnet.downloader.main.search.SearchFragment
 import fr.ffnet.downloader.main.search.SearchViewModel
 import fr.ffnet.downloader.options.OptionsController
 import fr.ffnet.downloader.options.OptionsViewModel
+import fr.ffnet.downloader.repository.AuthorRepository
 import fr.ffnet.downloader.repository.DatabaseRepository
 import fr.ffnet.downloader.repository.DownloaderRepository
 import fr.ffnet.downloader.repository.JustInRepository
@@ -80,6 +81,7 @@ class SearchModule(private val fragment: SearchFragment) {
         resources: Resources,
         databaseRepository: DatabaseRepository,
         downloaderRepository: DownloaderRepository,
+        authorRepository: AuthorRepository,
         pdfBuilder: PdfBuilder,
         epubBuilder: EpubBuilder,
     ): OptionsViewModel {
@@ -88,6 +90,7 @@ class SearchModule(private val fragment: SearchFragment) {
                 resources = resources,
                 dbRepository = databaseRepository,
                 apiRepository = downloaderRepository,
+                authorRepository = authorRepository,
                 pdfBuilder = pdfBuilder,
                 epubBuilder = epubBuilder
             )

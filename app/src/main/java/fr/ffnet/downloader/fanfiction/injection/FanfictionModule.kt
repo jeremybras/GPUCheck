@@ -8,6 +8,7 @@ import fr.ffnet.downloader.fanfiction.FanfictionActivity
 import fr.ffnet.downloader.fanfiction.FanfictionViewModel
 import fr.ffnet.downloader.options.OptionsController
 import fr.ffnet.downloader.options.OptionsViewModel
+import fr.ffnet.downloader.repository.AuthorRepository
 import fr.ffnet.downloader.repository.DatabaseRepository
 import fr.ffnet.downloader.repository.DownloaderRepository
 import fr.ffnet.downloader.repository.SettingsRepository
@@ -55,6 +56,7 @@ class FanfictionModule(private val activity: FanfictionActivity) {
         resources: Resources,
         databaseRepository: DatabaseRepository,
         downloaderRepository: DownloaderRepository,
+        authorRepository: AuthorRepository,
         pdfBuilder: PdfBuilder,
         epubBuilder: EpubBuilder
     ): OptionsViewModel {
@@ -63,6 +65,7 @@ class FanfictionModule(private val activity: FanfictionActivity) {
                 resources = resources,
                 dbRepository = databaseRepository,
                 apiRepository = downloaderRepository,
+                authorRepository = authorRepository,
                 pdfBuilder = pdfBuilder,
                 epubBuilder = epubBuilder
             )

@@ -18,6 +18,7 @@ import fr.ffnet.downloader.R
 import fr.ffnet.downloader.common.MainApplication
 import fr.ffnet.downloader.main.MainActivity
 import fr.ffnet.downloader.main.ViewPagerViewModel
+import fr.ffnet.downloader.main.search.SearchViewModel.*
 import fr.ffnet.downloader.main.search.injection.SearchModule
 import fr.ffnet.downloader.models.JustInUI
 import fr.ffnet.downloader.models.SettingType.DEFAULT_SEARCH_ALL
@@ -202,9 +203,8 @@ class SearchFragment : Fragment(), ParentListener {
         searchValidateButton.isEnabled = false
         val searchText = searchEditText.text.toString()
         val searchType = when (searchTypeRadioGroup.checkedRadioButtonId) {
-            R.id.searchAuthorRadioButton -> SearchViewModel.SearchType.SEARCH_AUTHOR
-            R.id.searchStoryRadioButton -> SearchViewModel.SearchType.SEARCH_STORY
-            else -> SearchViewModel.SearchType.SEARCH_ALL
+            R.id.searchAuthorRadioButton -> SearchType.SEARCH_AUTHOR
+            else -> SearchType.SEARCH_STORY
         }
         searchViewModel.search(searchText, searchType)
     }

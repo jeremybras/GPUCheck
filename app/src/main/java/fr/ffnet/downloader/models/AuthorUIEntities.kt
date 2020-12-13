@@ -1,5 +1,11 @@
 package fr.ffnet.downloader.models
 
+data class AuthorUI(
+    val title: String,
+    val nbStories: String,
+    val nbFavorites: String
+)
+
 sealed class AuthorUIItem {
 
     data class SearchAuthorNotResultUIItem(

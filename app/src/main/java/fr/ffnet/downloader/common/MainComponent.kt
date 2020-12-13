@@ -1,6 +1,8 @@
 package fr.ffnet.downloader.common
 
 import dagger.Component
+import fr.ffnet.downloader.author.injection.AuthorComponent
+import fr.ffnet.downloader.author.injection.AuthorModule
 import fr.ffnet.downloader.fanfiction.chapters.injection.FanfictionDetailsChaptersComponent
 import fr.ffnet.downloader.fanfiction.chapters.injection.FanfictionDetailsChaptersModule
 import fr.ffnet.downloader.fanfiction.injection.FanfictionComponent
@@ -40,6 +42,7 @@ interface MainComponent {
     fun plus(settingsModule: SettingsModule): SettingsComponent
 
     fun plus(module: FanfictionModule): FanfictionComponent
+    fun plus(module: AuthorModule): AuthorComponent
 
     fun plus(module: FanfictionDetailsSummaryModule): FanfictionDetailsSummaryComponent
     fun plus(module: FanfictionDetailsChaptersModule): FanfictionDetailsChaptersComponent

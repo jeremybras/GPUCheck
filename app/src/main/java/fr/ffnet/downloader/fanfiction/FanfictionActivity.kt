@@ -42,7 +42,7 @@ class FanfictionActivity : AppCompatActivity(), ParentListener, PopupMenu.OnMenu
 
         private const val EXTRA_ID = "EXTRA_ID"
 
-        fun intent(context: Context, fanfictionId: String): Intent = Intent(
+        fun newIntent(context: Context, fanfictionId: String): Intent = Intent(
             context, FanfictionActivity::class.java
         ).apply {
             putExtra(EXTRA_ID, fanfictionId)

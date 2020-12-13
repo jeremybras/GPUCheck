@@ -40,23 +40,40 @@ class ProfileBuilder @Inject constructor(
     ): List<Fanfiction> {
         return selector.map { fanfiction ->
             val fanfictionId = fanfiction.attr("data-storyId")
-            println(fanfictionId)
+            val image = fanfiction.select("a img").attr("data-original")
+
+            val fanfictionStuff = fanfiction.select(".z-padtop2").first().text()
+            val reviews = if (fanfictionStuff.contains("Reviews: ")) {
+                fanfictionStuff.split("Reviews: ")[1].split(" ")[0].replace(",", "").toInt()
+            } else 0
+            val favorites = if (fanfictionStuff.contains("Favs: ")) {
+                fanfictionStuff.split("Favs: ")[1].split(" ")[0].replace(",", "").toInt()
+            } else 0
+            val languageIndex = fanfictionStuff.indexOfAny(SearchBuilder.languageList)
+            val genreIndex = fanfictionStuff.indexOfAny(SearchBuilder.genreList)
+            val category = fanfictionStuff.split(" -")[0]
+
+
             Fanfiction(
                 id = fanfictionId,
                 title = fanfiction.attr("data-title"),
                 isInLibrary = false,
-                image = "",
+                image = "https:$image",
                 words = fanfiction.attr("data-wordcount").toInt(),
                 author = defaultAuthor ?: fanfiction
                     .select("a")
                     .first { it.attr("href").contains("/u/") }
                     .text(),
                 summary = "N/A",
-                language = "",
-                category = "",
-                genre = "",
-                nbReviews = 0,
-                nbFavorites = 0,
+                language = if (languageIndex >= 0) {
+                    fanfictionStuff.substring(languageIndex).replaceAfter(" ", "")
+                } else "",
+                category = category,
+                genre = if (genreIndex >= 0) {
+                    fanfictionStuff.substring(genreIndex).replaceAfter(" ", "").split("/")[0]
+                } else "",
+                nbReviews = reviews,
+                nbFavorites = favorites,
                 publishedDate = DateTime(
                     fanfiction.attr("data-datesubmit")
                         .toLong() * 1000

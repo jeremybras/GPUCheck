@@ -4,9 +4,9 @@ import android.content.Context
 import android.os.Environment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.observe
+import fr.ffnet.downloader.author.AuthorActivity
 import fr.ffnet.downloader.common.FFLogger
 import fr.ffnet.downloader.fanfiction.FanfictionActivity
-import fr.ffnet.downloader.options.OptionsViewModel.SearchError
 import fr.ffnet.downloader.utils.FanfictionOpener
 
 interface OnFanfictionActionsListener {
@@ -40,20 +40,18 @@ class OptionsController(
         optionsViewModel.getFile.observe(lifecycleOwner) { (fileName, absolutePath) ->
             fanfictionOpener.openFile(fileName, absolutePath)
         }
-        optionsViewModel.navigateToFanfiction.observe(lifecycleOwner) { fanfictionId ->
+        optionsViewModel.navigateToStory.observe(lifecycleOwner) { fanfictionId ->
             context.startActivity(
-                FanfictionActivity.intent(
-                    context,
-                    fanfictionId
-                )
+                FanfictionActivity.newIntent(context, fanfictionId)
             )
         }
-        optionsViewModel.error.observe(lifecycleOwner) { searchError ->
-            when (searchError) {
-                is SearchError.InfoFetchingFailed -> {
-                    parentListener.showErrorMessage(searchError.message)
-                }
-            }
+        optionsViewModel.error.observe(lifecycleOwner) { errorMessage ->
+            parentListener.showErrorMessage(errorMessage)
+        }
+        optionsViewModel.navigateToAuthor.observe(lifecycleOwner) { authorId ->
+            context.startActivity(
+                AuthorActivity.newIntent(context, authorId)
+            )
         }
     }
 

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/containerView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ff_eggshell"
+    android:paddingTop="@dimen/margin_super_big">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/menuImageView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:scaleType="centerInside"
+        app:layout_constraintStart_toStartOf="@+id/startGuideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_rawRes="@raw/ic_animations"
+        app:lottie_speed="2" />
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_big_big"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="@style/FFnet.TextStyle.BigTitle.Blue"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
+        app:layout_constraintStart_toStartOf="@+id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/menuImageView"
+        tools:text="Stories of Taliesin19" />
+
+    <ImageView
+        android:id="@+id/authorImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/content_description_story_image"
+        android:scaleType="fitXY"
+        android:src="@drawable/placeholder"
+        app:layout_constraintBottom_toBottomOf="@+id/actionButtonViewFlipper"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintTop_toTopOf="@id/aboutTextView" />
+
+    <TextView
+        android:id="@+id/aboutTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_big"
+        android:layout_marginTop="@dimen/margin_big"
+        android:text="@string/author_about"
+        android:textAppearance="@style/FFnet.TextStyle.MidTitle.Blue"
+        app:layout_constraintStart_toEndOf="@id/authorImageView"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+
+    <ImageView
+        android:id="@+id/publishedDateImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/content_description_story_published_date"
+        android:src="@drawable/ic_release"
+        app:layout_constraintBottom_toBottomOf="@+id/publishedDateTextView"
+        app:layout_constraintStart_toStartOf="@+id/aboutTextView"
+        app:layout_constraintTop_toTopOf="@id/nbStoriesDateTextView" />
+
+    <TextView
+        android:id="@+id/nbStoriesDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_mini"
+        android:textAppearance="@style/FFnet.TextStyle.SubTitle"
+        app:layout_constraintStart_toEndOf="@+id/publishedDateImageView"
+        app:layout_constraintTop_toBottomOf="@+id/aboutTextView"
+        tools:text="3 stories" />
+
+    <ImageView
+        android:id="@+id/favoriteImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/content_description_story_updated_date"
+        android:src="@drawable/ic_update_disabled"
+        app:layout_constraintBottom_toBottomOf="@+id/nbFavoritesDateTextView"
+        app:layout_constraintEnd_toEndOf="@+id/publishedDateImageView"
+        app:layout_constraintStart_toStartOf="@+id/publishedDateImageView"
+        app:layout_constraintTop_toTopOf="@id/nbFavoritesDateTextView" />
+
+    <TextView
+        android:id="@+id/nbFavoritesDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/FFnet.TextStyle.SubTitle"
+        app:layout_constraintStart_toStartOf="@+id/nbStoriesDateTextView"
+        app:layout_constraintTop_toBottomOf="@+id/nbStoriesDateTextView"
+        tools:text="15 favorite stories" />
+
+    <ViewFlipper
+        android:id="@+id/actionButtonViewFlipper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        app:layout_constraintStart_toStartOf="@+id/aboutTextView"
+        app:layout_constraintTop_toBottomOf="@id/nbFavoritesDateTextView">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/addToLibraryButton"
+            style="@style/Button.Text.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_add"
+            android:text="@string/story_add_to_library" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/syncStoryButton"
+            style="@style/Button.Text.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_update_disabled"
+            android:drawableTint="@color/ff_white"
+            android:gravity="center"
+            android:text="@string/story_synchronize" />
+
+    </ViewFlipper>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/storiesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_big"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/margin_big"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/authorImageView"
+        tools:listitem="@layout/item_search_result_story" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/startGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/margin_super_big" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/endGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/margin_super_big" />
+</androidx.constraintlayout.widget.ConstraintLayout>

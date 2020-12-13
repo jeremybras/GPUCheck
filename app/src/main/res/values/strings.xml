@@ -31,6 +31,10 @@
         <item quantity="one">1 story</item>
         <item quantity="other">%d stories</item>
     </plurals>
+    <plurals name="search_author_nb_favorites">
+        <item quantity="one">1 favorite story</item>
+        <item quantity="other">%d favorite stories</item>
+    </plurals>
     <string name="search_no_result">No result</string>
 
     <string name="export_permission_title">Write permission needed</string>
@@ -39,6 +43,7 @@
     <string name="export_permission_deny">Deny</string>
 
     <string name="load_story_info_fetching_error">There was an error while fetching fanfiction from fanfiction.net</string>
+    <string name="load_author_info_fetching_error">There was an error while fetching author from fanfiction.net</string>
     <string name="story_add_to_library">Add to library</string>
     <string name="story_synchronizing">Synchronizing</string>
     <string name="story_synchronize">Synchronize</string>
@@ -56,5 +61,7 @@
         <item quantity="other">%d chapters missing</item>
     </plurals>
 
-    <string name="drawer_menu_settings">Settings</string>
+    <string name="author_about">About this author</string>
+    <string name="author_load_error">There was an error while loading author from database</string>
+    <string name="author_title">Stories of %s</string>
 </resources>
