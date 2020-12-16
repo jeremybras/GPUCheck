@@ -5,14 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.observe
 import com.google.android.material.snackbar.Snackbar
-import fr.ffnet.downloader.R
 import fr.ffnet.downloader.common.MainApplication
+import fr.ffnet.downloader.databinding.ActivityMainBinding
 import fr.ffnet.downloader.main.injection.ViewPagerModule
 import fr.ffnet.downloader.main.search.SearchFragment
 import fr.ffnet.downloader.main.synced.SyncedFragment
 import fr.ffnet.downloader.options.ParentListener
 import fr.ffnet.downloader.settings.SettingsFragment
-import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), ParentListener {
@@ -20,6 +19,7 @@ class MainActivity : AppCompatActivity(), ParentListener {
     @Inject lateinit var viewModel: ViewPagerViewModel
 
     private var hasSyncedItems: Boolean = false
+    private lateinit var binding: ActivityMainBinding
 
     companion object {
         private const val MENU_IMAGE_SPEED = 1.5f
@@ -33,23 +33,25 @@ class MainActivity : AppCompatActivity(), ParentListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         MainApplication
             .getComponent(this)
             .plus(ViewPagerModule(this))
             .inject(this)
 
-        menuImageView.frame = 30
-        menuImageView.setMinAndMaxFrame(30, 59)
+        binding.menuImageView.frame = 30
+        binding.menuImageView.setMinAndMaxFrame(30, 59)
 
-        searchIcon.setOnClickListener {
+        binding.searchIcon.setOnClickListener {
             showSearch()
         }
 
         initViewPager()
 
-        menuImageView.setOnClickListener {
+        binding.menuImageView.setOnClickListener {
             onMenuImageView()
         }
     }
@@ -60,7 +62,7 @@ class MainActivity : AppCompatActivity(), ParentListener {
     }
 
     override fun showErrorMessage(message: String) {
-        Snackbar.make(mainContainer, message, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(binding.mainContainer, message, Snackbar.LENGTH_LONG).show()
     }
 
     override fun onBackPressed() {
@@ -76,11 +78,11 @@ class MainActivity : AppCompatActivity(), ParentListener {
 
     private fun initViewPager() {
         val mainAdapter = MainAdapter(supportFragmentManager)
-        pageTypeViewPager.adapter = mainAdapter
+        binding.pageTypeViewPager.adapter = mainAdapter
         viewModel.hasSyncedItems().observe(this) { newHasSyncedItems ->
             hasSyncedItems = newHasSyncedItems
             if (mainAdapter.fragmentList.isEmpty()) {
-                pageTypeViewPager.adapter = mainAdapter.apply {
+                binding.pageTypeViewPager.adapter = mainAdapter.apply {
                     fragmentList = mutableListOf(
                         SettingsFragment(),
                         SyncedFragment(),
@@ -98,7 +100,7 @@ class MainActivity : AppCompatActivity(), ParentListener {
     }
 
     private fun showSettings() {
-        pageTypeViewPager.currentItem = FRAGMENT_ID_SETTINGS
+        binding.pageTypeViewPager.currentItem = FRAGMENT_ID_SETTINGS
         figureOutMenuIcon()
     }
 
@@ -106,54 +108,54 @@ class MainActivity : AppCompatActivity(), ParentListener {
         if (hasSyncedItems.not()) {
             super.onBackPressed()
         } else {
-            pageTypeViewPager.currentItem = FRAGMENT_ID_SYNCED
+            binding.pageTypeViewPager.currentItem = FRAGMENT_ID_SYNCED
             figureOutMenuIcon()
         }
     }
 
     private fun showSearch() {
-        pageTypeViewPager.currentItem = FRAGMENT_ID_SEARCH
+        binding.pageTypeViewPager.currentItem = FRAGMENT_ID_SEARCH
         figureOutMenuIcon()
     }
 
     private fun setMenuClose() {
-        if (menuImageView.frame in 25..35) {
-            menuImageView.setMinAndMaxFrame(0, 30)
-            menuImageView.speed = -MENU_IMAGE_SPEED
-            menuImageView.playAnimation()
-        } else if (menuImageView.frame in 50..59) {
-            menuImageView.setMinAndMaxFrame(0, 59)
-            menuImageView.speed = -MENU_IMAGE_SPEED
-            menuImageView.playAnimation()
+        if (binding.menuImageView.frame in 25..35) {
+            binding.menuImageView.setMinAndMaxFrame(0, 30)
+            binding.menuImageView.speed = -MENU_IMAGE_SPEED
+            binding.menuImageView.playAnimation()
+        } else if (binding.menuImageView.frame in 50..59) {
+            binding.menuImageView.setMinAndMaxFrame(0, 59)
+            binding.menuImageView.speed = -MENU_IMAGE_SPEED
+            binding.menuImageView.playAnimation()
         }
     }
 
     private fun setMenuBack() {
-        if (menuImageView.frame in 25..35) {
-            menuImageView.setMinAndMaxFrame(30, 59)
-            menuImageView.speed = MENU_IMAGE_SPEED
-            menuImageView.playAnimation()
-        } else if (menuImageView.frame in 0..10) {
-            menuImageView.setMinAndMaxFrame(0, 59)
-            menuImageView.speed = MENU_IMAGE_SPEED
-            menuImageView.playAnimation()
+        if (binding.menuImageView.frame in 25..35) {
+            binding.menuImageView.setMinAndMaxFrame(30, 59)
+            binding.menuImageView.speed = MENU_IMAGE_SPEED
+            binding.menuImageView.playAnimation()
+        } else if (binding.menuImageView.frame in 0..10) {
+            binding.menuImageView.setMinAndMaxFrame(0, 59)
+            binding.menuImageView.speed = MENU_IMAGE_SPEED
+            binding.menuImageView.playAnimation()
         }
     }
 
     private fun setMenuOriginal() {
-        if (menuImageView.frame in 0..10) {
-            menuImageView.setMinAndMaxFrame(0, 30)
-            menuImageView.speed = MENU_IMAGE_SPEED
-            menuImageView.playAnimation()
-        } else if (menuImageView.frame in 50..59) {
-            menuImageView.setMinAndMaxFrame(30, 59)
-            menuImageView.speed = -MENU_IMAGE_SPEED
-            menuImageView.playAnimation()
+        if (binding.menuImageView.frame in 0..10) {
+            binding.menuImageView.setMinAndMaxFrame(0, 30)
+            binding.menuImageView.speed = MENU_IMAGE_SPEED
+            binding.menuImageView.playAnimation()
+        } else if (binding.menuImageView.frame in 50..59) {
+            binding.menuImageView.setMinAndMaxFrame(30, 59)
+            binding.menuImageView.speed = -MENU_IMAGE_SPEED
+            binding.menuImageView.playAnimation()
         }
     }
 
     private fun figureOutMenuIcon() {
-        searchIcon.isVisible = isOnSyncedFragment()
+        binding.searchIcon.isVisible = isOnSyncedFragment()
         when {
             isOnSyncedFragment() -> setMenuOriginal()
             hasSyncedItems && isOnSearchFragment() -> setMenuBack()
@@ -163,10 +165,10 @@ class MainActivity : AppCompatActivity(), ParentListener {
     }
 
     private fun onMenuImageView() {
-        when (menuImageView.frame) {
+        when (binding.menuImageView.frame) {
             in 50..59 -> onBackPressed()
             in 25..35 -> {
-                getBackFromSettings = pageTypeViewPager.currentItem
+                getBackFromSettings = binding.pageTypeViewPager.currentItem
                 showSettings()
             }
             in 0..10 -> {
@@ -188,14 +190,14 @@ class MainActivity : AppCompatActivity(), ParentListener {
     }
 
     private fun isOnSyncedFragment(): Boolean {
-        return pageTypeViewPager.currentItem == FRAGMENT_ID_SYNCED
+        return binding.pageTypeViewPager.currentItem == FRAGMENT_ID_SYNCED
     }
 
     private fun isOnSearchFragment(): Boolean {
-        return pageTypeViewPager.currentItem == FRAGMENT_ID_SEARCH
+        return binding.pageTypeViewPager.currentItem == FRAGMENT_ID_SEARCH
     }
 
     private fun isOnSettingsFragment(): Boolean {
-        return pageTypeViewPager.currentItem == FRAGMENT_ID_SETTINGS
+        return binding.pageTypeViewPager.currentItem == FRAGMENT_ID_SETTINGS
     }
 }

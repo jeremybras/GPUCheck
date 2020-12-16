@@ -10,14 +10,13 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
-import fr.ffnet.downloader.R
 import fr.ffnet.downloader.common.MainApplication
+import fr.ffnet.downloader.databinding.FragmentStoriesSyncedBinding
 import fr.ffnet.downloader.main.synced.SyncedListAdapter
 import fr.ffnet.downloader.main.synced.stories.injection.SyncedStoriesModule
 import fr.ffnet.downloader.options.OptionsController
 import fr.ffnet.downloader.options.ParentListener
 import fr.ffnet.downloader.utils.SwipeToDeleteCallback
-import kotlinx.android.synthetic.main.fragment_stories_synced.*
 import javax.inject.Inject
 
 class SyncedStoriesFragment : Fragment(), ParentListener {
@@ -26,11 +25,17 @@ class SyncedStoriesFragment : Fragment(), ParentListener {
     @Inject lateinit var optionsController: OptionsController
     @Inject lateinit var picasso: Picasso
 
+    private var _binding: FragmentStoriesSyncedBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? = inflater.inflate(R.layout.fragment_stories_synced, container, false)
+    ): View? {
+        _binding = FragmentStoriesSyncedBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,21 +49,21 @@ class SyncedStoriesFragment : Fragment(), ParentListener {
     }
 
     override fun showErrorMessage(message: String) {
-        Snackbar.make(syncedContainer, message, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(binding.syncedContainer, message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun initializeSynced() {
 
         val itemTouchHelper = ItemTouchHelper(object : SwipeToDeleteCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                (syncedResultRecyclerView.adapter as SyncedListAdapter).unsync(
+                (binding.syncedResultRecyclerView.adapter as SyncedListAdapter).unsync(
                     viewHolder.bindingAdapterPosition
                 )
             }
         })
-        itemTouchHelper.attachToRecyclerView(syncedResultRecyclerView)
+        itemTouchHelper.attachToRecyclerView(binding.syncedResultRecyclerView)
 
-        syncedResultRecyclerView.adapter = SyncedListAdapter(
+        binding.syncedResultRecyclerView.adapter = SyncedListAdapter(
             picasso,
             optionsController
         )
@@ -66,7 +71,7 @@ class SyncedStoriesFragment : Fragment(), ParentListener {
 
     private fun initializeViewModelObservers() {
         syncedViewModel.syncedList.observe(viewLifecycleOwner) { syncedItemList ->
-            (syncedResultRecyclerView.adapter as SyncedListAdapter).syncedResultList = syncedItemList
+            (binding.syncedResultRecyclerView.adapter as SyncedListAdapter).syncedResultList = syncedItemList
         }
     }
 }

@@ -1,12 +1,14 @@
 package fr.ffnet.downloader.main.synced
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.ffnet.downloader.R
+import fr.ffnet.downloader.databinding.ItemSyncedResultAuthorBinding
+import fr.ffnet.downloader.databinding.ItemSyncedResultStoryBinding
+import fr.ffnet.downloader.databinding.ItemSyncedResultStorySpotlightBinding
 import fr.ffnet.downloader.fanfiction.FanfictionViewModel.StoryState
 import fr.ffnet.downloader.models.SyncedUIItem
 import fr.ffnet.downloader.models.SyncedUIItem.SyncedAuthorUI
@@ -14,8 +16,6 @@ import fr.ffnet.downloader.models.SyncedUIItem.SyncedStorySpotlightUI
 import fr.ffnet.downloader.models.SyncedUIItem.SyncedStoryUI
 import fr.ffnet.downloader.models.SyncedUIItem.SyncedUITitle
 import fr.ffnet.downloader.options.OnFanfictionActionsListener
-import kotlinx.android.synthetic.main.item_synced_result_author.view.*
-import kotlinx.android.synthetic.main.item_synced_result_story_spotlight.view.*
 
 class SyncedListAdapter(
     private val picasso: Picasso,
@@ -41,18 +41,24 @@ class SyncedListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_AUTHOR -> SyncedAuthorUIViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.item_synced_result_author, parent, false
+                ItemSyncedResultAuthorBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
                 )
             )
             TYPE_STORY -> SyncedStoryUIViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.item_synced_result_story, parent, false
+                ItemSyncedResultStoryBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
                 )
             )
             else -> SyncedSpotlighStorytUIViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.item_synced_result_story_spotlight, parent, false
+                ItemSyncedResultStorySpotlightBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
                 )
             )
         }
@@ -85,7 +91,9 @@ class SyncedListAdapter(
         }
     }
 
-    inner class SyncedAuthorUIViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    inner class SyncedAuthorUIViewHolder(
+        private val binding: ItemSyncedResultAuthorBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(author: SyncedAuthorUI) {
 
@@ -93,48 +101,52 @@ class SyncedListAdapter(
                 .load(author.imageUrl)
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
-                .into(view.authorImageView)
+                .into(binding.authorImageView)
 
-            view.authorNameTextView.text = author.name
-            view.nbStoriesTextView.text = author.nbStories
-            view.setOnClickListener {
+            binding.authorNameTextView.text = author.name
+            binding.nbStoriesTextView.text = author.nbStories
+            binding.root.setOnClickListener {
                 listener.onFetchAuthorInformation(author.id)
             }
         }
     }
 
-    inner class SyncedStoryUIViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    inner class SyncedStoryUIViewHolder(
+        private val binding: ItemSyncedResultStoryBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(story: SyncedStoryUI) {
 
-            view.actionButtonViewFlipper.displayedChild = when (story.storyState) {
+            binding.actionButtonViewFlipper.displayedChild = when (story.storyState) {
                 StoryState.Default -> DISPLAY_SYNC
                 StoryState.Syncing -> DISPLAY_SYNCING
                 is StoryState.Synced -> DISPLAY_SYNCED
             }
 
-            view.exportPDFButton.isVisible = story.shouldShowExportPdf
-            view.exportEPUBButton.isVisible = story.shouldShowExportEpub
+            binding.exportPDFButton.isVisible = story.shouldShowExportPdf
+            binding.exportEPUBButton.isVisible = story.shouldShowExportEpub
 
-            view.titleTextView.text = story.title
-            view.detailsTextView.text = story.details
+            binding.titleTextView.text = story.title
+            binding.detailsTextView.text = story.details
 
-            view.exportPDFButton.setOnClickListener {
+            binding.exportPDFButton.setOnClickListener {
                 listener.onExportPdf(story.id)
             }
-            view.exportEPUBButton.setOnClickListener {
+            binding.exportEPUBButton.setOnClickListener {
                 listener.onExportEpub(story.id)
             }
-            view.syncStoryButton.setOnClickListener {
+            binding.syncStoryButton.setOnClickListener {
                 listener.onSync(story.id)
             }
-            view.setOnClickListener {
+            binding.root.setOnClickListener {
                 listener.onFetchInformation(story.id)
             }
         }
     }
 
-    inner class SyncedSpotlighStorytUIViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    inner class SyncedSpotlighStorytUIViewHolder(
+        private val binding: ItemSyncedResultStorySpotlightBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(story: SyncedStorySpotlightUI) {
 
@@ -142,30 +154,30 @@ class SyncedListAdapter(
                 .load(story.imageUrl)
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
-                .into(view.storyImageView)
+                .into(binding.storyImageView)
 
-            view.actionButtonViewFlipper.displayedChild = when (story.storyState) {
+            binding.actionButtonViewFlipper.displayedChild = when (story.storyState) {
                 StoryState.Default -> DISPLAY_SYNC
                 StoryState.Syncing -> DISPLAY_SYNCING
                 StoryState.Synced -> DISPLAY_SYNCED
             }
 
-            view.exportPDFButton.isVisible = story.shouldShowExportPdf
-            view.exportEPUBButton.isVisible = story.shouldShowExportEpub
+            binding.exportPDFButton.isVisible = story.shouldShowExportPdf
+            binding.exportEPUBButton.isVisible = story.shouldShowExportEpub
 
-            view.titleTextView.text = story.title
-            view.detailsTextView.text = story.details
+            binding.titleTextView.text = story.title
+            binding.detailsTextView.text = story.details
 
-            view.setOnClickListener {
+            binding.root.setOnClickListener {
                 listener.onFetchInformation(story.id)
             }
-            view.exportPDFButton.setOnClickListener {
+            binding.exportPDFButton.setOnClickListener {
                 listener.onExportPdf(story.id)
             }
-            view.exportEPUBButton.setOnClickListener {
+            binding.exportEPUBButton.setOnClickListener {
                 listener.onExportEpub(story.id)
             }
-            view.syncStoryButton.setOnClickListener {
+            binding.syncStoryButton.setOnClickListener {
                 listener.onSync(story.id)
             }
         }

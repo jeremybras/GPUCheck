@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import fr.ffnet.downloader.R
+import androidx.lifecycle.observe
 import fr.ffnet.downloader.common.MainApplication
+import fr.ffnet.downloader.databinding.FragmentFanfictionDetailsSummaryBinding
 import fr.ffnet.downloader.fanfiction.summary.injection.FanfictionDetailsSummaryModule
-import kotlinx.android.synthetic.main.fragment_fanfiction_details_summary.*
 import javax.inject.Inject
 
 class FanfictionDetailsSummaryFragment : Fragment() {
@@ -30,11 +30,17 @@ class FanfictionDetailsSummaryFragment : Fragment() {
 
     private val fanfictionId by lazy { arguments?.getString(EXTRA_FANFICTION_ID) ?: "" }
 
+    private var _binding: FragmentFanfictionDetailsSummaryBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_fanfiction_details_summary, container, false)
+    ): View? {
+        _binding = FragmentFanfictionDetailsSummaryBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,20 +49,20 @@ class FanfictionDetailsSummaryFragment : Fragment() {
             .plus(FanfictionDetailsSummaryModule(this))
             .inject(this)
 
-        viewModel.loadStoryUI(fanfictionId).observe(viewLifecycleOwner, { story ->
+        viewModel.loadStoryUI(fanfictionId).observe(viewLifecycleOwner) { story ->
             if (story.language.isEmpty()) {
-                languageButton.isVisible = false
+                binding.languageButton.isVisible = false
             }
             if (story.genre.isEmpty()) {
-                genreButton.isVisible = false
+                binding.genreButton.isVisible = false
             }
-            languageButton.text = story.language
-            genreButton.text = story.genre
-            chaptersButton.text = story.chaptersNb.toString()
-            favoritesButton.text = story.favoritesNb
-            reviewsButton.text = story.reviewsNb
-            commentTextView.text = story.summary
-        })
+            binding.languageButton.text = story.language
+            binding.genreButton.text = story.genre
+            binding.chaptersButton.text = story.chaptersNb.toString()
+            binding.favoritesButton.text = story.favoritesNb
+            binding.reviewsButton.text = story.reviewsNb
+            binding.commentTextView.text = story.summary
+        }
     }
 
 }

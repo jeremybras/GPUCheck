@@ -1,14 +1,14 @@
 package fr.ffnet.downloader.main.search
 
+import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.ffnet.downloader.R
+import fr.ffnet.downloader.databinding.ItemJustInBinding
 import fr.ffnet.downloader.models.JustInUI.JustInUIItem
 import fr.ffnet.downloader.options.OnFanfictionActionsListener
-import kotlinx.android.synthetic.main.item_just_in.view.*
 
 class JustInAdapter(
     private val picasso: Picasso,
@@ -22,13 +22,8 @@ class JustInAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JustInViewHolder {
-        return JustInViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_just_in,
-                parent,
-                false
-            )
-        )
+        val binding = ItemJustInBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return JustInViewHolder(binding, parent.context)
     }
 
     override fun onBindViewHolder(holder: JustInViewHolder, position: Int) {
@@ -37,10 +32,13 @@ class JustInAdapter(
 
     override fun getItemCount(): Int = justInList.size
 
-    inner class JustInViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    inner class JustInViewHolder(
+        private val binding: ItemJustInBinding,
+        private val context: Context
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(justInUI: JustInUIItem) {
 
-            view.setOnClickListener {
+            binding.root.setOnClickListener {
                 actionsListener.onFetchInformation(justInUI.storyId)
             }
 
@@ -48,7 +46,7 @@ class JustInAdapter(
                 .load(justInUI.imageUrl)
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
-                .into(view.justInImageView)
+                .into(binding.justInImageView)
         }
     }
 }

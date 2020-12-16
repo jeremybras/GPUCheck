@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso
 import fr.ffnet.downloader.BuildConfig
 import fr.ffnet.downloader.R
 import fr.ffnet.downloader.common.MainApplication
+import fr.ffnet.downloader.databinding.ActivityFanfictionBinding
 import fr.ffnet.downloader.fanfiction.FanfictionViewModel.StoryState
 import fr.ffnet.downloader.fanfiction.chapters.FanfictionDetailsChaptersFragment
 import fr.ffnet.downloader.fanfiction.injection.FanfictionModule
@@ -26,7 +27,6 @@ import fr.ffnet.downloader.models.SettingType.PDF_EXPORT
 import fr.ffnet.downloader.options.OptionsController
 import fr.ffnet.downloader.options.ParentListener
 import fr.ffnet.downloader.settings.SettingsViewModel
-import kotlinx.android.synthetic.main.activity_fanfiction.*
 import javax.inject.Inject
 
 class FanfictionActivity : AppCompatActivity(), ParentListener, PopupMenu.OnMenuItemClickListener {
@@ -37,6 +37,7 @@ class FanfictionActivity : AppCompatActivity(), ParentListener, PopupMenu.OnMenu
     @Inject lateinit var picasso: Picasso
 
     private val fanfictionId by lazy { intent.getStringExtra(EXTRA_ID) ?: "" }
+    private lateinit var binding: ActivityFanfictionBinding
 
     companion object {
 
@@ -60,7 +61,8 @@ class FanfictionActivity : AppCompatActivity(), ParentListener, PopupMenu.OnMenu
             .plus(FanfictionModule(this))
             .inject(this)
 
-        setContentView(R.layout.activity_fanfiction)
+        binding = ActivityFanfictionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initializeTabLayout()
         setListeners()
@@ -103,7 +105,7 @@ class FanfictionActivity : AppCompatActivity(), ParentListener, PopupMenu.OnMenu
     }
 
     override fun showErrorMessage(message: String) {
-        Snackbar.make(containerView, message, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(binding.containerView, message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun setObservers() {
@@ -113,30 +115,30 @@ class FanfictionActivity : AppCompatActivity(), ParentListener, PopupMenu.OnMenu
                 .load("https:${story.imageUrl}")
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
-                .into(storyImageView)
+                .into(binding.storyImageView)
 
-            titleTextView.text = story.title
-            detailsTextView.text = story.details
-            publishedDateTextView.text = story.publishedDate
-            updatedDateTextView.text = story.updatedDate
+            binding.titleTextView.text = story.title
+            binding.detailsTextView.text = story.details
+            binding.publishedDateTextView.text = story.publishedDate
+            binding.updatedDateTextView.text = story.updatedDate
 
-            chapterSyncImageView.isVisible = story.isDownloadComplete.not()
-            chapterSyncTextView.isVisible = story.isDownloadComplete.not()
-            chapterSyncTextView.text = story.chaptersMissingText
+            binding.chapterSyncImageView.isVisible = story.isDownloadComplete.not()
+            binding.chapterSyncTextView.isVisible = story.isDownloadComplete.not()
+            binding.chapterSyncTextView.text = story.chaptersMissingText
         }
         viewModel.globalSyncState.observe(this) { storyState ->
-            actionButtonViewFlipper.displayedChild = when (storyState) {
+            binding.actionButtonViewFlipper.displayedChild = when (storyState) {
                 StoryState.Default -> DISPLAY_ADD_LIBRARY
                 StoryState.Syncing -> DISPLAY_SYNCING
                 StoryState.Synced -> DISPLAY_SYNCED
             }
         }
         settingsViewModel.settingList.observe(this) { settingList ->
-            exportPDFButton.isVisible = settingList
+            binding.exportPDFButton.isVisible = settingList
                 .firstOrNull { it.type == PDF_EXPORT }
                 ?.isEnabled
                 ?: true
-            exportEPUBButton.isVisible = settingList
+            binding.exportEPUBButton.isVisible = settingList
                 .firstOrNull { it.type == EPUB_EXPORT }
                 ?.isEnabled
                 ?: true
@@ -144,40 +146,40 @@ class FanfictionActivity : AppCompatActivity(), ParentListener, PopupMenu.OnMenu
     }
 
     private fun setListeners() {
-        menuImageView.frame = 59
-        menuImageView.setOnClickListener {
+        binding.menuImageView.frame = 59
+        binding.menuImageView.setOnClickListener {
             finish()
         }
-        optionsImageView.setOnClickListener {
-            val popup = PopupMenu(this, optionsImageView)
+        binding.optionsImageView.setOnClickListener {
+            val popup = PopupMenu(this, binding.optionsImageView)
             val inflater = popup.menuInflater
             inflater.inflate(R.menu.story_menu, popup.menu)
             popup.setOnMenuItemClickListener(this)
             popup.show()
         }
 
-        addToLibraryButton.setOnClickListener {
+        binding.addToLibraryButton.setOnClickListener {
             viewModel.syncChapters(fanfictionId)
         }
-        syncStoryButton.setOnClickListener {
+        binding.syncStoryButton.setOnClickListener {
             viewModel.syncChapters(fanfictionId)
         }
-        exportEPUBButton.setOnClickListener {
+        binding.exportEPUBButton.setOnClickListener {
             optionsController.onExportEpub(fanfictionId)
         }
-        exportPDFButton.setOnClickListener {
+        binding.exportPDFButton.setOnClickListener {
             optionsController.onExportPdf(fanfictionId)
         }
     }
 
     private fun initializeTabLayout() {
         val betweenSpace = 30
-        val slidingTabStrip = detailsTabLayout.getChildAt(0) as ViewGroup
+        val slidingTabStrip = binding.detailsTabLayout.getChildAt(0) as ViewGroup
         for (i in 0 until slidingTabStrip.childCount - 1) {
             (slidingTabStrip.getChildAt(i).layoutParams as ViewGroup.MarginLayoutParams).rightMargin = betweenSpace
         }
 
-        viewPager.adapter = DetailsTabAdapter(
+        binding.viewPager.adapter = DetailsTabAdapter(
             supportFragmentManager,
             mapOf(
                 resources.getString(R.string.story_tab_title_summary) to FanfictionDetailsSummaryFragment.newInstance(
@@ -191,6 +193,6 @@ class FanfictionActivity : AppCompatActivity(), ParentListener, PopupMenu.OnMenu
                 )
             )
         )
-        detailsTabLayout.setupWithViewPager(viewPager)
+        binding.detailsTabLayout.setupWithViewPager(binding.viewPager)
     }
 }

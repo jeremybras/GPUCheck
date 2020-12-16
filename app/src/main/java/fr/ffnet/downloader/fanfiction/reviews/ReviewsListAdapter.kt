@@ -1,13 +1,11 @@
 package fr.ffnet.downloader.fanfiction.reviews
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import fr.ffnet.downloader.R
+import fr.ffnet.downloader.databinding.ItemReviewBinding
 import fr.ffnet.downloader.fanfiction.reviews.ReviewsListAdapter.ReviewViewHolder
 import fr.ffnet.downloader.models.ReviewUI
-import kotlinx.android.synthetic.main.item_review.view.*
 
 class ReviewsListAdapter : RecyclerView.Adapter<ReviewViewHolder>() {
 
@@ -18,13 +16,8 @@ class ReviewsListAdapter : RecyclerView.Adapter<ReviewViewHolder>() {
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewViewHolder {
-        return ReviewViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_review,
-                parent,
-                false
-            )
-        )
+        val binding = ItemReviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ReviewViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ReviewViewHolder, position: Int) {
@@ -33,7 +26,9 @@ class ReviewsListAdapter : RecyclerView.Adapter<ReviewViewHolder>() {
 
     override fun getItemCount(): Int = reviewList.size
 
-    inner class ReviewViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    inner class ReviewViewHolder(
+        private val view: ItemReviewBinding
+    ) : RecyclerView.ViewHolder(view.root) {
         fun bind(review: ReviewUI) {
             view.posterTextView.text = review.poster
             view.chapterTextView.text = review.chapter

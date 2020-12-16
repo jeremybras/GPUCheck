@@ -1,22 +1,19 @@
 package fr.ffnet.downloader.main.search
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import fr.ffnet.downloader.R
+import fr.ffnet.downloader.databinding.ItemSearchResultAuthorBinding
+import fr.ffnet.downloader.databinding.ItemSearchResultStoryBinding
+import fr.ffnet.downloader.databinding.ItemSearchResultTitleBinding
 import fr.ffnet.downloader.models.SearchUIItem
 import fr.ffnet.downloader.models.SearchUIItem.SearchAuthorUI
 import fr.ffnet.downloader.models.SearchUIItem.SearchStoryUI
 import fr.ffnet.downloader.models.SearchUIItem.SearchUITitle
 import fr.ffnet.downloader.options.OnFanfictionActionsListener
-import kotlinx.android.synthetic.main.item_search_result_author.view.*
-import kotlinx.android.synthetic.main.item_search_result_story.view.*
-import kotlinx.android.synthetic.main.item_search_result_story.view.addButton
-import kotlinx.android.synthetic.main.item_search_result_story.view.storyImageView
-import kotlinx.android.synthetic.main.item_search_result_title.view.*
 
 class SearchListAdapter(
     private val picasso: Picasso,
@@ -37,21 +34,33 @@ class SearchListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            TYPE_HEADER -> FanfictionUITitleViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.item_search_result_title, parent, false
+            TYPE_HEADER -> {
+                FanfictionUITitleViewHolder(
+                    ItemSearchResultTitleBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
                 )
-            )
-            TYPE_AUTHOR -> SearchAuthorUIViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.item_search_result_author, parent, false
+            }
+            TYPE_AUTHOR -> {
+                SearchAuthorUIViewHolder(
+                    ItemSearchResultAuthorBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
                 )
-            )
-            else -> SearchStoryUIViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.item_search_result_story, parent, false
+            }
+            else -> {
+                SearchStoryUIViewHolder(
+                    ItemSearchResultStoryBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
                 )
-            )
+            }
         }
     }
 
@@ -72,13 +81,17 @@ class SearchListAdapter(
         }
     }
 
-    inner class FanfictionUITitleViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    inner class FanfictionUITitleViewHolder(val binding: ItemSearchResultTitleBinding) : RecyclerView.ViewHolder(
+        binding.root
+    ) {
         fun bind(item: SearchUITitle) {
-            view.searchResultTitleTextView.text = item.title
+            binding.searchResultTitleTextView.text = item.title
         }
     }
 
-    inner class SearchAuthorUIViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    inner class SearchAuthorUIViewHolder(
+        private val binding: ItemSearchResultAuthorBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(author: SearchAuthorUI) {
 
@@ -86,19 +99,21 @@ class SearchListAdapter(
                 .load(author.imageUrl)
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
-                .into(view.authorImageView)
+                .into(binding.authorImageView)
 
-            view.authorNameTextView.text = author.name
-            view.nbStoriesTextView.text = author.nbStories
+            binding.authorNameTextView.text = author.name
+            binding.nbStoriesTextView.text = author.nbStories
 
-            view.setOnClickListener {
+            binding.root.setOnClickListener {
                 listener.onFetchAuthorInformation(author.id)
             }
 
         }
     }
 
-    inner class SearchStoryUIViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    inner class SearchStoryUIViewHolder(
+        private val binding: ItemSearchResultStoryBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(story: SearchStoryUI) {
 
@@ -106,25 +121,25 @@ class SearchListAdapter(
                 .load(story.imageUrl)
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.placeholder)
-                .into(view.storyImageView)
+                .into(binding.storyImageView)
 
-            view.storyTitleTextView.text = story.title
-            view.detailsTextView.text = story.details
-            view.updatedDateTextView.text = story.updatedDate
+            binding.storyTitleTextView.text = story.title
+            binding.detailsTextView.text = story.details
+            binding.updatedDateTextView.text = story.updatedDate
 
             if (story.language.isEmpty()) {
-                view.languageButton.isVisible = false
+                binding.languageButton.isVisible = false
             }
             if (story.genre.isEmpty()) {
-                view.genreButton.isVisible = false
+                binding.genreButton.isVisible = false
             }
-            view.languageButton.text = story.language
-            view.genreButton.text = story.genre
-            view.chaptersButton.text = story.chaptersNb.toString()
-            view.favoritesButton.text = story.favoritesNb
-            view.reviewsButton.text = story.reviewsNb
+            binding.languageButton.text = story.language
+            binding.genreButton.text = story.genre
+            binding.chaptersButton.text = story.chaptersNb.toString()
+            binding.favoritesButton.text = story.favoritesNb
+            binding.reviewsButton.text = story.reviewsNb
 
-            view.addButton.setOnClickListener {
+            binding.addButton.setOnClickListener {
                 listener.onFetchInformation(story.id)
             }
         }

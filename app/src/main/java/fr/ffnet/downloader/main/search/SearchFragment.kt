@@ -16,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import fr.ffnet.downloader.R
 import fr.ffnet.downloader.common.MainApplication
+import fr.ffnet.downloader.databinding.FragmentSearchBinding
 import fr.ffnet.downloader.main.MainActivity
 import fr.ffnet.downloader.main.ViewPagerViewModel
 import fr.ffnet.downloader.main.search.SearchViewModel.SearchType
@@ -26,7 +27,6 @@ import fr.ffnet.downloader.models.SettingType.DEFAULT_SEARCH_STORIES
 import fr.ffnet.downloader.options.OptionsController
 import fr.ffnet.downloader.options.ParentListener
 import fr.ffnet.downloader.settings.SettingsViewModel
-import kotlinx.android.synthetic.main.fragment_search.*
 import javax.inject.Inject
 
 class SearchFragment : Fragment(), ParentListener {
@@ -43,6 +43,9 @@ class SearchFragment : Fragment(), ParentListener {
         private const val DISPLAY_JUST_IN_CONTENT = 1
     }
 
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
+
     enum class KeyboardStatus {
         CLOSED, OPENED
     }
@@ -55,9 +58,9 @@ class SearchFragment : Fragment(), ParentListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_search, container, false)
-        view?.let(::setKeyboardStatusListener)
-        return view
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        setKeyboardStatusListener(binding.root)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,8 +75,8 @@ class SearchFragment : Fragment(), ParentListener {
     }
 
     override fun showErrorMessage(message: String) {
-        searchValidateButton.isEnabled = true
-        Snackbar.make(searchContainer, message, Snackbar.LENGTH_LONG).show()
+        binding.searchValidateButton.isEnabled = true
+        Snackbar.make(binding.searchContainer, message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun setKeyboardStatusListener(view: View) {
@@ -89,18 +92,18 @@ class SearchFragment : Fragment(), ParentListener {
             } else {
                 if (keyboardStatus == KeyboardStatus.OPENED) {
                     keyboardStatus = KeyboardStatus.CLOSED
-                    searchEditText.clearFocus()
+                    binding.searchEditText.clearFocus()
                 }
             }
         }
     }
 
     fun onBackPressed() {
-        val search = searchEditText.text.toString().isBlank()
+        val search = binding.searchEditText.text.toString().isBlank()
         when {
-            searchEditText.hasFocus() && search -> transitionToStart()
-            searchEditText.hasFocus() -> searchEditText.clearFocus()
-            welcomeBlock.isVisible.not() && hasSyncedStories.not() -> transitionToStart()
+            binding.searchEditText.hasFocus() && search -> transitionToStart()
+            binding.searchEditText.hasFocus() -> binding.searchEditText.clearFocus()
+            binding.welcomeBlock.isVisible.not() && hasSyncedStories.not() -> transitionToStart()
             else -> {
                 transitionToStart()
                 (requireActivity() as MainActivity).showSynced()
@@ -110,34 +113,34 @@ class SearchFragment : Fragment(), ParentListener {
 
     private fun initializeSearch() {
 
-        justInRecyclerView.layoutManager = LinearLayoutManager(
+        binding.justInRecyclerView.layoutManager = LinearLayoutManager(
             requireContext(),
             LinearLayoutManager.HORIZONTAL,
             false
         )
-        justInRecyclerView.adapter = JustInAdapter(picasso, optionsController)
+        binding.justInRecyclerView.adapter = JustInAdapter(picasso, optionsController)
 
         justInViewModel.loadJustInList(JustInViewModel.JustInType.UPDATED)
-        justInTextView.text = requireContext().getText(R.string.search_just_in_title_updated)
+        binding.justInTextView.text = requireContext().getText(R.string.search_just_in_title_updated)
 
-        searchResultRecyclerView.adapter = SearchListAdapter(
+        binding.searchResultRecyclerView.adapter = SearchListAdapter(
             picasso,
             optionsController
         )
 
-        searchEditText.setOnFocusChangeListener { _, hasFocus ->
+        binding.searchEditText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 transitionToEnd()
             }
         }
-        searchEditText.setOnEditorActionListener { _, actionId, _ ->
+        binding.searchEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 onSearchTriggered()
             }
             true
         }
-        searchValidateButton.setOnClickListener {
-            if (welcomeBlock.isVisible) {
+        binding.searchValidateButton.setOnClickListener {
+            if (binding.welcomeBlock.isVisible) {
                 transitionToEnd()
             }
             onSearchTriggered()
@@ -148,47 +151,43 @@ class SearchFragment : Fragment(), ParentListener {
 
         viewPagerViewModel.hasSyncedItems().observe(viewLifecycleOwner) { hasSyncedStories ->
             this.hasSyncedStories = hasSyncedStories
-            welcomeBlock.isVisible = hasSyncedStories.not()
+            binding.welcomeBlock.isVisible = hasSyncedStories.not()
         }
 
         searchViewModel.storyResult.observe(viewLifecycleOwner) {
-            searchValidateButton.isEnabled = true
-            (searchResultRecyclerView.adapter as SearchListAdapter).searchResultList = it
+            binding.searchValidateButton.isEnabled = true
+            (binding.searchResultRecyclerView.adapter as SearchListAdapter).searchResultList = it
         }
         searchViewModel.authorResult.observe(viewLifecycleOwner) {
-            searchValidateButton.isEnabled = true
-            (searchResultRecyclerView.adapter as SearchListAdapter).searchResultList = it
+            binding.searchValidateButton.isEnabled = true
+            (binding.searchResultRecyclerView.adapter as SearchListAdapter).searchResultList = it
         }
 
         searchViewModel.error.observe(viewLifecycleOwner) {
             showErrorMessage(it)
         }
         searchViewModel.navigateToFanfiction.observe(viewLifecycleOwner) { fanfictionId ->
-            searchValidateButton.isEnabled = true
+            binding.searchValidateButton.isEnabled = true
             optionsController.onFetchInformation(fanfictionId)
         }
         searchViewModel.navigateToAuthor.observe(viewLifecycleOwner) {
-            Snackbar.make(
-                searchContainer,
-                "Opening author detail for $it",
-                Snackbar.LENGTH_LONG
-            ).show()
+            showErrorMessage(it)
         }
 
         justInViewModel.justInList.observe(viewLifecycleOwner) { justInResult ->
             if (justInResult is JustInUI.JustInSuccess) {
-                justInViewFlipper.displayedChild = DISPLAY_JUST_IN_CONTENT
-                (justInRecyclerView.adapter as JustInAdapter).justInList = justInResult.justInList
+                binding.justInViewFlipper.displayedChild = DISPLAY_JUST_IN_CONTENT
+                (binding.justInRecyclerView.adapter as JustInAdapter).justInList = justInResult.justInList
             } else {
-                justInViewFlipper.displayedChild = DISPLAY_JUST_IN_LOADER
+                binding.justInViewFlipper.displayedChild = DISPLAY_JUST_IN_LOADER
             }
         }
 
         settingsViewModel.settingList.observe(viewLifecycleOwner) { settingList ->
             settingList.map { setting ->
                 when (setting.type) {
-                    DEFAULT_SEARCH_AUTHORS -> searchAuthorRadioButton.isChecked = setting.isEnabled
-                    DEFAULT_SEARCH_STORIES -> searchStoryRadioButton.isChecked = setting.isEnabled
+                    DEFAULT_SEARCH_AUTHORS -> binding.searchAuthorRadioButton.isChecked = setting.isEnabled
+                    DEFAULT_SEARCH_STORIES -> binding.searchStoryRadioButton.isChecked = setting.isEnabled
 
                     else -> {
                         // Do nothing
@@ -203,10 +202,10 @@ class SearchFragment : Fragment(), ParentListener {
             view?.windowToken,
             0
         )
-        searchEditText.clearFocus()
-        searchValidateButton.isEnabled = false
-        val searchText = searchEditText.text.toString()
-        val searchType = when (searchTypeRadioGroup.checkedRadioButtonId) {
+        binding.searchEditText.clearFocus()
+        binding.searchValidateButton.isEnabled = false
+        val searchText = binding.searchEditText.text.toString()
+        val searchType = when (binding.searchTypeRadioGroup.checkedRadioButtonId) {
             R.id.searchAuthorRadioButton -> SearchType.SEARCH_AUTHOR
             else -> SearchType.SEARCH_STORY
         }
@@ -214,15 +213,15 @@ class SearchFragment : Fragment(), ParentListener {
     }
 
     private fun transitionToEnd() {
-        welcomeBlock.isVisible = false
+        binding.welcomeBlock.isVisible = false
     }
 
     private fun transitionToStart() {
-        searchEditText.clearFocus()
-        welcomeBlock.isVisible = hasSyncedStories.not()
+        binding.searchEditText.clearFocus()
+        binding.welcomeBlock.isVisible = hasSyncedStories.not()
     }
 
     fun shouldShowWelcomeBlock(): Boolean {
-        return welcomeBlock.isVisible.not() && hasSyncedStories.not()
+        return binding.welcomeBlock.isVisible.not() && hasSyncedStories.not()
     }
 }
