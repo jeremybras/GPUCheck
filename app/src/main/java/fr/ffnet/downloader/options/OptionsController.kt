@@ -3,7 +3,6 @@ package fr.ffnet.downloader.options
 import android.content.Context
 import android.os.Environment
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.observe
 import fr.ffnet.downloader.author.AuthorActivity
 import fr.ffnet.downloader.common.FFLogger
 import fr.ffnet.downloader.fanfiction.FanfictionActivity

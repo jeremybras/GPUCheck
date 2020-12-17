@@ -37,7 +37,7 @@ class OptionsViewModel(
                 navigateToStory.postValue(fanfictionId)
                 apiRepository.loadFanfictionInfo(fanfictionId)
             } else {
-                apiRepository.loadFanfictionInfo(fanfictionId)?.let { story ->
+                apiRepository.loadFanfictionInfo(fanfictionId)?.let {
                     FFLogger.d(EVENT_KEY, "Fanfiction $fanfictionId loaded successfully")
                     navigateToStory.postValue(fanfictionId)
                 } ?: displayErrorMessage(R.string.load_story_info_fetching_error)

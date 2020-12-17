@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.observe
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import fr.ffnet.downloader.BuildConfig

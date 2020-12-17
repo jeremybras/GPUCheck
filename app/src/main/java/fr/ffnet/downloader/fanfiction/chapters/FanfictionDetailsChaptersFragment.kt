@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.observe
 import fr.ffnet.downloader.common.MainApplication
 import fr.ffnet.downloader.databinding.FragmentFanfictionDetailsChaptersBinding
 import fr.ffnet.downloader.fanfiction.chapters.injection.FanfictionDetailsChaptersModule

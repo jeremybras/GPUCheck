@@ -2,6 +2,7 @@ package fr.ffnet.downloader.repository.entities
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import org.joda.time.LocalDateTime
 import java.util.*
@@ -34,7 +35,10 @@ data class FanfictionEntity(
         parentColumns = ["id"],
         childColumns = ["fanfictionId"],
         onDelete = ForeignKey.NO_ACTION
-    )]
+    )],
+    indices = [
+        Index(value = ["fanfictionId"])
+    ]
 )
 data class ChapterEntity(
     @PrimaryKey(autoGenerate = true) val id: Long? = null,
@@ -50,7 +54,10 @@ data class ChapterEntity(
         parentColumns = ["id"],
         childColumns = ["fanfictionId"],
         onDelete = ForeignKey.NO_ACTION
-    )]
+    )],
+    indices = [
+        Index(value = ["fanfictionId"])
+    ]
 )
 data class ReviewEntity(
     @PrimaryKey(autoGenerate = true) val id: Long? = null,

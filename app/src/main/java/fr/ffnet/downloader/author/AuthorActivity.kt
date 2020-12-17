@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.observe
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import fr.ffnet.downloader.R

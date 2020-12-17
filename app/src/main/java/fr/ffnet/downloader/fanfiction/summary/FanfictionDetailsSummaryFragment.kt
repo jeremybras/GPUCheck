@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.observe
 import fr.ffnet.downloader.common.MainApplication
 import fr.ffnet.downloader.databinding.FragmentFanfictionDetailsSummaryBinding
 import fr.ffnet.downloader.fanfiction.summary.injection.FanfictionDetailsSummaryModule
